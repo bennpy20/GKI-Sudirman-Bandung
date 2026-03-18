@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php";
+@source "../../storage/framework/views/*.php";
+@source "../**/*.blade.php";
+@source "../**/*.js";
+
+@theme {
+    --color-church-gold: #C5A059;
+    --color-church-dark: #1A1A1A;
+    --color-church-warm: #F5F2ED;
+}
+
+@layer utilities {
+    [x-cloak] {
+        display: none !important;
+    }
+
+    .card-shadow {
+        box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05);
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .whitespace-pre-wrap {
+        white-space: pre-wrap;
+    }
+}
