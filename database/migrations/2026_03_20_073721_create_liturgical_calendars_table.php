@@ -11,16 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('worships', function (Blueprint $table) {
+        Schema::create('liturgical_calendars', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('bible_verse');
-            $table->string('video_url')->nullable();
-            $table->integer('session');
-            $table->date('date');
-            
-            $table->foreignId('liturgical_calendars_id')->constrained('liturgical_calendars');
-
+            $table->string('name');
+            $table->string('color');
             $table->timestamps();
         });
     }
@@ -30,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('worships');
+        Schema::dropIfExists('liturgical_calendars');
     }
 };

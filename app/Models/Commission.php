@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Commission extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'name'
+    ];
 
     public function members()
     {
