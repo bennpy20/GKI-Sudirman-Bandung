@@ -16,7 +16,7 @@ class Announcement extends Model
         'users_id'
     ];
 
-    public function user()
+    public function users()
     {
         return $this->belongsTo(User::class, 'users_id');
     }

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('date');
             
             $table->foreignId('liturgical_calendars_id')->constrained('liturgical_calendars');
+            $table->foreignId('guest_ministers_id')->constrained('guest_ministers');
 
             $table->timestamps();
         });

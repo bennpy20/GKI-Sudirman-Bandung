@@ -13,6 +13,7 @@ class Worship extends Model
         'session',
         'date',
         'liturgical_calendars_id',
+        'guest_ministers_id',
     ];
 
     public function services()
@@ -23,5 +24,10 @@ class Worship extends Model
     public function liturgical_calendars()
     {
         return $this->belongsTo(LiturgicalCalendar::class,'liturgical_calendars_id');
+    }
+
+    public function guest_ministers()
+    {
+        return $this->belongsTo(GuestMinister::class,'guest_ministers_id');
     }
 }

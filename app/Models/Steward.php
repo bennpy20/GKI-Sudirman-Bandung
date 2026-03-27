@@ -10,6 +10,6 @@ class Steward extends Model
 
     public function members()
     {
-        return $this->belongsToMany(Member::class,'members_has_stewards','stewards_id','members_id');
+        return $this->belongsToMany(Member::class,'member_services','stewards_id','members_id');
     }
 }

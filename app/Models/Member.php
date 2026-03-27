@@ -21,27 +21,27 @@ class Member extends Model
         'commissions_id'
     ];
 
-    public function user()
+    public function users()
     {
         return $this->belongsTo(User::class,'users_id');
     }
 
-    public function region()
+    public function regions()
     {
         return $this->belongsTo(Region::class,'regions_id');
     }
 
-    public function commission()
+    public function commissions()
     {
         return $this->belongsTo(Commission::class,'commissions_id');
     }
 
     public function stewards()
     {
-        return $this->belongsToMany(Steward::class,'members_has_stewards','members_id','stewards_id');
+        return $this->belongsToMany(Steward::class,'member_services','members_id','stewards_id');
     }
 
-    public function services()
+    public function sunday_services()
     {
         return $this->hasMany(SundayService::class,'members_id');
     }

@@ -14,17 +14,17 @@ class Offering extends Model
         'worships_id'
     ];
 
-    public function user()
+    public function users()
     {
         return $this->belongsTo(User::class, 'users_id');
     }
 
-    public function commission()
+    public function commissions()
     {
         return $this->belongsTo(Commission::class, 'commissions_id');
     }
 
-    public function worship()
+    public function worships()
     {
         return $this->belongsTo(Worship::class, 'worships_id');
     }

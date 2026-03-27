@@ -13,12 +13,12 @@ class EventBudget extends Model
         'commissions_id'
     ];
 
-    public function event()
+    public function events()
     {
         return $this->belongsTo(Event::class, 'events_id');
     }
 
-    public function commission()
+    public function commissions()
     {
         return $this->belongsTo(Commission::class, 'commissions_id');
     }
