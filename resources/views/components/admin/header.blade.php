@@ -47,12 +47,12 @@
                 
                 <div class="border-t border-gray-50 my-1"></div>
                 
-                <!-- <form method="POST" action="#">
+                <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 font-bold transition-colors">
                         <i class="fas fa-sign-out-alt w-5 text-center mr-1 text-red-400"></i> Logout Akun
                     </button>
-                </form> -->
+                </form>
             </div>
         </div>
     </div>

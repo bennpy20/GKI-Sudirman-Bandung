@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\About;
 use Illuminate\Http\Request;
 
 class AdminAboutController extends Controller
@@ -11,7 +12,9 @@ class AdminAboutController extends Controller
      */
     public function index()
     {
-        return view('admin.about.index');
+        $abouts = About::with('users')->latest()->get();
+
+        return view('admin.about.index', compact('abouts'));
     }
 
     /**
@@ -27,7 +30,22 @@ class AdminAboutController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:100',
+            'description' => 'required|string',
+        ], [
+            'name.required' => 'Label informasi wajib diisi.',
+            'name.string' => 'Label informasi harus berupa teks.',
+            'name.max' => 'Label informasi tidak boleh lebih dari 100 karakter.',
+            'description.required' => 'Deskripsi lengkap wajib diisi.',
+            'description.string' => 'Deskripsi lengkap harus berupa teks.',
+        ]);
+
+        $request['users_id'] = auth()->id();
+
+        About::create($request->only('name', 'description', 'users_id'));
+
+        return redirect()->route('admin.about.index')->with('success', 'Informasi profil gereja berhasil ditambahkan!');
     }
 
     /**

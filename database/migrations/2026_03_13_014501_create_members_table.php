@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('members', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('address')->nullable();
-            $table->integer('status')->nullable();
+            $table->string('address');
+            $table->integer('status');
             $table->string('phone_number',20)->nullable();
-            $table->date('birth_date')->nullable();
-            $table->date('join_date')->nullable();
-            $table->integer('membership')->nullable();
-            $table->boolean('is_active')->default(true);
-            $table->boolean('is_region_leader')->default(false);
+            $table->date('birth_date');
+            $table->date('join_date');
+            $table->integer('membership');
+            $table->boolean('is_active');
+            $table->boolean('is_region_leader');
 
             $table->foreignId('users_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('regions_id')->constrained('regions');

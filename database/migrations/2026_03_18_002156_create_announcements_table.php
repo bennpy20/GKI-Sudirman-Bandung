@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event_budgets', function (Blueprint $table) {
+        Schema::create('announcements', function (Blueprint $table) {
             $table->id();
-            $table->integer('amount');
-            $table->string('division');
+            $table->string('category');
+            $table->string('title');
+            $table->text('content');
+            $table->string('image_url')->nullable();
+            $table->date('date_start');
+            $table->date('date_end');
 
-            $table->foreignId('events_id')->constrained('events')->cascadeOnDelete();
-            $table->foreignId('commissions_id')->constrained('commissions');
+            $table->foreignId('users_id')->constrained('users');
 
             $table->timestamps();
         });
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_budgets');
+        Schema::dropIfExists('announcements');
     }
 };
