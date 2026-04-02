@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Commission;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class AdminCommissionController extends Controller
 {
@@ -11,7 +13,9 @@ class AdminCommissionController extends Controller
      */
     public function index()
     {
-        return view('admin.commission.index');
+        $commissions = Commission::oldest('id')->paginate(10);
+
+        return view('admin.commission.index', compact('commissions'));
     }
 
     /**
@@ -27,7 +31,29 @@ class AdminCommissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:100',
+            'day' => 'required|string|max:10',
+            'time_start' => 'required',
+            'time_end' => 'required',
+            'room' => 'required|string|max:200',
+        ], [
+            'name.required' => 'Nama komisi wajib diisi.',
+            'name.string' => 'Nama komisi harus berupa teks.',
+            'name.max' => 'Nama komisi tidak boleh lebih dari 100 karakter.',
+            'day.required' => 'Hari persekutuan wajib diisi.',
+            'day.string' => 'Hari persekutuan harus berupa teks.',
+            'day.max' => 'Hari persekutuan tidak boleh lebih dari 10 karakter.',
+            'time_start.required' => 'Waktu mulai wajib diisi.',
+            'time_end.required' => 'Waktu selesai wajib diisi.',
+            'room.required' => 'Lokasi atau ruangan wajib diisi.',
+            'room.string' => 'Lokasi atau ruangan harus berupa teks.',
+            'room.max' => 'Lokasi atau ruangan tidak boleh lebih dari 200 karakter.',
+        ]);
+
+        Commission::create($request->only('name', 'day', 'time_start', 'time_end', 'room'));
+
+        return redirect()->route('admin.commission.index')->with('success', 'Data komisi berhasil ditambahkan!');
     }
 
     /**
@@ -35,7 +61,17 @@ class AdminCommissionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        Carbon::setLocale('id');
+
+        $commission = Commission::findOrFail($id);
+
+        $members = $commission->members()->get();
+
+        foreach ($members as $member) {
+            $member->birth_date_formatted = Carbon::parse($member->birth_date)->translatedFormat('j F Y');
+        }
+
+        return view('admin.commission.show', compact('commission', 'members'));
     }
 
     /**
@@ -43,7 +79,9 @@ class AdminCommissionController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $commission = Commission::findOrFail($id);
+
+        return view('admin.commission.edit', compact('commission'));
     }
 
     /**
@@ -51,7 +89,30 @@ class AdminCommissionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:100',
+            'day' => 'required|string|max:10',
+            'time_start' => 'required',
+            'time_end' => 'required',
+            'room' => 'required|string|max:200',
+        ], [
+            'name.required' => 'Nama komisi wajib diisi.',
+            'name.string' => 'Nama komisi harus berupa teks.',
+            'name.max' => 'Nama komisi tidak boleh lebih dari 100 karakter.',
+            'day.required' => 'Hari persekutuan wajib diisi.',
+            'day.string' => 'Hari persekutuan harus berupa teks.',
+            'day.max' => 'Hari persekutuan tidak boleh lebih dari 10 karakter.',
+            'time_start.required' => 'Waktu mulai wajib diisi.',
+            'time_end.required' => 'Waktu selesai wajib diisi.',
+            'room.required' => 'Lokasi atau ruangan wajib diisi.',
+            'room.string' => 'Lokasi atau ruangan harus berupa teks.',
+            'room.max' => 'Lokasi atau ruangan tidak boleh lebih dari 200 karakter.',
+        ]);
+
+        $commission = Commission::findOrFail($id);
+        $commission->update($request->only('name', 'day', 'time_start', 'time_end', 'room'));
+
+        return redirect()->route('admin.commission.index')->with('success', 'Data komisi berhasil diperbarui!');
     }
 
     /**
@@ -59,6 +120,9 @@ class AdminCommissionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $commission = Commission::findOrFail($id);
+        $commission->delete();
+
+        return redirect()->route('admin.commission.index')->with('success', 'Data komisi berhasil dihapus!');
     }
 }

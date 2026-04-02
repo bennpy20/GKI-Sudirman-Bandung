@@ -1,54 +1,76 @@
 @extends('components.admin.layout')
-@section('page_title', 'Edit Komisi')
+
+@section('page_title', 'Kelola Komisi')
+
+@section('title', 'Admin - Komisi')
 
 @section('content')
-<!-- Header -->
-<div class="mb-8">
-    <a href="#" class="text-sm font-medium text-gray-500 hover:text-church-gold mb-3 inline-flex items-center transition-colors">
+<div class="mb-8 relative z-10">
+    <a href="{{ route('admin.commission.index') }}" class="text-sm font-medium text-gray-500 hover:text-church-gold mb-3 inline-flex items-center transition-colors">
         <div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center mr-2 shadow-sm">
             <i class="fas fa-arrow-left"></i>
         </div>
-        Kembali ke Daftar Komisi
+        Kembali
     </a>
-    <h2 class="text-3xl font-serif font-bold text-church-dark mt-1">Perbarui Komisi</h2>
-    <p class="text-sm text-gray-500 font-sans mt-2 flex items-center gap-2">
-        <i class="fas fa-edit text-church-gold"></i> Ubah rincian nama pentalayan Komisi Pemuda.
-    </p>
+    <h2 class="text-3xl font-serif font-bold text-church-dark mt-1">Sunting Data Komisi</h2>
 </div>
-
-<form action="#" method="POST">
+<form action="{{ route('admin.commission.update', $commission->id) }}" method="POST">
     @csrf
     @method('PUT')
-    
-    <div class="max-w-2xl">
+    <div class="grid grid-cols-1 pb-24">
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-            <div class="px-6 md:px-8 py-5 border-b border-gray-50 bg-church-warm/20">
-                <h3 class="text-xl font-serif font-bold text-church-dark flex items-center gap-3">
-                    <i class="fas fa-tag text-church-gold"></i>
-                    Informasi Komisi
+            <div class="px-6 py-5 border-b border-gray-50 bg-gray-50/50">
+                <h3 class="text-lg font-bold text-church-dark flex items-center gap-2">
+                    Data Komisi
                 </h3>
             </div>
-            
             <div class="p-6 md:p-8 space-y-6">
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-2">Nama Komisi <span class="text-red-500">*</span></label>
-                    <input type="text" name="name" value="Komisi Pemuda" required class="w-full px-5 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all focus:bg-white text-church-dark font-medium">
+                    <input type="text" name="name" value="{{ old('name', $commission->name) }}" required class="w-full px-5 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark font-medium">
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Hari <span class="text-red-500">*</span></label>
+                        <select name="day" required class="w-full px-5 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark font-medium appearance-none">
+                            <option value="Senin" {{ old('day', $commission->day) == 'Senin' ? 'selected' : '' }}>Senin</option>
+                            <option value="Selasa" {{ old('day', $commission->day) == 'Selasa' ? 'selected' : '' }}>Selasa</option>
+                            <option value="Rabu" {{ old('day', $commission->day) == 'Rabu' ? 'selected' : '' }}>Rabu</option>
+                            <option value="Kamis" {{ old('day', $commission->day) == 'Kamis' ? 'selected' : '' }}>Kamis</option>
+                            <option value="Jumat" {{ old('day', $commission->day) == 'Jumat' ? 'selected' : '' }}>Jumat</option>
+                            <option value="Sabtu" {{ old('day', $commission->day) == 'Sabtu' ? 'selected' : '' }}>Sabtu</option>
+                            <option value="Minggu" {{ old('day', $commission->day) == 'Minggu' ? 'selected' : '' }}>Minggu</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Waktu Mulai <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <input type="time" name="time_start" value="{{ old('time_start', $commission->time_start) }}" required class="w-full px-5 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark font-medium">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Waktu Selesai <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <input type="time" name="time_end" value="{{ old('time_end', $commission->time_end) }}" required class="w-full px-5 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark font-medium">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Lokasi/Ruangan <span class="text-red-500">*</span></label>
+                    <div class="relative">
+                        <input type="text" name="room" value="{{ old('room', $commission->room) }}" required class="w-full px-5 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark font-medium">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Sticky Footer Actions -->
     <div class="fixed bottom-0 left-0 md:left-64 right-0 p-4 lg:p-6 bg-white/90 backdrop-blur-md border-t border-gray-200/60 z-30 flex justify-end gap-3 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] transition-all">
-        <a href="#" class="px-5 lg:px-6 py-2.5 lg:py-3 bg-white border border-gray-300 rounded-xl text-gray-700 font-bold hover:bg-gray-50 transition-colors text-sm lg:text-base">
+        <a href="{{ route('admin.commission.index') }}" class="px-5 lg:px-6 py-2.5 lg:py-3 bg-white border border-gray-300 rounded-xl text-gray-700 font-bold hover:bg-gray-50 transition-colors text-sm lg:text-base">
             Batalkan
         </a>
-        <button type="submit" class="px-6 lg:px-8 py-2.5 lg:py-3 bg-gradient-to-r from-church-gold to-yellow-600 rounded-xl text-church-dark font-bold hover:from-yellow-500 hover:to-yellow-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm lg:text-base flex items-center gap-2">
-            <i class="fas fa-save"></i> Perbarui Komisi
+        <button type="submit" class="cursor-pointer px-6 lg:px-8 py-2.5 lg:py-3 bg-gradient-to-r from-church-gold to-yellow-600 rounded-xl text-church-dark font-bold hover:from-yellow-500 hover:to-yellow-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm lg:text-base flex items-center gap-2">
+            <i class="fas fa-save"></i>Perbarui Komisi
         </button>
     </div>
 </form>
-
-<!-- Spacer for fixed footer -->
-<div class="h-24"></div>
 @endsection

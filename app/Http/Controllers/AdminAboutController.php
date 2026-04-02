@@ -12,7 +12,7 @@ class AdminAboutController extends Controller
      */
     public function index()
     {
-        $abouts = About::with('users')->latest()->get();
+        $abouts = About::with('users')->oldest('id')->get();
 
         return view('admin.about.index', compact('abouts'));
     }
@@ -45,7 +45,7 @@ class AdminAboutController extends Controller
 
         About::create($request->only('name', 'description', 'users_id'));
 
-        return redirect()->route('admin.about.index')->with('success', 'Informasi profil gereja berhasil ditambahkan!');
+        return redirect()->route('admin.about.index')->with('success', 'Data profil gereja berhasil ditambahkan!');
     }
 
     /**
@@ -53,7 +53,9 @@ class AdminAboutController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $about = About::with('users')->findOrFail($id);
+
+        return view('admin.about.show', compact('about'));
     }
 
     /**
@@ -61,7 +63,9 @@ class AdminAboutController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $about = About::with('users')->findOrFail($id);
+
+        return view('admin.about.edit', compact('about'));
     }
 
     /**
@@ -69,7 +73,24 @@ class AdminAboutController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:100',
+            'description' => 'required|string',
+        ], [
+            'name.required' => 'Label informasi wajib diisi.',
+            'name.string' => 'Label informasi harus berupa teks.',
+            'name.max' => 'Label informasi tidak boleh lebih dari 100 karakter.',
+            'description.required' => 'Deskripsi lengkap wajib diisi.',
+            'description.string' => 'Deskripsi lengkap harus berupa teks.',
+        ]);
+
+        $about = About::findOrFail($id);
+
+        $request['users_id'] = auth()->id();
+
+        $about->update($request->only('name', 'description', 'users_id'));
+
+        return redirect()->route('admin.about.index')->with('success', 'Data profil gereja berhasil diperbarui!');
     }
 
     /**
@@ -77,6 +98,9 @@ class AdminAboutController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $about = About::findOrFail($id);
+        $about->delete();
+
+        return redirect()->route('admin.about.index')->with('success', 'Data profil gereja berhasil dihapus!');
     }
 }

@@ -57,7 +57,7 @@
                 <div class="w-8 h-8 rounded-lg flex items-center justify-center transition-colors {{ request()->routeIs('admin.about.*') ? 'bg-church-dark/10 text-church-dark' : 'bg-white/5 group-hover:bg-church-gold/20 group-hover:text-church-gold' }}">
                     <i class="fas fa-info-circle"></i>
                 </div>
-                <span class="text-sm {{ request()->routeIs('admin.about.*') ? 'font-bold' : 'font-medium' }}">Tentang Gereja</span>
+                <span class="text-sm {{ request()->routeIs('admin.about.*') ? 'font-bold' : 'font-medium' }}">Profil Gereja</span>
             </a>
 
             <!-- Master Data Section -->
@@ -76,12 +76,12 @@
                 <div class="w-8 h-8 rounded-lg flex items-center justify-center transition-colors {{ request()->routeIs('admin.region.*') ? 'bg-church-dark/10 text-church-dark' : 'bg-white/5 group-hover:bg-church-gold/20 group-hover:text-church-gold' }}">
                     <i class="fas fa-map-marked-alt"></i>
                 </div>
-                <span class="text-sm {{ request()->routeIs('admin.region.*') ? 'font-bold' : 'font-medium' }}">Wilayah & Rayon</span>
+                <span class="text-sm {{ request()->routeIs('admin.region.*') ? 'font-bold' : 'font-medium' }}">Rayon</span>
             </a>
             
             <a href="{{ route('admin.commission.index') }}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.commission.*') ? 'bg-gradient-to-r from-church-gold to-yellow-600 text-church-dark shadow-[0_4px_20px_rgba(197,160,89,0.3)] transform hover:-translate-y-0.5' : 'text-white/70 hover:bg-white/5 hover:text-church-gold group' }}">
                 <div class="w-8 h-8 rounded-lg flex items-center justify-center transition-colors {{ request()->routeIs('admin.commission.*') ? 'bg-church-dark/10 text-church-dark' : 'bg-white/5 group-hover:bg-church-gold/20 group-hover:text-church-gold' }}">
-                    <i class="fas fa-users-cog"></i>
+                    <i class="fas fa-users"></i>
                 </div>
                 <span class="text-sm {{ request()->routeIs('admin.commission.*') ? 'font-bold' : 'font-medium' }}">Komisi</span>
             </a>
@@ -97,7 +97,7 @@
     
     <div class="p-4 border-t border-white/10">
         <a href="{{ route('home.index') }}" target="_blank" class="flex items-center justify-center gap-2 w-full py-3 bg-white/5 hover:bg-white/10 rounded-xl text-white/80 transition-colors text-sm font-medium">
-            <i class="fas fa-external-link-alt"></i> Lihat Website
+            <i class="fas fa-external-link-alt"></i>Lihat Website
         </a>
     </div>
 </aside>

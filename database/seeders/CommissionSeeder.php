@@ -15,10 +15,18 @@ class CommissionSeeder extends Seeder
     {
         DB::table('commissions')->insert([
             [
-                'name' => 'Youth'
+                'name' => 'Youth',
+                'day' => 'Senin',
+                'time_start' => '18:00:00',
+                'time_end' => '20:00:00',
+                'room' => 'Room A'
             ],
             [
-                'name' => 'Sekolah Minggu'
+                'name' => 'Sekolah Minggu',
+                'day' => 'Minggu',
+                'time_start' => '09:00:00',
+                'time_end' => '10:30:00',
+                'room' => 'Room B'
             ],
         ]);
     }

@@ -6,8 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Commission extends Model
 {
+    public $timestamps = false;
+    
     protected $fillable = [
-        'name'
+        'name',
+        'day',
+        'time_start',
+        'time_end',
+        'room',
     ];
 
     public function members()

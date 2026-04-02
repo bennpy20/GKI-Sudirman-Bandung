@@ -1,5 +1,8 @@
 @extends('components.admin.layout')
-@section('page_title', 'Kalender Liturgi')
+
+@section('page_title', 'Kelola Kalender Liturgi')
+
+@section('title', 'Admin - Kalender Liturgi')
 
 @section('content')
 <!-- Page Header -->
@@ -7,22 +10,19 @@
     <div>
         <h2 class="text-3xl font-serif font-bold text-church-dark">Kalender Liturgi</h2>
         <p class="text-sm text-gray-500 mt-2 font-sans flex items-center gap-2">
-            <i class="fas fa-info-circle text-church-gold"></i> Kelola data masa raya, pekan liturgi, beserta warna peristiwanya.
+            <i class="fas fa-info-circle text-church-gold"></i>Kelola data masa raya, pekan liturgi, dan warna peristiwanya.
         </p>
     </div>
-    
     <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
         <div class="relative w-full sm:w-auto">
             <input type="text" placeholder="Cari pekan..." class="w-full sm:w-64 pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all shadow-sm text-sm">
             <i class="fas fa-search absolute left-3.5 top-3 text-gray-400"></i>
         </div>
         <a href="{{ route('admin.liturgical_calendar.create') }}" class="w-full sm:w-auto justify-center bg-gradient-to-r from-church-gold to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-church-dark px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 whitespace-nowrap">
-            <i class="fas fa-plus"></i> Tambah Liturgi
+            <i class="fas fa-plus"></i>Tambah Pekan Liturgi
         </a>
     </div>
 </div>
-
-<!-- Data Table Container -->
 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
     <div class="p-5 border-b border-gray-50 flex justify-between items-center bg-gray-50/30">
         <h3 class="font-bold text-church-dark text-lg">Daftar Pekan Liturgi</h3>
@@ -32,116 +32,105 @@
             <thead>
                 <tr class="bg-white text-gray-500 text-xs uppercase tracking-wider border-b border-gray-100">
                     <th class="px-6 py-4 font-semibold w-1/2">Nama Pekan Liturgi</th>
-                    <th class="px-6 py-4 font-semibold w-1/4">Warna Peristiwa</th>
+                    <th class="px-6 py-4 font-semibold w-1/4">Warna Liturgi Peristiwa</th>
                     <th class="px-6 py-4 font-semibold text-center w-1/4">Aksi</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-50 text-sm">
-                <!-- Data Row 1 -->
+                @forelse($liturgical_calendars as $liturgical_calendar)
                 <tr class="hover:bg-church-warm/30 transition-colors group">
                     <td class="px-6 py-4">
                         <div class="flex items-center gap-3">
-                            <div class="h-10 w-10 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center font-bold text-sm shadow-sm border border-purple-100">
-                                <i class="fas fa-cross"></i>
-                            </div>
                             <div>
-                                <div class="font-bold text-church-dark text-base">Prapaskah 1</div>
-                                <div class="text-xs text-gray-500 mt-0.5">Persiapan & Pertobatan</div>
+                                <div class="font-bold text-church-dark text-base">{{ $liturgical_calendar->name }}</div>
                             </div>
                         </div>
                     </td>
+                    <!-- Ganti warna -->
+                    @php
+                        $colors = [
+                            'Ungu' => ['bg-purple-50 text-purple-700 border-purple-100', 'bg-purple-600'],
+                            'Hijau' => ['bg-green-50 text-green-700 border-green-100', 'bg-green-600'],
+                            'Merah' => ['bg-red-50 text-red-700 border-red-100', 'bg-red-600'],
+                            'Putih' => ['bg-gray-50 text-gray-700 border-gray-200', 'bg-gray-200'],
+                            'Hitam' => ['bg-gray-500 text-white border-gray-800', 'bg-black'],
+                        ];
+                        [$colorClass, $dot] = $colors[$liturgical_calendar->color] ?? ['bg-gray-50 text-gray-700 border-gray-200', 'bg-gray-400'];
+                    @endphp
                     <td class="px-6 py-4">
-                        <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold bg-purple-50 text-purple-700 border border-purple-100 shadow-sm">
-                            <span class="w-2.5 h-2.5 rounded-full bg-purple-600"></span> Ungu
+                        <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold {{ $colorClass }}">
+                            <span class="w-2.5 h-2.5 rounded-full {{ $dot }}"></span>{{ $liturgical_calendar->color }}
                         </span>
                     </td>
                     <td class="px-6 py-4">
                         <div class="flex justify-center space-x-2 transition-opacity">
-                            <button title="Detail" class="text-blue-600 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 p-2 rounded-lg transition-colors border border-blue-100">
+                            <a href="{{ route('admin.liturgical_calendar.show', $liturgical_calendar->id) }}" title="Detail" class="text-blue-600 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 p-2 rounded-lg transition-colors border border-blue-100">
                                 <i class="fas fa-eye w-4 text-center"></i>
-                            </button>
-                            <button title="Edit" class="text-church-dark hover:text-yellow-800 bg-church-gold/10 hover:bg-church-gold/30 p-2 rounded-lg transition-colors border border-church-gold/30">
+                            </a>
+                            <a href="{{ route('admin.liturgical_calendar.edit', $liturgical_calendar->id) }}" title="Edit" class="text-church-dark hover:text-yellow-800 bg-church-gold/10 hover:bg-church-gold/30 p-2 rounded-lg transition-colors border border-church-gold/30">
                                 <i class="fas fa-edit w-4 text-center"></i>
-                            </button>
-                            <button title="Hapus" onclick="confirmDelete(1)" class="text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 p-2 rounded-lg transition-colors border border-red-100">
-                                <i class="fas fa-trash-alt w-4 text-center"></i>
-                            </button>
+                            </a>
+                            <form id="delete-form-{{ $liturgical_calendar->id }}" action="{{ route('admin.liturgical_calendar.destroy', $liturgical_calendar->id) }}" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button" title="Hapus" onclick="confirmDelete({{ $liturgical_calendar->id }})" class="cursor-pointer text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 p-2 rounded-lg transition-colors border border-red-100">
+                                    <i class="fas fa-trash-alt w-4 text-center"></i>
+                                </button>
+                            </form>
                         </div>
                     </td>
                 </tr>
-                <!-- Data Row 2 -->
-                <tr class="hover:bg-church-warm/30 transition-colors group">
-                    <td class="px-6 py-4">
-                        <div class="flex items-center gap-3">
-                            <div class="h-10 w-10 rounded-xl bg-green-50 text-green-700 flex items-center justify-center font-bold text-sm shadow-sm border border-green-100">
-                                <i class="fas fa-seedling"></i>
-                            </div>
-                            <div>
-                                <div class="font-bold text-church-dark text-base">Minggu Biasa</div>
-                                <div class="text-xs text-gray-500 mt-0.5">Pertumbuhan Iman</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4">
-                        <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold bg-green-50 text-green-700 border border-green-100 shadow-sm">
-                            <span class="w-2.5 h-2.5 rounded-full bg-green-500"></span> Hijau
-                        </span>
-                    </td>
-                    <td class="px-6 py-4">
-                        <div class="flex justify-center space-x-2 transition-opacity">
-                            <button title="Detail" class="text-blue-600 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 p-2 rounded-lg transition-colors border border-blue-100">
-                                <i class="fas fa-eye w-4 text-center"></i>
-                            </button>
-                            <button title="Edit" class="text-church-dark hover:text-yellow-800 bg-church-gold/10 hover:bg-church-gold/30 p-2 rounded-lg transition-colors border border-church-gold/30">
-                                <i class="fas fa-edit w-4 text-center"></i>
-                            </button>
-                            <button title="Hapus" onclick="confirmDelete(2)" class="text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 p-2 rounded-lg transition-colors border border-red-100">
-                                <i class="fas fa-trash-alt w-4 text-center"></i>
-                            </button>
+                @empty
+                <tr>
+                    <td colspan="3" class="px-6 py-4 text-center text-gray-500">
+                        <div class="flex flex-col items-center gap-3 py-10">
+                            <i class="fas fa-calendar-alt text-4xl text-gray-300"></i>
+                            <p class="text-sm">Belum ada data pekan liturgi yang ditambahkan. Klik tombol "Tambah Pekan Liturgi" untuk memulai.</p>
                         </div>
                     </td>
                 </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
-    
     <div class="px-6 py-4 border-t border-gray-50 bg-gray-50/30 flex flex-col md:flex-row justify-between items-center gap-4">
-        <span class="text-xs text-gray-500 font-medium text-center md:text-left">Menampilkan 1 hingga 2 dari 15 entri</span>
-        <div class="flex flex-wrap justify-center gap-1">
-            <button class="px-3 py-1 text-sm border border-gray-200 rounded-md bg-white text-gray-400 cursor-not-allowed hidden sm:block">Sebelumnya</button>
-            <button class="px-3 py-1 text-sm border border-church-gold rounded-md bg-church-gold/10 text-church-dark font-medium">1</button>
-            <button class="px-3 py-1 text-sm border border-gray-200 rounded-md bg-white text-gray-600 hover:bg-gray-50">2</button>
-            <button class="px-3 py-1 text-sm border border-gray-200 rounded-md bg-white text-gray-600 hover:bg-gray-50 hidden sm:block">Berikutnya</button>
-        </div>
+    <!-- Pagination -->
+    <span class="text-xs text-gray-500 font-medium text-center md:text-left">
+        Menampilkan {{ $liturgical_calendars->firstItem() ?? 0 }} hingga {{ $liturgical_calendars->lastItem() ?? 0 }} data dari total {{ $liturgical_calendars->total() }} data
+    </span>
+    <div class="flex flex-wrap justify-center gap-1">
+        @if ($liturgical_calendars->onFirstPage())
+            <span class="px-3 py-1 text-sm border border-gray-200 rounded-md text-gray-400 cursor-not-allowed hidden sm:block">
+                Sebelumnya
+            </span>
+        @else
+            <a href="{{ $liturgical_calendars->previousPageUrl() }}" class="px-3 py-1 text-sm border border-gray-200 rounded-md bg-white text-gray-600 hover:bg-gray-50 hidden sm:block">
+                Sebelumnya
+            </a>
+        @endif
+
+        @foreach ($liturgical_calendars->getUrlRange(1, $liturgical_calendars->lastPage()) as $page => $url)
+            @if ($page == $liturgical_calendars->currentPage())
+                <span class="px-3 py-1 text-sm border border-church-gold rounded-md bg-church-gold/10 text-church-dark font-medium">
+                    {{ $page }}
+                </span>
+            @else
+                <a href="{{ $url }}" class="px-3 py-1 text-sm border border-gray-200 rounded-md bg-white text-gray-600 hover:bg-gray-50">
+                    {{ $page }}
+                </a>
+            @endif
+        @endforeach
+
+        @if ($liturgical_calendars->hasMorePages())
+            <a href="{{ $liturgical_calendars->nextPageUrl() }}" class="px-3 py-1 text-sm border border-gray-200 rounded-md bg-white text-gray-600 hover:bg-gray-50 hidden sm:block">
+                Berikutnya
+            </a>
+        @else
+            <span class="px-3 py-1 text-sm border border-gray-200 rounded-md text-gray-400 cursor-not-allowed hidden sm:block">
+                Berikutnya
+            </span>
+        @endif
     </div>
 </div>
-
-<script>
-    function confirmDelete(id) {
-        Swal.fire({
-            title: 'Hapus Kalender Liturgi?',
-            text: "Data ini mungkin digunakan dalam relasi jadwal ibadah raya!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#ef4444',
-            cancelButtonColor: '#a1a1aa',
-            confirmButtonText: 'Ya, Hapus',
-            cancelButtonText: 'Batal',
-            customClass: {
-                confirmButton: 'font-sans font-bold rounded-xl px-5 py-2.5',
-                cancelButton: 'font-sans font-bold rounded-xl px-5 py-2.5',
-                popup: 'rounded-2xl shadow-xl border border-gray-100'
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    title: 'Dihapus!',
-                    text: 'Kalender Liturgi telah dihapus.',
-                    icon: 'success',
-                    customClass: { popup: 'rounded-2xl', confirmButton: 'font-sans font-bold rounded-xl bg-church-gold hover:bg-yellow-600 text-church-dark px-6 py-2' }
-                });
-            }
-        })
-    }
-</script>
+</div>
 @endsection

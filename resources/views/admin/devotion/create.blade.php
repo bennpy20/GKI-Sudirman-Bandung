@@ -1,108 +1,87 @@
 @extends('components.admin.layout')
-@section('page_title', 'Tulis Renungan Baru')
+
+@section('page_title', 'Kelola Renungan Harian')
+
+@section('title', 'Admin - Renungan Harian')
 
 @section('content')
-<!-- Header -->
 <div class="mb-8 relative z-10">
-    <a href="#" class="text-sm font-medium text-gray-500 hover:text-church-gold mb-3 inline-flex items-center transition-colors">
+    <a href="{{ route('admin.devotion.index') }}" class="text-sm font-medium text-gray-500 hover:text-church-gold mb-3 inline-flex items-center transition-colors">
         <div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center mr-2 shadow-sm">
             <i class="fas fa-arrow-left"></i>
         </div>
-        Kembali ke Daftar Renungan
+        Kembali
     </a>
-    <h2 class="text-3xl font-serif font-bold text-church-dark mt-1">Tulis Renungan Harian</h2>
-    <p class="text-sm text-gray-500 font-sans mt-2 flex items-center gap-2">
-        <i class="fas fa-feather-alt text-church-gold"></i> Bagikan berkat firman Tuhan melalui artikel renungan tertulis.
-    </p>
+    <h2 class="text-3xl font-serif font-bold text-church-dark mt-1">Tambah Data Renungan Harian</h2>
 </div>
-
-<form action="#" method="POST">
+<form action="{{ route('admin.devotion.store') }}" method="POST">
     @csrf
-    
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-32">
-        <!-- Main Form Column -->
+    <div class="grid grid-cols-1 gap-8 pb-24">
         <div class="lg:col-span-2 space-y-6">
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                 <div class="px-6 py-5 border-b border-gray-50 bg-gray-50/50">
                     <h3 class="text-lg font-bold text-church-dark flex items-center gap-2">
-                        <i class="fas fa-book-open text-church-gold"></i> Naskah Renungan
+                        Data Renungan Harian
                     </h3>
                 </div>
-                
-                <div class="p-6 space-y-6">
+                <div class="p-6 md:p-8 space-y-6">
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Judul Artikel / Renungan <span class="text-red-500">*</span></label>
-                        <input type="text" name="title" required placeholder="Contoh: Tuhan Penolong yang Setia" class="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark font-medium placeholder-gray-400">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Judul Renungan <span class="text-red-500">*</span></label>
+                        <input type="text" name="title" required placeholder="Tuliskan judul renungan.." class="w-full px-5 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark font-medium">
+                        @error('title')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
-
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Nats Alkitab <span class="text-red-500">*</span></label>
+                        <input type="text" name="bible_verse" required placeholder="Tuliskan nats Alkitab.." class="w-full px-5 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark font-medium">
+                        @error('bible_verse')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Sumber Bacaan Alkitab <span class="text-red-500">*</span></label>
-                            <input type="text" name="bible_verse" required placeholder="Contoh: Mazmur 121:1-8" class="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark font-medium">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Nama Penulis / Kontributor <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Penulis/Sumber <span class="text-red-500">*</span></label>
                             <div class="relative">
-                                <input type="text" name="author" required placeholder="Contoh: Pdt. Yohanes" class="w-full pl-11 pr-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark font-medium">
-                                <i class="fas fa-pen-nib absolute left-4 top-3.5 text-gray-400 pointer-events-none"></i>
+                                <input type="text" name="author" required placeholder="Tuliskan penulis/sumber.." class="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark font-medium">
+                                @error('author')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Kategori Pembaca <span class="text-red-500">*</span></label>
+                            <select name="category" required class="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark appearance-none font-medium">
+                                <option value="" disabled selected>Pilih Kategori</option>
+                                <option value="1">Dewasa</option>
+                                <option value="2">Remaja/Pemuda</option>
+                                <option value="3">Anak Sekolah Minggu</option>
+                                <option value="4">Usia Indah</option>
+                            </select>
+                            @error('category')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
-                    
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2 flex justify-between">
                             <span>Isi Renungan <span class="text-red-500">*</span></span>
-                            <span class="text-xs text-gray-400 font-normal">Jabarkan renungan sesuai nats pilihan</span>
                         </label>
-                        <textarea name="content" required rows="15" placeholder="Mulia hari dengan senyuman dan sapaan damai sejahtera..." class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark font-medium leading-relaxed resize-y"></textarea>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Sidebar Config Column -->
-        <div class="lg:col-span-1 space-y-6">
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden sticky top-6">
-                <div class="px-6 py-5 border-b border-gray-50 bg-church-warm/20">
-                    <h3 class="text-lg font-bold text-church-dark flex items-center gap-2">
-                        <i class="fas fa-tags text-church-gold"></i> Metadata
-                    </h3>
-                </div>
-                
-                <div class="p-6 space-y-6">
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Segmentasi Pembaca <span class="text-red-500">*</span></label>
-                        <p class="text-xs text-gray-500 mb-3">Tentukan kepada strata usia apa renungan ini difokuskan.</p>
-                        <select name="category" required class="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark appearance-none font-medium">
-                            <option value="" disabled selected>-- Pilih Segmentasi --</option>
-                            <option value="Umum">Umum (Semua Usia)</option>
-                            <option value="Anak">Anak-anak Sekolah Minggu</option>
-                            <option value="Remaja">Remaja Tunas</option>
-                            <option value="Pemuda">Pemuda (Youth)</option>
-                            <option value="Lansia">Lansia (Lanjut Usia)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="bg-blue-50 rounded-xl p-4 border border-blue-100">
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-info-circle text-blue-500 mt-0.5"></i>
-                            <p class="text-xs text-blue-800 leading-relaxed font-medium">
-                                Renungan yang berhasil ditambahkan akan langsung dapat dibaca oleh jemaat pada halaman Beranda website gereja tanpa perlu pengaturan sistem tayang spesifik.
-                            </p>
-                        </div>
+                        <textarea name="content" required rows="15" placeholder="Tuliskan isi renungan.." class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark font-medium leading-relaxed resize-y"></textarea>
+                        @error('content')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Sticky Footer Actions -->
     <div class="fixed bottom-0 left-0 md:left-64 right-0 p-4 lg:p-6 bg-white/90 backdrop-blur-md border-t border-gray-200/60 z-30 flex justify-end gap-3 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] transition-all">
-        <a href="#" class="px-5 lg:px-6 py-2.5 lg:py-3 bg-white border border-gray-300 rounded-xl text-gray-700 font-bold hover:bg-gray-50 transition-colors text-sm lg:text-base">
+        <a href="{{ route('admin.devotion.index') }}" class="px-5 lg:px-6 py-2.5 lg:py-3 bg-white border border-gray-300 rounded-xl text-gray-700 font-bold hover:bg-gray-50 transition-colors text-sm lg:text-base">
             Batalkan
         </a>
-        <button type="submit" class="px-6 lg:px-8 py-2.5 lg:py-3 bg-gradient-to-r from-church-gold to-yellow-600 rounded-xl text-church-dark font-bold hover:from-yellow-500 hover:to-yellow-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm lg:text-base flex items-center gap-2">
-            <i class="fas fa-check"></i> Simpan Renungan
+        <button type="submit" class="cursor-pointer px-6 lg:px-8 py-2.5 lg:py-3 bg-gradient-to-r from-church-gold to-yellow-600 rounded-xl text-church-dark font-bold hover:from-yellow-500 hover:to-yellow-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm lg:text-base flex items-center gap-2">
+            <i class="fas fa-save"></i>Simpan Renungan Harian
         </button>
     </div>
 </form>

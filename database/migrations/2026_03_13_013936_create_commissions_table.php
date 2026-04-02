@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('commissions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('day');
+            $table->time('time_start');
+            $table->time('time_end');
+            $table->string('room');
             // $table->timestamps();
         });
     }
