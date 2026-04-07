@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('stewards', function (Blueprint $table) {
             $table->id();
             $table->string('field');
+            $table->foreignId('commissions_id')->nullable()->constrained('commissions')->nullOnDelete();
             // $table->timestamps();
         });
     }

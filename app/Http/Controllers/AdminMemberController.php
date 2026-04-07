@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Commission;
+use App\Models\Member;
+use App\Models\Region;
+use App\Models\Steward;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AdminMemberController extends Controller
@@ -11,7 +16,30 @@ class AdminMemberController extends Controller
      */
     public function index()
     {
-        return view('admin.member.index');
+        $members = Member::latest('id')->paginate(10);
+
+        $memberStatus = [
+            1 => 'Koordinator Pendeta',
+            2 => 'Pendeta',
+            3 => 'Penginjil',
+            4 => 'Penatua',
+            5 => 'Diaken',
+            6 => 'Jemaat Biasa',
+        ];
+
+        $memberMembership = [
+            1 => 'Baptis Anak',
+            2 => 'Sidi/Baptis Dewasa',
+            3 => 'Atestasi Keluar',
+            4 => 'Meninggal Dunia',
+        ];
+
+        foreach ($members as $member) {
+            $member->memberStatus = $memberStatus[$member->status];
+            $member->memberMembership = $memberMembership[$member->membership];
+        }
+
+        return view('admin.member.index', compact('members'));
     }
 
     /**
@@ -19,7 +47,15 @@ class AdminMemberController extends Controller
      */
     public function create()
     {
-        return view('admin.member.create');
+        $regions = Region::all();
+
+        $commissions = Commission::all();
+
+        $stewards = Steward::with('commission')->get()->groupBy(function ($steward) {
+            return $steward->commission ? $steward->commission->name : 'Bidang Umum';
+        });
+
+        return view('admin.member.create', compact('regions', 'commissions', 'stewards'));
     }
 
     /**
@@ -27,7 +63,65 @@ class AdminMemberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->merge([
+            'users_id' => auth()->id(),
+            'regions_id' => $request->regions_id ?: null,
+            'commissions_id' => $request->commissions_id ?: null,
+        ]);
+
+        $request->validate([
+            'name' => 'required|string|max:200',
+            'address' => 'required|string|max:200',
+            'gender' => 'required|in:1,2',
+            'status' => 'required|in:1,2,3,4,5,6',
+            'phone_number' => 'nullable|string|max:20',
+            'birth_date' => 'required|date',
+            'join_date' => 'required|date',
+            'membership' => 'required|in:1,2,3,4',
+            'is_active' => 'required|in:0,1',
+            'is_region_leader' => 'required|in:0,1',
+            'users_id' => 'required|exists:users,id',
+            'regions_id' => 'nullable|exists:regions,id|required_if:is_region_leader,1',
+            'commissions_id' => 'nullable|exists:commissions,id',
+            'stewards' => 'nullable|array',
+            'stewards.*' => 'exists:stewards,id',
+        ], [
+            'name.required' => 'Nama anggota jemaat wajib diisi.',
+            'name.string' => 'Nama anggota jemaat harus berupa teks.',
+            'name.max' => 'Nama anggota jemaat tidak boleh lebih dari 200 karakter.',
+            'address.required' => 'Alamat anggota jemaat wajib diisi.',
+            'address.string' => 'Alamat anggota jemaat harus berupa teks.',
+            'address.max' => 'Alamat anggota jemaat tidak boleh lebih dari 200 karakter.',
+            'gender.required' => 'Jenis kelamin anggota jemaat wajib dipilih.',
+            'gender.in' => 'Jenis kelamin anggota jemaat tidak valid.',
+            'status.required' => 'Status anggota jemaat wajib dipilih.',
+            'status.in' => 'Status anggota jemaat tidak valid.',
+            'phone_number.string' => 'Nomor telepon anggota jemaat harus berupa teks.',
+            'phone_number.max' => 'Nomor telepon anggota jemaat tidak boleh lebih dari 20 karakter.',
+            'birth_date.required' => 'Tanggal lahir anggota jemaat wajib diisi.',
+            'birth_date.date' => 'Tanggal lahir anggota jemaat harus berupa tanggal yang valid.',
+            'join_date.required' => 'Tanggal bergabung anggota jemaat wajib diisi.',
+            'join_date.date' => 'Tanggal bergabung anggota jemaat harus berupa tanggal yang valid.',
+            'membership.required' => 'Jenis keanggotaan anggota jemaat wajib dipilih.',
+            'membership.in' => 'Jenis keanggotaan anggota jemaat tidak valid.',
+            'is_active.required' => 'Status keaktifan anggota jemaat wajib dipilih.',
+            'is_active.in' => 'Status keaktifan anggota jemaat tidak valid.',
+            'is_region_leader.required' => 'Status kepemimpinan rayon anggota jemaat wajib dipilih.',
+            'is_region_leader.in' => 'Status kepemimpinan rayon anggota jemaat tidak valid.',
+            'users_id.required' => 'ID pengguna wajib diisi.',
+            'users_id.exists' => 'ID pengguna tidak valid.',
+            'regions_id.exists' => 'ID rayon tidak valid.',
+            'regions_id.required_if' => 'Ketua rayon harus memiliki rayon.',
+            'commissions_id.exists' => 'ID komisi tidak valid.',
+            'stewards.array' => 'Daftar bidang pelayanan tidak valid.',
+            'stewards.*.exists' => 'Bidang pelayanan tidak valid.',
+        ]);
+
+        $member = Member::create($request->only('name', 'address', 'gender', 'status', 'phone_number', 'birth_date', 'join_date', 'membership', 'is_active', 'is_region_leader', 'users_id', 'regions_id', 'commissions_id'));
+
+        $member->stewards()->sync($request->stewards ?? []);
+
+        return redirect()->route('admin.member.index')->with('success', 'Data anggota jemaat berhasil ditambahkan!');
     }
 
     /**
@@ -35,7 +129,44 @@ class AdminMemberController extends Controller
      */
     public function show(string $id)
     {
-        return view('admin.member.show');
+        Carbon::setLocale('id');
+
+        $member = Member::with(['stewards.commission'])->findOrFail($id);
+
+        $memberStatus = [
+            1 => 'Koordinator Pendeta',
+            2 => 'Pendeta',
+            3 => 'Penginjil',
+            4 => 'Penatua',
+            5 => 'Diaken',
+            6 => 'Jemaat Biasa',
+        ];
+
+        $memberMembership = [
+            1 => 'Baptis Anak',
+            2 => 'Sidi/Baptis Dewasa',
+            3 => 'Atestasi Keluar',
+            4 => 'Meninggal Dunia',
+        ];
+
+        $memberGender = [
+            1 => 'Laki-laki',
+            2 => 'Perempuan',
+        ];
+
+        $member->memberStatus = $memberStatus[$member->status];
+        $member->memberMembership = $memberMembership[$member->membership];
+        $member->memberGender = $memberGender[$member->gender];
+
+        $member->birth_date_formatted = Carbon::parse($member->birth_date, 'Asia/Jakarta')->translatedFormat('j F Y');
+        $member->join_date_formatted = Carbon::parse($member->join_date, 'Asia/Jakarta')->translatedFormat('j F Y');
+        $member->member_new_id = 'J' . Carbon::parse($member->join_date, 'Asia/Jakarta')->format('Ymd') . $member->id;
+
+        $stewardsGrouped = $member->stewards->groupBy(function ($steward) {
+            return $steward->commission?->name ?? 'Bidang Umum';
+        });
+        
+        return view('admin.member.show', compact('member', 'stewardsGrouped'));
     }
 
     /**
@@ -43,7 +174,19 @@ class AdminMemberController extends Controller
      */
     public function edit(string $id)
     {
-        return view('admin.member.edit');
+        $member = Member::with('stewards')->findOrFail($id);
+
+        $regions = Region::all();
+
+        $commissions = Commission::all();
+
+        $stewards = Steward::with('commission')->get()->groupBy(function ($steward) {
+            return $steward->commission ? $steward->commission->name : 'Bidang Umum';
+        });
+
+        $memberStewardIds = $member->stewards->pluck('id')->toArray();
+
+        return view('admin.member.edit', compact('member', 'regions', 'commissions', 'stewards', 'memberStewardIds'));
     }
 
     /**
@@ -51,7 +194,63 @@ class AdminMemberController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->merge([
+            'users_id' => auth()->id(),
+            'regions_id' => $request->regions_id ?: null,
+            'commissions_id' => $request->commissions_id ?: null,
+        ]);
+
+        $request->validate([
+            'name' => 'required|string|max:200',
+            'address' => 'required|string|max:200',
+            'gender' => 'required|in:1,2',
+            'status' => 'required|in:1,2,3,4,5,6',
+            'phone_number' => 'nullable|string|max:20',
+            'birth_date' => 'required|date',
+            'join_date' => 'required|date',
+            'membership' => 'required|in:1,2,3,4',
+            'is_active' => 'required|in:0,1',
+            'is_region_leader' => 'required|in:0,1',
+            'users_id' => 'required|exists:users,id',
+            'regions_id' => 'nullable|exists:regions,id|required_if:is_region_leader,1',
+            'commissions_id' => 'nullable|exists:commissions,id',
+        ], [
+            'name.required' => 'Nama anggota jemaat wajib diisi.',
+            'name.string' => 'Nama anggota jemaat harus berupa teks.',
+            'name.max' => 'Nama anggota jemaat tidak boleh lebih dari 200 karakter.',
+            'address.required' => 'Alamat anggota jemaat wajib diisi.',
+            'address.string' => 'Alamat anggota jemaat harus berupa teks.',
+            'address.max' => 'Alamat anggota jemaat tidak boleh lebih dari 200 karakter.',
+            'gender.required' => 'Jenis kelamin anggota jemaat wajib dipilih.',
+            'gender.in' => 'Jenis kelamin anggota jemaat tidak valid.',
+            'status.required' => 'Status anggota jemaat wajib dipilih.',
+            'status.in' => 'Status anggota jemaat tidak valid.',
+            'phone_number.string' => 'Nomor telepon anggota jemaat harus berupa teks.',
+            'phone_number.max' => 'Nomor telepon anggota jemaat tidak boleh lebih dari 20 karakter.',
+            'birth_date.required' => 'Tanggal lahir anggota jemaat wajib diisi.',
+            'birth_date.date' => 'Tanggal lahir anggota jemaat harus berupa tanggal yang valid.',
+            'join_date.required' => 'Tanggal bergabung anggota jemaat wajib diisi.',
+            'join_date.date' => 'Tanggal bergabung anggota jemaat harus berupa tanggal yang valid.',
+            'membership.required' => 'Jenis keanggotaan anggota jemaat wajib dipilih.',
+            'membership.in' => 'Jenis keanggotaan anggota jemaat tidak valid.',
+            'is_active.required' => 'Status keaktifan anggota jemaat wajib dipilih.',
+            'is_active.in' => 'Status keaktifan anggota jemaat tidak valid.',
+            'is_region_leader.required' => 'Status kepemimpinan rayon anggota jemaat wajib dipilih.',
+            'is_region_leader.in' => 'Status kepemimpinan rayon anggota jemaat tidak valid.',
+            'users_id.required' => 'ID pengguna wajib diisi.',
+            'users_id.exists' => 'ID pengguna tidak valid.',
+            'regions_id.exists' => 'ID rayon tidak valid.',
+            'regions_id.required_if' => 'Ketua rayon harus memiliki rayon.',
+            'commissions_id.exists' => 'ID komisi tidak valid.',
+        ]);
+
+        $member = Member::findOrFail($id);
+
+        $member->update($request->only('name', 'address', 'gender', 'status', 'phone_number', 'birth_date', 'join_date', 'membership', 'is_active', 'is_region_leader', 'users_id', 'regions_id', 'commissions_id'));
+
+        $member->stewards()->sync($request->stewards ?? []);
+
+        return redirect()->route('admin.member.index')->with('success', 'Data anggota jemaat berhasil diperbarui!');
     }
 
     /**
@@ -59,6 +258,10 @@ class AdminMemberController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $member = Member::findOrFail($id);
+
+        $member->delete();
+
+        return redirect()->route('admin.member.index')->with('success', 'Data anggota jemaat berhasil dihapus!');
     }
 }

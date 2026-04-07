@@ -33,13 +33,13 @@
 
             <!-- Dropdown Menu -->
             <div x-show="profileOpen" 
-                 x-transition:enter="transition ease-out duration-100" 
-                 x-transition:enter-start="transform opacity-0 scale-95" 
-                 x-transition:enter-end="transform opacity-100 scale-100" 
-                 x-transition:leave="transition ease-in duration-75" 
-                 x-transition:leave-start="transform opacity-100 scale-100" 
-                 x-transition:leave-end="transform opacity-0 scale-95" 
-                 class="absolute right-0 mt-3 w-48 bg-white rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.1)] border border-gray-100 py-2 z-50 text-sm" style="display: none;">
+                x-transition:enter="transition ease-out duration-100" 
+                x-transition:enter-start="transform opacity-0 scale-95" 
+                x-transition:enter-end="transform opacity-100 scale-100" 
+                x-transition:leave="transition ease-in duration-75" 
+                x-transition:leave-start="transform opacity-100 scale-100" 
+                x-transition:leave-end="transform opacity-0 scale-95" 
+                class="absolute right-0 mt-3 w-48 bg-white rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.1)] border border-gray-100 py-2 z-50 text-sm" style="display: none;">
                 
                 <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-church-warm/30 hover:text-church-gold font-bold transition-colors">
                     <i class="fas fa-user-circle w-5 text-center mr-1 text-gray-400"></i> Profil Akun

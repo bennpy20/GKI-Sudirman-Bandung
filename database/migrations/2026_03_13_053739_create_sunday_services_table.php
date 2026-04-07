@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('sunday_services', function (Blueprint $table) {
 
-            $table->foreignId('members_id')->nullable()->constrained('members');
+            $table->foreignId('members_id')->constrained('members')->cascadeOnDelete();
             $table->foreignId('worships_id')->constrained('worships')->cascadeOnDelete();
 
-            $table->timestamps();
+            // $table->timestamps();
+
+            $table->primary(['members_id','worships_id']);
         });
     }
 

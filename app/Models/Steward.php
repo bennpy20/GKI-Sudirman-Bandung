@@ -6,7 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Steward extends Model
 {
-    protected $fillable = ['field'];
+    public $timestamps = false;
+    
+    protected $fillable = [
+        'field',
+        'commissions_id'
+        ];
+
+    public function commission()
+    {
+        return $this->belongsTo(Commission::class, 'commissions_id');
+    }
 
     public function members()
     {

@@ -6,12 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Worship extends Model
 {
+    public $timestamps = false;
+    
     protected $fillable = [
         'title',
         'bible_verse',
         'video_url',
-        'session',
+        'category',
         'date',
+        'time',
         'liturgical_calendars_id',
         'guest_ministers_id',
     ];

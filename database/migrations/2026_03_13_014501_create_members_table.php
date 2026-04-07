@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('address');
+            $table->integer('gender');
             $table->integer('status');
             $table->string('phone_number',20)->nullable();
             $table->date('birth_date');
@@ -23,11 +24,11 @@ return new class extends Migration
             $table->boolean('is_active');
             $table->boolean('is_region_leader');
 
-            $table->foreignId('users_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('regions_id')->constrained('regions');
-            $table->foreignId('commissions_id')->constrained('commissions');
+            $table->foreignId('users_id')->constrained('users');
+            $table->foreignId('regions_id')->nullable()->constrained('regions')->nullOnDelete();
+            $table->foreignId('commissions_id')->nullable()->constrained('commissions')->nullOnDelete();
 
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 

@@ -48,6 +48,10 @@ class AdminAnnouncementController extends Controller
      */
     public function store(Request $request)
     {
+        $request->merge([
+            'users_id' => auth()->id()
+        ]);
+
         $request->validate([
             'title' => 'required|string|max:200',
             'content' => 'required|string',
@@ -73,8 +77,6 @@ class AdminAnnouncementController extends Controller
             'image_url.mimes' => 'Format gambar harus JPG, JPEG, PNG, atau WEBP.',
             'image_url.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
         ]);
-
-        $request['users_id'] = auth()->id();
 
         $announcement = Announcement::create($request->only('title', 'content', 'category', 'date_start', 'date_end', 'users_id'));
 
@@ -124,7 +126,9 @@ class AdminAnnouncementController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $announcement = Announcement::findOrFail($id);
+        $request->merge([
+            'users_id' => auth()->id()
+        ]);
 
         $request->validate([
             'title' => 'required|string|max:200',
@@ -152,7 +156,7 @@ class AdminAnnouncementController extends Controller
             'image_url.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
         ]);
 
-        $request['users_id'] = auth()->id();
+        $announcement = Announcement::findOrFail($id);
 
         $announcement->update($request->only('title', 'content', 'category', 'date_start', 'date_end', 'users_id'));
 

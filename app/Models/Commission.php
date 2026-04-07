@@ -16,8 +16,13 @@ class Commission extends Model
         'room',
     ];
 
+    public function stewards()
+    {
+        return $this->hasMany(Steward::class, 'commissions_id');
+    }
+
     public function members()
     {
-        return $this->hasMany(Member::class,'commissions_id');
+        return $this->hasMany(Member::class, 'commissions_id');
     }
 }

@@ -65,7 +65,7 @@
                         <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors">Forgot password?</a>
                     </div>
 
-                    <button type="submit" class="w-full bg-church-dark hover:bg-gray-800 text-white font-bold py-2.5 px-4 rounded-lg transition-colors mt-4 text-sm shadow-md flex items-center justify-center gap-2">
+                    <button type="submit" class="cursor-pointer w-full bg-church-dark hover:bg-gray-800 text-white font-bold py-2.5 px-4 rounded-lg transition-colors mt-4 text-sm shadow-md flex items-center justify-center gap-2">
                         <span>Login</span>
                     </button>
                 </form>

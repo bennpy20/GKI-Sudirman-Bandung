@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('stewards_id')->constrained('stewards')->cascadeOnDelete();
 
             $table->primary(['members_id','stewards_id']);
+
+            // $table->timestamps();
         });
     }
 

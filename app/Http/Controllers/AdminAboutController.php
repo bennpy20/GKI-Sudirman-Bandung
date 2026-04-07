@@ -30,6 +30,10 @@ class AdminAboutController extends Controller
      */
     public function store(Request $request)
     {
+        $request->merge([
+            'users_id' => auth()->id()
+        ]);
+
         $request->validate([
             'name' => 'required|string|max:100',
             'description' => 'required|string',
@@ -40,8 +44,6 @@ class AdminAboutController extends Controller
             'description.required' => 'Deskripsi lengkap wajib diisi.',
             'description.string' => 'Deskripsi lengkap harus berupa teks.',
         ]);
-
-        $request['users_id'] = auth()->id();
 
         About::create($request->only('name', 'description', 'users_id'));
 
@@ -73,6 +75,10 @@ class AdminAboutController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->merge([
+            'users_id' => auth()->id()
+        ]);
+        
         $request->validate([
             'name' => 'required|string|max:100',
             'description' => 'required|string',
@@ -85,8 +91,6 @@ class AdminAboutController extends Controller
         ]);
 
         $about = About::findOrFail($id);
-
-        $request['users_id'] = auth()->id();
 
         $about->update($request->only('name', 'description', 'users_id'));
 

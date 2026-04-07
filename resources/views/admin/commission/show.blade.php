@@ -70,7 +70,10 @@
                     </div>
                     <div class="flex-1">
                         <div class="font-bold text-church-dark text-sm">{{ $member->name }}</div>
-                        <div class="text-xs text-gray-500 mt-0.5">{{ $member->birth_date_formatted }}</div>
+                        <div class="text-xs text-gray-500 mt-0.5">{{ $member->memberStatus }} • {{ $member->birth_date_formatted }}</div>
+                    </div>
+                    <div>
+                        <a href="{{ route('admin.member.show', $member->id) }}" class="px-3 py-1.5 text-xs font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors border border-blue-100">Lihat Profil</a>
                     </div>
                 </div>
                 @empty

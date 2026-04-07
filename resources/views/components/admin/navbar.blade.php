@@ -17,9 +17,9 @@
             
             <a href="{{ route('admin.member.index') }}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.member.*') ? 'bg-gradient-to-r from-church-gold to-yellow-600 text-church-dark shadow-[0_4px_20px_rgba(197,160,89,0.3)] transform hover:-translate-y-0.5' : 'text-white/70 hover:bg-white/5 hover:text-church-gold group' }}">
                 <div class="w-8 h-8 rounded-lg flex items-center justify-center transition-colors {{ request()->routeIs('admin.member.*') ? 'bg-church-dark/10 text-church-dark' : 'bg-white/5 group-hover:bg-church-gold/20 group-hover:text-church-gold' }}">
-                    <i class="fas fa-users"></i>
+                    <i class="fas fa-address-card"></i>
                 </div>
-                <span class="text-sm {{ request()->routeIs('admin.member.*') ? 'font-bold' : 'font-medium' }}">Data Jemaat</span>
+                <span class="text-sm {{ request()->routeIs('admin.member.*') ? 'font-bold' : 'font-medium' }}">Anggota Jemaat</span>
             </a>
 
             <a href="{{ route('admin.worship.index') }}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.worship.*') ? 'bg-gradient-to-r from-church-gold to-yellow-600 text-church-dark shadow-[0_4px_20px_rgba(197,160,89,0.3)] transform hover:-translate-y-0.5' : 'text-white/70 hover:bg-white/5 hover:text-church-gold group' }}">
@@ -90,7 +90,7 @@
                 <div class="w-8 h-8 rounded-lg flex items-center justify-center transition-colors {{ request()->routeIs('admin.steward.*') ? 'bg-church-dark/10 text-church-dark' : 'bg-white/5 group-hover:bg-church-gold/20 group-hover:text-church-gold' }}">
                     <i class="fas fa-pray"></i>
                 </div>
-                <span class="text-sm {{ request()->routeIs('admin.steward.*') ? 'font-bold' : 'font-medium' }}">Penatalayan</span>
+                <span class="text-sm {{ request()->routeIs('admin.steward.*') ? 'font-bold' : 'font-medium' }}">Pelayanan</span>
             </a>
         </nav>
     </div>

@@ -16,13 +16,14 @@ return new class extends Migration
             $table->string('title');
             $table->string('bible_verse');
             $table->string('video_url')->nullable();
-            $table->integer('session');
+            $table->integer('category');
             $table->date('date');
-            
-            $table->foreignId('liturgical_calendars_id')->constrained('liturgical_calendars');
-            $table->foreignId('guest_ministers_id')->constrained('guest_ministers');
+            $table->time('time');
 
-            $table->timestamps();
+            $table->foreignId('liturgical_calendars_id')->nullable()->constrained('liturgical_calendars')->nullOnDelete();
+            $table->foreignId('guest_ministers_id')->nullable()->constrained('guest_ministers')->nullOnDelete();
+
+            // $table->timestamps();
         });
     }
 

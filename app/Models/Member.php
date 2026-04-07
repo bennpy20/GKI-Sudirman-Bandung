@@ -6,9 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Member extends Model
 {
+    public $timestamps = false;
+    
     protected $fillable = [
         'name',
         'address',
+        'gender',
         'status',
         'phone_number',
         'birth_date',
@@ -18,7 +21,7 @@ class Member extends Model
         'is_region_leader',
         'users_id',
         'regions_id',
-        'commissions_id'
+        'commissions_id',
     ];
 
     public function users()
@@ -38,11 +41,6 @@ class Member extends Model
 
     public function stewards()
     {
-        return $this->belongsToMany(Steward::class,'member_services','members_id','stewards_id');
-    }
-
-    public function sunday_services()
-    {
-        return $this->hasMany(SundayService::class,'members_id');
+        return $this->belongsToMany(Steward::class, 'member_services', 'members_id', 'stewards_id');
     }
 }

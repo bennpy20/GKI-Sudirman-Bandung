@@ -94,43 +94,43 @@
         </table>
     </div>
     <div class="px-6 py-4 border-t border-gray-50 bg-gray-50/30 flex flex-col md:flex-row justify-between items-center gap-4">
-    <!-- Pagination -->
-    <span class="text-xs text-gray-500 font-medium text-center md:text-left">
-        Menampilkan {{ $liturgical_calendars->firstItem() ?? 0 }} hingga {{ $liturgical_calendars->lastItem() ?? 0 }} data dari total {{ $liturgical_calendars->total() }} data
-    </span>
-    <div class="flex flex-wrap justify-center gap-1">
-        @if ($liturgical_calendars->onFirstPage())
-            <span class="px-3 py-1 text-sm border border-gray-200 rounded-md text-gray-400 cursor-not-allowed hidden sm:block">
-                Sebelumnya
-            </span>
-        @else
-            <a href="{{ $liturgical_calendars->previousPageUrl() }}" class="px-3 py-1 text-sm border border-gray-200 rounded-md bg-white text-gray-600 hover:bg-gray-50 hidden sm:block">
-                Sebelumnya
-            </a>
-        @endif
-
-        @foreach ($liturgical_calendars->getUrlRange(1, $liturgical_calendars->lastPage()) as $page => $url)
-            @if ($page == $liturgical_calendars->currentPage())
-                <span class="px-3 py-1 text-sm border border-church-gold rounded-md bg-church-gold/10 text-church-dark font-medium">
-                    {{ $page }}
+        <!-- Pagination -->
+        <span class="text-xs text-gray-500 font-medium text-center md:text-left">
+            Menampilkan {{ $liturgical_calendars->firstItem() ?? 0 }} hingga {{ $liturgical_calendars->lastItem() ?? 0 }} data dari total {{ $liturgical_calendars->total() }} data
+        </span>
+        <div class="flex flex-wrap justify-center gap-1">
+            @if ($liturgical_calendars->onFirstPage())
+                <span class="px-3 py-1 text-sm border border-gray-200 rounded-md text-gray-400 cursor-not-allowed hidden sm:block">
+                    Sebelumnya
                 </span>
             @else
-                <a href="{{ $url }}" class="px-3 py-1 text-sm border border-gray-200 rounded-md bg-white text-gray-600 hover:bg-gray-50">
-                    {{ $page }}
+                <a href="{{ $liturgical_calendars->previousPageUrl() }}" class="px-3 py-1 text-sm border border-gray-200 rounded-md bg-white text-gray-600 hover:bg-gray-50 hidden sm:block">
+                    Sebelumnya
                 </a>
             @endif
-        @endforeach
 
-        @if ($liturgical_calendars->hasMorePages())
-            <a href="{{ $liturgical_calendars->nextPageUrl() }}" class="px-3 py-1 text-sm border border-gray-200 rounded-md bg-white text-gray-600 hover:bg-gray-50 hidden sm:block">
-                Berikutnya
-            </a>
-        @else
-            <span class="px-3 py-1 text-sm border border-gray-200 rounded-md text-gray-400 cursor-not-allowed hidden sm:block">
-                Berikutnya
-            </span>
-        @endif
+            @foreach ($liturgical_calendars->getUrlRange(1, $liturgical_calendars->lastPage()) as $page => $url)
+                @if ($page == $liturgical_calendars->currentPage())
+                    <span class="px-3 py-1 text-sm border border-church-gold rounded-md bg-church-gold/10 text-church-dark font-medium">
+                        {{ $page }}
+                    </span>
+                @else
+                    <a href="{{ $url }}" class="px-3 py-1 text-sm border border-gray-200 rounded-md bg-white text-gray-600 hover:bg-gray-50">
+                        {{ $page }}
+                    </a>
+                @endif
+            @endforeach
+
+            @if ($liturgical_calendars->hasMorePages())
+                <a href="{{ $liturgical_calendars->nextPageUrl() }}" class="px-3 py-1 text-sm border border-gray-200 rounded-md bg-white text-gray-600 hover:bg-gray-50 hidden sm:block">
+                    Berikutnya
+                </a>
+            @else
+                <span class="px-3 py-1 text-sm border border-gray-200 rounded-md text-gray-400 cursor-not-allowed hidden sm:block">
+                    Berikutnya
+                </span>
+            @endif
+        </div>
     </div>
-</div>
 </div>
 @endsection

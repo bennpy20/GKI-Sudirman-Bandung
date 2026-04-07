@@ -54,10 +54,15 @@
             <div class="p-4 space-y-3 relative">
                 @forelse ($members as $member)
                 <div class="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-xl transition-colors border border-transparent hover:border-gray-100">
-                    <div class="h-10 w-10 rounded-full bg-blue-50 text-blue-700 flex items-center justify-center font-bold text-sm">BS</div>
+                    <div class="h-10 w-10 rounded-full bg-church-gold flex items-center justify-center">
+                        <i class="fas fa-user text-church-dark" ></i>
+                    </div>
                     <div class="flex-1">
                         <div class="font-bold text-church-dark text-sm">{{ $member->name }}</div>
                         <div class="text-xs text-gray-500 mt-0.5">{{ $member->memberStatus }} • {{ $member->address }}</div>
+                    </div>
+                    <div>
+                        <a href="{{ route('admin.member.show', $member->id) }}" class="px-3 py-1.5 text-xs font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors border border-blue-100">Lihat Profil</a>
                     </div>
                 </div>
                 @empty

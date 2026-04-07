@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SundayService extends Model
+class MemberService extends Model
 {
     public $timestamps = false;
     
     protected $fillable = [
         'members_id',
-        'worships_id'
+        'stewards_id'
     ];
 
     public function members()
@@ -18,8 +18,8 @@ class SundayService extends Model
         return $this->belongsTo(Member::class,'members_id');
     }
 
-    public function worships()
+    public function stewards()
     {
-        return $this->belongsTo(Worship::class,'worships_id');
+        return $this->belongsTo(Steward::class,'stewards_id');
     }
 }

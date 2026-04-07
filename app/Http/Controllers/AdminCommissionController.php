@@ -65,7 +65,18 @@ class AdminCommissionController extends Controller
 
         $commission = Commission::findOrFail($id);
 
-        $members = $commission->members()->get();
+        $memberStatus = [
+            1 => 'Pendeta',
+            2 => 'Penginjil',
+            3 => 'Penatua',
+            4 => 'Diaken',
+            5 => 'Jemaat',
+        ];
+
+        $members = $commission->members()->oldest('id')->get()->map(function ($member) use ($memberStatus) {
+            $member->memberStatus = $memberStatus[$member->status];
+            return $member;
+        });
 
         foreach ($members as $member) {
             $member->birth_date_formatted = Carbon::parse($member->birth_date)->translatedFormat('j F Y');

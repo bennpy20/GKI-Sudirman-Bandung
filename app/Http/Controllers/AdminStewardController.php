@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Commission;
+use App\Models\Steward;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AdminStewardController extends Controller
@@ -11,7 +14,9 @@ class AdminStewardController extends Controller
      */
     public function index()
     {
-        return view('admin.steward.index');
+        $stewards = Steward::with('commission')->oldest('id')->paginate(10);
+
+        return view('admin.steward.index', compact('stewards'));
     }
 
     /**
@@ -19,7 +24,9 @@ class AdminStewardController extends Controller
      */
     public function create()
     {
-        return view('admin.steward.create');
+        $commissions = Commission::all();
+
+        return view('admin.steward.create', compact('commissions'));
     }
 
     /**
@@ -27,7 +34,27 @@ class AdminStewardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->merge([
+            'commissions_id' => $request->commissions_id ?: null,
+        ]);
+
+        $request->validate([
+            'field' => 'required|string|max:100',
+            'commissions_id' => 'nullable|exists:commissions,id',
+        ], [
+            'field.required' => 'Nama pelayanan wajib diisi.',
+            'field.string' => 'Nama pelayanan harus berupa teks.',
+            'field.max' => 'Nama pelayanan tidak boleh lebih dari 100 karakter.',
+            'commissions_id.required' => 'Kategori komisi wajib dipilih.',
+            'commissions_id.in' => 'Kategori komisi tidak valid.',
+        ]);
+
+        Steward::create([
+            'field' => $request->field,
+            'commissions_id' => $request->commissions_id,
+        ]);
+
+        return redirect()->route('admin.steward.index')->with('success', 'Data pelayan berhasil ditambahkan!');
     }
 
     /**
@@ -35,7 +62,28 @@ class AdminStewardController extends Controller
      */
     public function show(string $id)
     {
-        //
+        Carbon::setLocale('id');
+        
+        $steward = Steward::with('commission')->findOrFail($id);
+
+        $memberStatus = [
+            1 => 'Pendeta',
+            2 => 'Penginjil',
+            3 => 'Penatua',
+            4 => 'Diaken',
+            5 => 'Jemaat',
+        ];
+
+        $members = $steward->members()->oldest('id')->get()->map(function ($member) use ($memberStatus) {
+            $member->memberStatus = $memberStatus[$member->status];
+            return $member;
+        });
+
+        foreach ($members as $member) {
+            $member->birth_date_formatted = Carbon::parse($member->birth_date)->translatedFormat('j F Y');
+        }
+
+        return view('admin.steward.show', compact('steward', 'members'));
     }
 
     /**
@@ -43,7 +91,11 @@ class AdminStewardController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $steward = Steward::findOrFail($id);
+
+        $commissions = Commission::all();
+
+        return view('admin.steward.edit', compact('steward', 'commissions'));
     }
 
     /**
@@ -51,7 +103,29 @@ class AdminStewardController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $steward = Steward::findOrFail($id);
+
+        $request->merge([
+            'commissions_id' => $request->commissions_id ?: null,
+        ]);
+
+        $request->validate([
+            'field' => 'required|string|max:100',
+            'commissions_id' => 'nullable|exists:commissions,id',
+        ], [
+            'field.required' => 'Nama pelayanan wajib diisi.',
+            'field.string' => 'Nama pelayanan harus berupa teks.',
+            'field.max' => 'Nama pelayanan tidak boleh lebih dari 100 karakter.',
+            'commissions_id.required' => 'Kategori komisi wajib dipilih.',
+            'commissions_id.in' => 'Kategori komisi tidak valid.',
+        ]);
+
+        $steward->update([
+            'field' => $request->field,
+            'commissions_id' => $request->commissions_id,
+        ]);
+
+        return redirect()->route('admin.steward.index')->with('success', 'Data pelayan berhasil diperbarui!');
     }
 
     /**
@@ -59,6 +133,10 @@ class AdminStewardController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $steward = Steward::findOrFail($id);
+
+        $steward->delete();
+
+        return redirect()->route('admin.steward.index')->with('success', 'Data pelayan berhasil dihapus!');
     }
 }

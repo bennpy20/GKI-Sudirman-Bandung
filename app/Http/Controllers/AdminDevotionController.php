@@ -18,7 +18,7 @@ class AdminDevotionController extends Controller
         $devotions = Devotion::latest()->paginate(10);
 
         $devotionCategory = [
-            1 => 'Dewasa',
+            1 => 'Umum',
             2 => 'Remaja/Pemuda',
             3 => 'Anak Sekolah Minggu',
             4 => 'Usia Indah',
@@ -45,6 +45,10 @@ class AdminDevotionController extends Controller
      */
     public function store(Request $request)
     {
+        $request->merge([
+            'users_id' => auth()->id()
+        ]);
+
         $request->validate([
             'title' => 'required|string|max:200',
             'bible_verse' => 'required|string|max:100',
@@ -67,8 +71,6 @@ class AdminDevotionController extends Controller
             'content.string' => 'Isi renungan harus berupa teks.',
         ]);
 
-        $request['users_id'] = auth()->id();
-
         Devotion::create($request->only('title', 'bible_verse', 'author', 'category', 'content', 'users_id'));
 
         return redirect()->route('admin.devotion.index')->with('success', 'Data renungan harian berhasil ditambahkan!');
@@ -86,7 +88,7 @@ class AdminDevotionController extends Controller
         $devotion->created_at_formatted = Carbon::parse($devotion->created_at, 'Asia/Jakarta')->translatedFormat('j F Y');
 
         $devotionCategory = [
-            1 => 'Dewasa',
+            1 => 'Umum',
             2 => 'Remaja/Pemuda',
             3 => 'Anak Sekolah Minggu',
             4 => 'Usia Indah',
@@ -112,7 +114,9 @@ class AdminDevotionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $devotion = Devotion::findOrFail($id);
+        $request->merge([
+            'users_id' => auth()->id()
+        ]);
 
         $request->validate([
             'title' => 'required|string|max:200',
@@ -136,7 +140,7 @@ class AdminDevotionController extends Controller
             'content.string' => 'Isi renungan harus berupa teks.',
         ]);
 
-        $request['users_id'] = auth()->id();
+        $devotion = Devotion::findOrFail($id);
 
         $devotion->update($request->only('title', 'bible_verse', 'author', 'category', 'content', 'users_id'));
 
