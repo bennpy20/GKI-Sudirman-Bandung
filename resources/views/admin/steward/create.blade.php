@@ -34,7 +34,7 @@
                         <p class="text-sm text-gray-500 italic">Belum ada data komisi. Silakan tambahkan data komisi terlebih dahulu.</p>
                     @else
                     <select name="commissions_id" class="w-full px-5 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark appearance-none font-medium">
-                        <option value="" selected>Pilih Komisi</option>
+                        <option value="" selected>Bidang Umum</option>
                         @foreach ($commissions as $commission)
                             <option value="{{ $commission->id }}">Komisi {{ $commission->name }}</option>
                         @endforeach

@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('devotions', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title', 200);
             $table->text('content');
-            $table->string('bible_verse');
-            $table->string('author');
+            $table->string('bible_verse', 100);
+            $table->string('author', 100);
             $table->integer('category');
 
             $table->foreignId('users_id')->constrained('users');

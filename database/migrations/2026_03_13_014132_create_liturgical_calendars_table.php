@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('liturgical_calendars', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('color');
+            $table->string('name', 150);
+            $table->string('color', 50);
             // $table->timestamps();
         });
     }

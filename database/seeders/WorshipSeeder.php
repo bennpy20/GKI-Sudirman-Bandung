@@ -15,24 +15,24 @@ class WorshipSeeder extends Seeder
     {
         DB::table('worships')->insert([
             [
-                'title' => 'Ibadah Minggu',
+                'title' => 'Tuhan Gembala yang Baik',
                 'bible_verse' => 'Mazmur 23',
                 'video_url' => 'https://youtube.com/example1',
                 'category' => 1,
                 'date' => '2026-03-01',
                 'time' => '08:00:00',
                 'liturgical_calendars_id' => 1,
-                'guest_ministers_id' => 1,
+                'preachers_id' => 1,
             ],
             [
-                'title' => 'Ibadah Pemuda',
+                'title' => 'Kekuatan dalam Kelemahan',
                 'bible_verse' => 'Yeremia 29:11; Filipi 4:13',
                 'video_url' => null,
                 'category' => 2,
                 'date' => '2026-03-08',
                 'time' => '19:00:00',
                 'liturgical_calendars_id' => 1,
-                'guest_ministers_id' => 2,
+                'preachers_id' => 2,
             ],
         ]);
     }

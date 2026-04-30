@@ -110,10 +110,10 @@
                         <label class="block text-sm font-bold text-gray-700 mb-2">Kategori Bidang <span class="text-red-500">*</span></label>
                         <select name="category" required class="w-full px-5 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark appearance-none font-medium">
                             <option value="" disabled selected>Pilih Bidang</option>
-                            <option value="Diakonia">Diakonia</option>
-                            <option value="Persekutuan dan Keesaan">Persekutuan dan Keesaan</option>
-                            <option value="Pembinaan">Pembinaan</option>
-                            <option value="Sarana Penunjang">Sarana Penunjang</option>
+                            <option value="1">Diakonia</option>
+                            <option value="2">Persekutuan dan Keesaan</option>
+                            <option value="3">Pembinaan</option>
+                            <option value="4">Sarana Penunjang</option>
                         </select>
                         @error('category')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>

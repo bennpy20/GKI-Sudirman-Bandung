@@ -26,11 +26,13 @@
                         <i class="fas fa-pray"></i>
                     </div>
                 </div>
-                <h3 class="text-2xl font-bold text-church-dark">{{ $steward->field }}</h3>
+                <h3 class="text-xl font-bold text-church-dark">{{ $steward->field }}</h3>
                 <p class="text-sm font-medium text-gray-500 mt-2">{{ $steward->commission?->name ? 'Komisi ' . $steward->commission->name : 'Bidang Umum' }}</p>
-                <div class="mt-6 p-4 bg-gray-50 rounded-xl border border-gray-100">
-                    <div class="text-3xl font-bold text-church-dark mb-1">{{ $members->count() }}</div>
-                    <div class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Total Jemaat</div>
+                <div class="flex items-center justify-center w-full mt-6 pt-4 border-t border-gray-100">
+                    <div class="text-center">
+                        <p class="text-xs text-gray-400 font-medium mb-1">Total Jemaat</p>
+                        <p class="text-xl font-bold text-church-dark">{{ $members->count() }}</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -38,7 +40,7 @@
     <div class="md:col-span-2 space-y-6">
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
             <div class="px-6 py-5 border-b border-gray-50 bg-gray-50/50 flex justify-between items-center">
-                <h3 class="text-xl font-bold text-church-dark">Anggota Pelayanan</h3>
+                <h3 class="text-base font-bold text-church-dark">Anggota Pelayanan</h3>
                 <span class="text-xs text-blue-600 font-bold hover:underline cursor-pointer">Lihat Semua</span>
             </div>
             <div class="p-4 space-y-3 relative">

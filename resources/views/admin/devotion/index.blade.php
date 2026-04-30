@@ -24,7 +24,7 @@
 </div>
 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
     <div class="p-5 border-b border-gray-50 flex justify-between items-center bg-gray-50/30">
-        <h3 class="font-bold text-church-dark text-lg">Data Renungan Harian</h3>
+        <h3 class="font-bold text-church-dark text-lg">Daftar Renungan Harian</h3>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse whitespace-nowrap">

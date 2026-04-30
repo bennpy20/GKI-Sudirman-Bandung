@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             RegionSeeder::class,
             CommissionSeeder::class,
-            GuestMinisterSeeder::class,
+            PreacherSeeder::class,
             LiturgicalCalendarSeeder::class,
             StewardSeeder::class,
 

@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
-            $table->string('category');
-            $table->string('title');
+            $table->integer('category');
+            $table->string('title', 200);
             $table->text('content');
-            $table->string('image_url')->nullable();
+            $table->string('image_url', 200)->nullable();
             $table->date('date_start');
             $table->date('date_end');
 

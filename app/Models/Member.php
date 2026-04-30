@@ -43,4 +43,9 @@ class Member extends Model
     {
         return $this->belongsToMany(Steward::class, 'member_services', 'members_id', 'stewards_id');
     }
+
+    public function worships()
+    {
+        return $this->belongsToMany(Worship::class, 'sunday_services', 'members_id', 'worships_id');
+    }
 }

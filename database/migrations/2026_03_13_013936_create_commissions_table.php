@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('commissions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('day');
+            $table->string('name', 100);
+            $table->string('day', 10);
             $table->time('time_start');
             $table->time('time_end');
-            $table->string('room');
+            $table->string('room', 200);
             // $table->timestamps();
         });
     }

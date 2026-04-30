@@ -19,7 +19,7 @@ class AdminMemberController extends Controller
         $members = Member::latest('id')->paginate(10);
 
         $memberStatus = [
-            1 => 'Koordinator Pendeta',
+            1 => 'Koordinator Hamba Tuhan',
             2 => 'Pendeta',
             3 => 'Penginjil',
             4 => 'Penatua',
@@ -134,7 +134,7 @@ class AdminMemberController extends Controller
         $member = Member::with(['stewards.commission'])->findOrFail($id);
 
         $memberStatus = [
-            1 => 'Koordinator Pendeta',
+            1 => 'Koordinator Hamba Tuhan',
             2 => 'Pendeta',
             3 => 'Penginjil',
             4 => 'Penatua',

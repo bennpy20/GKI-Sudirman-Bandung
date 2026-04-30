@@ -15,7 +15,7 @@ class AnnouncementSeeder extends Seeder
     {
         DB::table('announcements')->insert([
             [
-                'category' => 'Bidang Diakonia',
+                'category' => 1,
                 'title' => 'Persembahan kasih untuk korban bencana alam',
                 'content' => 'Saudara-saudari yang terkasih, mari kita bersatu
                     dalam doa dan dukungan untuk mereka yang terdampak bencana alam.

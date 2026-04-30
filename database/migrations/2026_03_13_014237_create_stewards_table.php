@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('stewards', function (Blueprint $table) {
             $table->id();
-            $table->string('field');
+            $table->string('field', 100);
             $table->foreignId('commissions_id')->nullable()->constrained('commissions')->nullOnDelete();
             // $table->timestamps();
         });

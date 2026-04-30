@@ -6,21 +6,21 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class GuestMinisterSeeder extends Seeder
+class PreacherSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('guest_ministers')->insert([
+        DB::table('preachers')->insert([
             [
-                'name' => 'Paduan Suara GKI Cibunut',
-                'role' => 'Paduan Suara',
+                'name' => 'Pdt. Dr. Hariman A. Pattianakotta, M.Th.',
+                'base' => 'GKP Jemaat Tanah Tinggi',
             ],
             [
-                'name' => 'Angklung GKI Kebon Jati',
-                'role' => 'Persembahan Pujian',
+                'name' => 'GI. Amanda Cantika, S.Th.',
+                'base' => 'GKI Maranatha',
             ],
         ]);
     }

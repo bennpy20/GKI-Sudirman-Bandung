@@ -5,7 +5,6 @@
 @section('title', 'Admin - Pelayanan')
 
 @section('content')
-<!-- Header -->
 <div class="mb-8">
     <a href="{{ route('admin.steward.index') }}" class="text-sm font-medium text-gray-500 hover:text-church-gold mb-3 inline-flex items-center transition-colors">
         <div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center mr-2 shadow-sm">
@@ -36,7 +35,7 @@
                         <p class="text-sm text-gray-500 italic">Belum ada data komisi. Silakan tambahkan data komisi terlebih dahulu.</p>
                     @else
                     <select name="commissions_id" class="w-full px-5 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark appearance-none font-medium">
-                        <option value="" selected>Pilih Komisi</option>
+                        <option value="" selected>Bidang Umum</option>
                         @foreach ($commissions as $commission)
                             <option value="{{ $commission->id }}" {{ old('commissions_id', $steward->commissions_id) == $commission->id ? 'selected' : '' }}>Komisi {{ $commission->name }}</option>
                         @endforeach

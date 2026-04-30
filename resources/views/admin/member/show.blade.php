@@ -7,7 +7,7 @@
 @section('content')
 <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
     <div>
-        <a href="{{ route('admin.member.index') }}" class="text-sm font-medium text-gray-500 hover:text-church-gold mb-3 inline-flex items-center transition-colors">
+        <a href="{{ url()->previous() }}" class="text-sm font-medium text-gray-500 hover:text-church-gold mb-3 inline-flex items-center transition-colors">
             <div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center mr-2 shadow-sm">
                 <i class="fas fa-arrow-left"></i>
             </div>
@@ -59,20 +59,20 @@
                 </h3>
             </div>
             <div class="p-6">
-                <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
                     <div>
-                        <dt class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Tanggal Lahir</dt>
-                        <dd class="text-base font-medium text-church-dark">{{ $member->birth_date_formatted }}</dd>
+                        <div class="text-sm font-semibold text-gray-500 mb-1">Tanggal Lahir</div>
+                        <div class="text-sm font-medium text-church-dark">{{ $member->birth_date_formatted }}</div>
                     </div>
                     <div>
-                        <dt class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Jenis Kelamin</dt>
-                        <dd class="text-base font-medium text-church-dark">{{ $member->memberGender }}</dd>
+                        <div class="text-sm font-semibold text-gray-500 mb-1">Jenis Kelamin</div>
+                        <div class="text-sm font-medium text-church-dark">{{ $member->memberGender }}</div>
                     </div>
                     <div class="md:col-span-2">
-                        <dt class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Alamat</dt>
-                        <dd class="text-base font-medium text-church-dark leading-relaxed">{{ $member->address }}</dd>
+                        <div class="text-sm font-semibold text-gray-500 mb-1">Alamat</div>
+                        <div class="text-sm font-medium text-church-dark leading-relaxed">{{ $member->address }}</div>
                     </div>
-                </dl>
+                </div>
             </div>
         </div>
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -84,12 +84,12 @@
             <div class="p-6">
                 <dl class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-6">
                     <div>
-                        <dt class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Tanggal Bergabung</dt>
-                        <dd class="text-base font-medium text-church-dark">{{ $member->join_date_formatted }}</dd>
+                        <dt class="text-sm font-semibold text-gray-500 mb-1">Tanggal Bergabung</dt>
+                        <dd class="text-sm font-medium text-church-dark">{{ $member->join_date_formatted }}</dd>
                     </div>
                     <div>
-                        <dt class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Rayon</dt>
-                        <dd class="text-base font-medium text-church-dark flex items-center gap-2">
+                        <dt class="text-sm font-semibold text-gray-500 mb-1">Rayon</dt>
+                        <dd class="text-sm font-medium text-church-dark flex items-center gap-2">
                             {{ $member->regions?->name ? 'Rayon ' . $member->regions->name : '-' }}
                             @if($member->is_region_leader === 1)
                             <span class="text-[10px] bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full font-bold">KETUA</span>
@@ -97,56 +97,42 @@
                         </dd>
                     </div>
                     <div>
-                        <dt class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Komisi</dt>
-                        <dd class="text-base font-medium text-church-dark">{{ $member->commissions->name ?? '-' }}</dd>
+                        <dt class="text-sm font-semibold text-gray-500 mb-1">Komisi</dt>
+                        <dd class="text-sm font-medium text-church-dark">{{ $member->commissions->name ?? '-' }}</dd>
                     </div>
                 </dl>
             </div>
         </div>
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-    <div class="px-6 py-5 border-b border-gray-50 bg-church-warm/20">
-        <h3 class="text-base font-bold text-church-dark">
-            Bidang Pelayanan
-        </h3>
-    </div>
-
-    <div class="p-6 space-y-6">
-
-        {{-- ❌ Kalau tidak ada pelayanan --}}
-        @if($stewardsGrouped->isEmpty())
-            <p class="text-sm text-gray-500 italic">
-                Jemaat belum terlibat dalam pelayanan.
-            </p>
-        @else
-
-            {{-- 🔥 LOOP PER KOMISI --}}
-            @foreach($stewardsGrouped as $category => $stewards)
-
-                <div class="bg-gray-50/50 p-5 rounded-2xl border border-gray-100">
-
-                    {{-- LABEL KOMISI --}}
-                    <h4 class="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
-                        <div class="w-1.5 h-4 bg-church-gold rounded-full"></div>
-                        {{ $category }}
-                    </h4>
-
-                    {{-- LIST STEWARDS --}}
-                    <div class="flex flex-wrap gap-2">
-                        @foreach($stewards as $steward)
-                            <span class="px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 shadow-sm">
-                                {{ $steward->field }}
-                            </span>
-                        @endforeach
-                    </div>
-
-                </div>
-
-            @endforeach
-
-        @endif
-
-    </div>
-</div>
+            <div class="px-6 py-5 border-b border-gray-50 bg-church-warm/20">
+                <h3 class="text-base font-bold text-church-dark">
+                    Bidang Pelayanan
+                </h3>
+            </div>
+            <div class="p-6 space-y-6">
+                @if($stewardsGrouped->isEmpty())
+                    <p class="text-sm text-gray-500 italic">
+                        Jemaat belum terlibat dalam pelayanan.
+                    </p>
+                @else
+                    @foreach($stewardsGrouped as $category => $stewards)
+                        <div class="bg-gray-50/50 p-5 rounded-2xl border border-gray-100">
+                            <h4 class="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+                                <div class="w-1.5 h-4 bg-church-gold rounded-full"></div>
+                                {{ $category }}
+                            </h4>
+                            <div class="flex flex-wrap gap-2">
+                                @foreach($stewards as $steward)
+                                    <span class="px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 shadow-sm">
+                                        {{ $steward->field }}
+                                    </span>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+        </div>
     </div>
 </div>
 @endsection

@@ -26,10 +26,18 @@ class AdminAnnouncementController extends Controller
 
         $announcements = $announcementsFilter->paginate(10)->withQueryString();
 
+        $announcementCategory = [
+            1 => 'Diakonia',
+            2 => 'Persekutuan dan Keesaan',
+            3 => 'Pembinaan',
+            4 => 'Sarana Penunjang',
+        ];
+
         foreach ($announcements as $announcement) {
             $announcement->is_date_active = Carbon::now('Asia/Jakarta')->lte(Carbon::parse($announcement->date_end, 'Asia/Jakarta')->endOfDay());
             $announcement->date_start = Carbon::parse($announcement->date_start, 'Asia/Jakarta')->translatedFormat('j F Y');
             $announcement->date_end = Carbon::parse($announcement->date_end, 'Asia/Jakarta')->translatedFormat('j F Y');
+            $announcement->announcementCategory = $announcementCategory[$announcement->category];
         }
 
         return view('admin.announcement.index', compact('announcements'));
@@ -55,10 +63,10 @@ class AdminAnnouncementController extends Controller
         $request->validate([
             'title' => 'required|string|max:200',
             'content' => 'required|string',
-            'category' => 'required|string|max:100',
+            'category' => 'required|in:1,2,3,4',
             'date_start' => 'required|date',
             'date_end' => 'required|date|after_or_equal:date_start',
-            'image_url' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'image_url' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
         ], [
             'title.required' => 'Judul pengumuman wajib diisi.',
             'title.string' => 'Judul pengumuman harus berupa teks.',
@@ -66,8 +74,7 @@ class AdminAnnouncementController extends Controller
             'content.required' => 'Isi pengumuman wajib diisi.',
             'content.string' => 'Isi pengumuman harus berupa teks.',
             'category.required' => 'Kategori pengumuman wajib diisi.',
-            'category.string' => 'Kategori pengumuman harus berupa teks.',
-            'category.max' => 'Kategori pengumuman tidak boleh lebih dari 100 karakter.',
+            'category.in' => 'Kategori pengumuman tidak valid.',
             'date_start.required' => 'Tanggal mulai wajib diisi.',
             'date_start.date' => 'Tanggal mulai harus berupa tanggal yang valid.',
             'date_end.required' => 'Tanggal selesai wajib diisi.',
@@ -75,7 +82,7 @@ class AdminAnnouncementController extends Controller
             'date_end.after_or_equal' => 'Tanggal selesai harus sama dengan atau setelah tanggal mulai.',
             'image_url.image' => 'File yang diunggah harus berupa gambar.',
             'image_url.mimes' => 'Format gambar harus JPG, JPEG, PNG, atau WEBP.',
-            'image_url.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
+            'image_url.max' => 'Ukuran gambar tidak boleh lebih dari 8MB.',
         ]);
 
         $announcement = Announcement::create($request->only('title', 'content', 'category', 'date_start', 'date_end', 'users_id'));
@@ -102,11 +109,19 @@ class AdminAnnouncementController extends Controller
 
         $announcement = Announcement::with('users')->findOrFail($id);
 
-        $announcement->is_date_active = Carbon::now('Asia/Jakarta')->lte(Carbon::parse($announcement->date_end, 'Asia/Jakarta')->endOfDay());
-        $announcement->date_start = Carbon::parse($announcement->date_start)->translatedFormat('j F Y');
-        $announcement->date_end = Carbon::parse($announcement->date_end)->translatedFormat('j F Y');
+        $announcementCategory = [
+            1 => 'Diakonia',
+            2 => 'Persekutuan dan Keesaan',
+            3 => 'Pembinaan',
+            4 => 'Sarana Penunjang',
+        ];
 
-        $announcement->updated_at_local = Carbon::parse($announcement->updated_at)->timezone('Asia/Jakarta')->translatedFormat('j F Y H:i');
+        $announcement->is_date_active = Carbon::now('Asia/Jakarta')->lte(Carbon::parse($announcement->date_end, 'Asia/Jakarta')->endOfDay());
+        $announcement->date_start = Carbon::parse($announcement->date_start, 'Asia/Jakarta')->translatedFormat('j F Y');
+        $announcement->date_end = Carbon::parse($announcement->date_end, 'Asia/Jakarta')->translatedFormat('j F Y');
+        $announcement->announcementCategory = $announcementCategory[$announcement->category];
+
+        $announcement->updated_at_local = Carbon::parse($announcement->updated_at, 'Asia/Jakarta')->timezone('Asia/Jakarta')->translatedFormat('j F Y H:i');
 
         return view('admin.announcement.show', compact('announcement'));
     }
@@ -133,10 +148,10 @@ class AdminAnnouncementController extends Controller
         $request->validate([
             'title' => 'required|string|max:200',
             'content' => 'required|string',
-            'category' => 'required|string|max:100',
+            'category' => 'required|in:1,2,3,4',
             'date_start' => 'required|date',
             'date_end' => 'required|date|after_or_equal:date_start',
-            'image_url' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'image_url' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
         ], [
             'title.required' => 'Judul pengumuman wajib diisi.',
             'title.string' => 'Judul pengumuman harus berupa teks.',
@@ -144,8 +159,7 @@ class AdminAnnouncementController extends Controller
             'content.required' => 'Isi pengumuman wajib diisi.',
             'content.string' => 'Isi pengumuman harus berupa teks.',
             'category.required' => 'Kategori pengumuman wajib diisi.',
-            'category.string' => 'Kategori pengumuman harus berupa teks.',
-            'category.max' => 'Kategori pengumuman tidak boleh lebih dari 100 karakter.',
+            'category.in' => 'Kategori pengumuman tidak valid.',
             'date_start.required' => 'Tanggal mulai wajib diisi.',
             'date_start.date' => 'Tanggal mulai harus berupa tanggal yang valid.',
             'date_end.required' => 'Tanggal selesai wajib diisi.',
@@ -153,7 +167,7 @@ class AdminAnnouncementController extends Controller
             'date_end.after_or_equal' => 'Tanggal selesai harus sama dengan atau setelah tanggal mulai.',
             'image_url.image' => 'File yang diunggah harus berupa gambar.',
             'image_url.mimes' => 'Format gambar harus JPG, JPEG, PNG, atau WEBP.',
-            'image_url.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
+            'image_url.max' => 'Ukuran gambar tidak boleh lebih dari 8MB.',
         ]);
 
         $announcement = Announcement::findOrFail($id);

@@ -19,7 +19,7 @@
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
             <div class="px-8 pt-8 pb-6 text-center">
                 <div class="mx-auto w-16 h-16 bg-church-warm/30 text-church-dark rounded-full flex items-center justify-center mb-4 border border-church-gold/20">
-                    <i class="fas fa-church text-2xl"></i>
+                    <img src="{{ asset('logo.png') }}" alt="Logo GKI Sudirman" class="w-16 h-16 rounded-full object-cover">
                 </div>
                 <h1 class="text-2xl font-bold text-gray-900 mb-2">Login</h1>
                 <p class="text-gray-500 text-sm">Silakan masuk ke akun admin GKI Sudirman</p>
@@ -57,13 +57,14 @@
                         @enderror
                     </div>
 
-                    <div class="flex items-center justify-between pt-1">
+                    <!-- <div class="flex items-center justify-between pt-1">
                         <label class="flex items-center gap-2 cursor-pointer">
                             <input type="checkbox" name="remember" class="w-4 h-4 rounded border-gray-300 text-church-gold focus:ring-church-gold">
                             <span class="text-sm font-medium text-gray-600">Remember me</span>
                         </label>
                         <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors">Forgot password?</a>
                     </div>
+                    -->
 
                     <button type="submit" class="cursor-pointer w-full bg-church-dark hover:bg-gray-800 text-white font-bold py-2.5 px-4 rounded-lg transition-colors mt-4 text-sm shadow-md flex items-center justify-center gap-2">
                         <span>Login</span>

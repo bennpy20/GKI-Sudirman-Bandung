@@ -58,7 +58,7 @@
             <div class="p-6 space-y-4">
                 <div>
                     <span class="text-sm text-gray-500 block">Kategori / Bidang</span>
-                    <span class="font-bold text-church-dark">{{ $announcement->category }}</span>
+                    <span class="font-bold text-church-dark">{{ $announcement->announcementCategory }}</span>
                 </div>
                 <div>
                     <span class="text-sm text-gray-500 block">Terakhir Diubah</span>
@@ -112,7 +112,7 @@
     <script>
         function openImageModal() {
             const modal = document.getElementById('imageModal');
-            modal.classList.remove('hidden'); // Mencegah body di-scroll waktu modalnya terbuka
+            modal.classList.remove('hidden'); // Mencegah body discroll waktu modalnya terbuka
             document.body.style.overflow = 'hidden'; 
         }
 
@@ -120,10 +120,10 @@
             const modal = document.getElementById('imageModal');
             const imageContent = document.getElementById('modalImageContent');
             
-            // Tutup modal jika user menekan tombol silang atau klik area di luar gambar
+            // Tutup modal kalo user menekan tombol silang atao mengklik area di luar gambar
             if (forceClose || event.target !== imageContent) {
                 modal.classList.add('hidden');
-                // Kembalikan fungsi scroll pada body
+                // Kembalikan fungsi scroll di body
                 document.body.style.overflow = 'auto'; 
             }
         }

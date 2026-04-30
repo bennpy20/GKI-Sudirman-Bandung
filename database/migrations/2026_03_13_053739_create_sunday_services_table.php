@@ -15,10 +15,11 @@ return new class extends Migration
 
             $table->foreignId('members_id')->constrained('members')->cascadeOnDelete();
             $table->foreignId('worships_id')->constrained('worships')->cascadeOnDelete();
+            $table->foreignId('stewards_id')->constrained('stewards')->cascadeOnDelete();
 
             // $table->timestamps();
 
-            $table->primary(['members_id','worships_id']);
+            $table->primary(['members_id','worships_id', 'stewards_id']);
         });
     }
 

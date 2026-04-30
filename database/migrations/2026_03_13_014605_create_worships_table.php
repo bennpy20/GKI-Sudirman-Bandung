@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('worships', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('bible_verse');
-            $table->string('video_url')->nullable();
+            $table->string('title', 200);
+            $table->text('description')->nullable();
+            $table->string('bible_verse', 100);
+            $table->string('video_url', 200)->nullable();
             $table->integer('category');
             $table->date('date');
             $table->time('time');
 
             $table->foreignId('liturgical_calendars_id')->nullable()->constrained('liturgical_calendars')->nullOnDelete();
-            $table->foreignId('guest_ministers_id')->nullable()->constrained('guest_ministers')->nullOnDelete();
+            $table->foreignId('preachers_id')->nullable()->constrained('preachers')->nullOnDelete();
 
             // $table->timestamps();
         });

@@ -17,10 +17,12 @@ class SundayServiceSeeder extends Seeder
             [
                 'members_id' => 1,
                 'worships_id' => 1,
+                'stewards_id' => 1,
             ],
             [
                 'members_id' => 2,
                 'worships_id' => 1,
+                'stewards_id' => 2,
             ],
         ]);
     }

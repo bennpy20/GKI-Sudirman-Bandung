@@ -122,33 +122,4 @@
         @endif
     </div>
 </div>
-
-<script>
-    function confirmDelete(id) {
-        Swal.fire({
-            title: 'Hapus Wilayah?',
-            text: "Data wilayah beserta jemaat di dalamnya akan kehilangan relasi!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#ef4444',
-            cancelButtonColor: '#a1a1aa',
-            confirmButtonText: 'Ya, Hapus',
-            cancelButtonText: 'Batal',
-            customClass: {
-                confirmButton: 'font-sans font-bold rounded-xl px-5 py-2.5',
-                cancelButton: 'font-sans font-bold rounded-xl px-5 py-2.5',
-                popup: 'rounded-2xl shadow-xl border border-gray-100'
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    title: 'Dihapus!',
-                    text: 'Data wilayah telah dihapus.',
-                    icon: 'success',
-                    customClass: { popup: 'rounded-2xl', confirmButton: 'font-sans font-bold rounded-xl bg-church-gold hover:bg-yellow-600 text-church-dark px-6 py-2' }
-                });
-            }
-        })
-    }
-</script>
 @endsection

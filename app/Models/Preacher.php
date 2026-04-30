@@ -4,17 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GuestMinister extends Model
+class Preacher extends Model
 {
     public $timestamps = false;
     
     protected $fillable = [
         'name',
-        'role',
+        'base',
     ];
 
     public function worships()
     {
-        return $this->hasMany(Worship::class,'guest_ministers_id');
+        return $this->hasMany(Worship::class,'preachers_id');
     }
 }

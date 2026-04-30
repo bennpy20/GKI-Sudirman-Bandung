@@ -66,11 +66,12 @@ class AdminCommissionController extends Controller
         $commission = Commission::findOrFail($id);
 
         $memberStatus = [
-            1 => 'Pendeta',
-            2 => 'Penginjil',
-            3 => 'Penatua',
-            4 => 'Diaken',
-            5 => 'Jemaat',
+            1 => 'Koordinator Hamba Tuhan',
+            2 => 'Pendeta',
+            3 => 'Penginjil',
+            4 => 'Penatua',
+            5 => 'Diaken',
+            6 => 'Jemaat Biasa',
         ];
 
         $members = $commission->members()->oldest('id')->get()->map(function ($member) use ($memberStatus) {
@@ -79,7 +80,7 @@ class AdminCommissionController extends Controller
         });
 
         foreach ($members as $member) {
-            $member->birth_date_formatted = Carbon::parse($member->birth_date)->translatedFormat('j F Y');
+            $member->birth_date_formatted = Carbon::parse($member->birth_date, 'Asia/Jakarta')->translatedFormat('j F Y');
         }
 
         return view('admin.commission.show', compact('commission', 'members'));

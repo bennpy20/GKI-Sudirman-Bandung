@@ -26,10 +26,12 @@
                         <i class="fas fa-map-marked-alt"></i>
                     </div>
                 </div>
-                <h3 class="text-2xl font-bold text-church-dark">Rayon {{ $region->name }}</h3>
-                <div class="mt-6 p-4 bg-gray-50 rounded-xl border border-gray-100">
-                    <div class="text-3xl font-bold text-church-dark mb-1">{{ $members->count() }}</div>
-                    <div class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Total Jemaat</div>
+                <h3 class="text-xl font-bold text-church-dark">Rayon {{ $region->name }}</h3>
+                <div class="flex items-center justify-center w-full mt-6 pt-4 border-t border-gray-100">
+                    <div class="text-center">
+                        <p class="text-xs text-gray-400 font-medium mb-1">Total Jemaat</p>
+                        <p class="text-xl font-bold text-church-dark">{{ $members->count() }}</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -37,19 +39,19 @@
     <div class="md:col-span-2 space-y-6">
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
             <div class="px-6 py-5 border-b border-gray-50 bg-church-warm/20">
-                <h3 class="text-xl font-bold text-church-dark flex items-center gap-2">
+                <h3 class="text-base font-bold text-church-dark flex items-center gap-2">
                     Deskripsi Rayon
                 </h3>
             </div>
             <div class="p-6">
-                <p class="text-base text-gray-700 leading-relaxed">
+                <p class="text-sm text-gray-700 leading-relaxed">
                     {{ $region->description }}
                 </p>
             </div>
         </div>
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
             <div class="px-6 py-5 border-b border-gray-50 bg-gray-50/50 flex justify-between items-center">
-                <h3 class="text-xl font-bold text-church-dark">Anggota Rayon</h3>
+                <h3 class="text-base font-bold text-church-dark">Anggota Rayon</h3>
             </div>
             <div class="p-4 space-y-3 relative">
                 @forelse ($members as $member)

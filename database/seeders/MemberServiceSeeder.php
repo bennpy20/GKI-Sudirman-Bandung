@@ -22,6 +22,10 @@ class MemberServiceSeeder extends Seeder
                 'members_id' => 2,
                 'stewards_id' => 1,
             ],
+            [
+                'members_id' => 3,
+                'stewards_id' => 2,
+            ],
         ]);
     }
 }

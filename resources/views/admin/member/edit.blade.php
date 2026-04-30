@@ -89,20 +89,20 @@
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Status Aktif <span class="text-red-500">*</span></label>
                         <select name="is_active" class="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark appearance-none font-medium">
-                            <option value="1" {{ $member->is_active === 1 ? 'selected' : '' }}>Aktif</option>
-                            <option value="0" {{ $member->is_active === 0 ? 'selected' : '' }}>Non-Aktif</option>
+                            <option value="1" {{ old('is_active', $member->is_active) == 1 ? 'selected' : '' }}>Aktif</option>
+                            <option value="0" {{ old('is_active', $member->is_active) == 0 ? 'selected' : '' }}>Non-Aktif</option>
                         </select>
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Status Jemaat <span class="text-red-500">*</span></label>
                         <select name="status" required class="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark appearance-none font-medium">
-                            <option value="" disabled selected>Pilih Status</option>
-                            <option value="1" {{ $member->status === 1 ? 'selected' : '' }}>Koordinator Hamba Tuhan</option>
-                            <option value="2" {{ $member->status === 2 ? 'selected' : '' }}>Pendeta</option>
-                            <option value="3" {{ $member->status === 3 ? 'selected' : '' }}>Penginjil</option>
-                            <option value="4" {{ $member->status === 4 ? 'selected' : '' }}>Penatua</option>
-                            <option value="5" {{ $member->status === 5 ? 'selected' : '' }}>Diaken</option>
-                            <option value="6" {{ $member->status === 6 ? 'selected' : '' }}>Jemaat Biasa</option>
+                            <option value="" disabled {{ old('status', $member->status) ? '' : 'selected' }}>Pilih Status</option>
+                            <option value="1" {{ old('status', $member->status) == 1 ? 'selected' : '' }}>Koordinator Hamba Tuhan</option>
+                            <option value="2" {{ old('status', $member->status) == 2 ? 'selected' : '' }}>Pendeta</option>
+                            <option value="3" {{ old('status', $member->status) == 3 ? 'selected' : '' }}>Penginjil</option>
+                            <option value="4" {{ old('status', $member->status) == 4 ? 'selected' : '' }}>Penatua</option>
+                            <option value="5" {{ old('status', $member->status) == 5 ? 'selected' : '' }}>Diaken</option>
+                            <option value="6" {{ old('status', $member->status) == 6 ? 'selected' : '' }}>Jemaat Biasa</option>
                         </select>
                         @error('status')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -111,11 +111,11 @@
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Keanggotaan <span class="text-red-500">*</span></label>
                         <select name="membership" required class="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark appearance-none font-medium">
-                            <option value="" disabled selected>Pilih Jenis Keanggotaan</option>
-                            <option value="1" {{ $member->membership === 1 ? 'selected' : '' }}>Baptis Anak</option>
-                            <option value="2" {{ $member->membership === 2 ? 'selected' : '' }}>Sidi/Baptis Dewasa</option>
-                            <option value="3" {{ $member->membership === 3 ? 'selected' : '' }}>Atestasi Keluar</option>
-                            <option value="4" {{ $member->membership === 4 ? 'selected' : '' }}>Meninggal</option>
+                            <option value="" disabled {{ old('membership', $member->membership) ? '' : 'selected' }}>Pilih Jenis Keanggotaan</option>
+                            <option value="1" {{ old('membership', $member->membership) == 1 ? 'selected' : '' }}>Baptis Anak</option>
+                            <option value="2" {{ old('membership', $member->membership) == 2 ? 'selected' : '' }}>Sidi/Baptis Dewasa</option>
+                            <option value="3" {{ old('membership', $member->membership) == 3 ? 'selected' : '' }}>Atestasi Keluar</option>
+                            <option value="4" {{ old('membership', $member->membership) == 4 ? 'selected' : '' }}>Meninggal</option>
                         </select>
                         @error('membership')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -136,9 +136,11 @@
                             <p class="text-sm text-gray-500 italic">Belum ada data rayon. Silakan tambahkan data rayon terlebih dahulu.</p>
                         @else
                         <select name="regions_id" class="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark appearance-none font-medium">
-                            <option value="" selected>Pilih Rayon</option>
+                            <option value="" {{ old('regions_id', $member->regions_id) ? '' : 'selected' }}>
+                                Pilih Rayon
+                            </option>
                             @foreach ($regions as $region)
-                                <option value="{{ $region->id }} " {{ $member->regions_id === $region->id ? 'selected' : '' }}>{{ $region->name }}</option>
+                                <option value="{{ $region->id }}" {{ old('regions_id', $member->regions_id) == $region->id ? 'selected' : '' }}>{{ $region->name }}</option>
                             @endforeach
                         </select>
                         @endif
@@ -149,7 +151,7 @@
                     <input type="hidden" name="is_region_leader" value="0">
                     <label class="flex items-center gap-3 p-4 bg-yellow-50/50 border border-yellow-100 rounded-xl cursor-pointer hover:bg-yellow-50 transition-colors group mt-[18px]">
                         <div class="relative flex items-center">
-                            <input type="checkbox" name="is_region_leader" value="1" class="w-5 h-5 text-church-gold rounded border-gray-300 focus:ring-church-gold" {{ $member->is_region_leader ? 'checked' : '' }}>
+                            <input type="checkbox" name="is_region_leader" value="1" class="w-5 h-5 text-church-gold rounded border-gray-300 focus:ring-church-gold" {{ old('is_region_leader', $member->is_region_leader) ? 'checked' : '' }}>
                         </div>
                         <span class="text-sm font-bold text-yellow-800">Jemaat merupakan ketua rayon</span>
                     </label>
@@ -158,10 +160,12 @@
                         @if ($commissions->isEmpty())
                             <p class="text-sm text-gray-500 italic">Belum ada data komisi. Silakan tambahkan data komisi terlebih dahulu.</p>
                         @else
-                        <select name="commissions_id" class="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark appearance-none font-medium">
-                            <option value="" selected>Pilih Komisi</option>
+                        <select id="commissionSelect" name="commissions_id" class="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark appearance-none font-medium">
+                            <option value="" {{ old('commissions_id', $member->commissions_id) ? '' : 'selected' }}>
+                                Pilih Komisi
+                            </option>
                             @foreach ($commissions as $commission)
-                                <option value="{{ $commission->id }}" {{ $member->commissions_id === $commission->id ? 'selected' : '' }}>Komisi {{ $commission->name }}</option>
+                                <option value="{{ $commission->id }}" {{ old('commissions_id', $member->commissions_id) == $commission->id ? 'selected' : '' }}>Komisi {{ $commission->name }}</option>
                             @endforeach
                         </select>
                         @endif
@@ -213,4 +217,37 @@
         </button>
     </div>
 </form>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const commissionSelect = document.getElementById('commissionSelect');
+        if (!commissionSelect) return;
+
+        const stewardItems = document.querySelectorAll('.steward-item');
+
+        function filterStewards() {
+            const selected = commissionSelect.value;
+
+            stewardItems.forEach(item => {
+                const commissionId = item.dataset.commission;
+
+                if (!selected) {
+                    item.style.display = commissionId === 'general' ? 'inline-block' : 'none';
+                } else {
+                    item.style.display =
+                        commissionId === 'general' || commissionId == selected
+                            ? 'inline-block'
+                            : 'none';
+                }
+            });
+
+            document.querySelectorAll('[data-category]').forEach(cat => {
+                const visibleItems = cat.querySelectorAll('.steward-item:not([style*="display: none"])');
+                cat.style.display = visibleItems.length ? 'block' : 'none';
+            });
+        }
+
+        commissionSelect.addEventListener('change', filterStewards);
+        filterStewards();
+    });
+</script>
 @endsection

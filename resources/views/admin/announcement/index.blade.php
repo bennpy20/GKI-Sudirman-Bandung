@@ -23,31 +23,30 @@
     </div>
 </div>
 <div class="flex gap-2 overflow-x-auto pb-4 mb-2 scrollbar-hide">
-    
     <a href="{{ request()->fullUrlWithQuery(['filter' => 'all']) }}"
         class="px-5 py-2 rounded-xl text-sm font-bold whitespace-nowrap shadow-sm
         {{ request('filter', 'all') == 'all' ? 'bg-church-dark text-white' : 'bg-white border border-gray-200 text-gray-600' }}">
             Semua Warta
     </a>
-
     <a href="{{ request()->fullUrlWithQuery(['filter' => 'active']) }}"
         class="px-5 py-2 rounded-xl text-sm font-medium whitespace-nowrap
         {{ request('filter') == 'active' ? 'bg-church-dark text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
-            Aktif / Ditayangkan
+            Sedang Aktif
     </a>
-
     <a href="{{ request()->fullUrlWithQuery(['filter' => 'expired']) }}"
         class="px-5 py-2 rounded-xl text-sm font-medium whitespace-nowrap
         {{ request('filter') == 'expired' ? 'bg-church-dark text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
-            Kedaluwarsa
+            Telah Berakhir
     </a>
-
 </div>
 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="p-5 border-b border-gray-50 flex justify-between items-center bg-gray-50/30">
+        <h3 class="font-bold text-church-dark text-lg">Daftar Warta Jemaat</h3>
+    </div>
     <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse whitespace-nowrap">
             <thead>
-                <tr class="bg-gray-50/50 text-gray-500 text-xs uppercase tracking-wider border-b border-gray-100">
+                <tr class="bg-white text-gray-500 text-xs uppercase tracking-wider border-b border-gray-100">
                     <th class="px-6 py-4 font-bold">Judul Warta</th>
                     <th class="px-6 py-4 font-bold">Kategori</th>
                     <th class="px-6 py-4 font-bold">Periode Tayang</th>
@@ -76,7 +75,7 @@
                         </div>
                     </td>
                     <td class="px-6 py-4">
-                        <div class="font-medium text-gray-800">{{ $announcement->category }}</div>
+                        <div class="font-medium text-gray-800">{{ $announcement->announcementCategory }}</div>
                     </td>
                     <td class="px-6 py-4">
                         <div class="font-medium text-gray-800">{{ $announcement->date_start }} - {{ $announcement->date_end }}</div>

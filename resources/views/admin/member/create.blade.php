@@ -42,10 +42,10 @@
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Jenis Kelamin <span class="text-red-500">*</span></label>
                         <div class="grid grid-cols-2 gap-3 h-[46px]">
-                            <label class="flex items-center justify-center gap-2 px-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 transition-colors has-[:checked]:bg-church-gold/10 has-[:checked]:border-church-gold has-[:checked]:text-yellow-800 font-medium">
+                            <label class="flex items-center justify-center gap-2 px-4 border border-gray-200 rounded-xl cursor-pointer bg-gray-50/50 hover:bg-gray-50 transition-colors has-[:checked]:bg-church-gold/10 has-[:checked]:border-church-gold has-[:checked]:text-yellow-800 font-medium">
                                 <input type="radio" name="gender" value="1" class="text-church-gold focus:ring-church-gold"> Laki-laki
                             </label>
-                            <label class="flex items-center justify-center gap-2 px-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 transition-colors has-[:checked]:bg-church-gold/10 has-[:checked]:border-church-gold has-[:checked]:text-yellow-800 font-medium">
+                            <label class="flex items-center justify-center gap-2 px-4 border border-gray-200 rounded-xl cursor-pointer bg-gray-50/50 hover:bg-gray-50 transition-colors has-[:checked]:bg-church-gold/10 has-[:checked]:border-church-gold has-[:checked]:text-yellow-800 font-medium">
                                 <input type="radio" name="gender" value="2" class="text-church-gold focus:ring-church-gold"> Perempuan
                             </label>
                         </div>
@@ -216,27 +216,19 @@
 <script>
     const commissionSelect = document.getElementById('commissionSelect');
     const stewardItems = document.querySelectorAll('.steward-item');
-
     function filterStewards() {
         const selected = commissionSelect.value;
-
         stewardItems.forEach(item => {
             const commissionId = item.dataset.commission;
-
-            // 🟢 KASUS 1: belum pilih komisi
             if (!selected) {
-                // tampilkan hanya general
                 if (commissionId === 'general') {
                     item.style.display = 'inline-block';
                 } else {
                     item.style.display = 'none';
                 }
-            }
-            // 🟢 KASUS 2: sudah pilih komisi
-            else {
+            } else {
                 if (
-                    commissionId === 'general' || // umum tetap tampil
-                    commissionId === selected     // komisi terpilih
+                    commissionId === 'general' || commissionId === selected
                 ) {
                     item.style.display = 'inline-block';
                 } else {
@@ -244,16 +236,12 @@
                 }
             }
         });
-
-        // 🔥 sembunyikan kategori kosong
         document.querySelectorAll('[data-category]').forEach(cat => {
             const visibleItems = cat.querySelectorAll('.steward-item:not([style*="display: none"])');
             cat.style.display = visibleItems.length ? 'block' : 'none';
         });
     }
-
     commissionSelect.addEventListener('change', filterStewards);
-
-    filterStewards(); // run awal
+    filterStewards();
 </script>
 @endsection

@@ -24,23 +24,23 @@
                 <div class="w-24 h-24 bg-white rounded-full border-4 border-white shadow-lg flex items-center justify-center text-4xl text-church-gold mb-4 relative z-10 z-20">
                     <i class="fas fa-users"></i>
                 </div>
-                <h3 class="text-2xl font-bold text-church-dark mb-4 text-center">Komisi {{ $commission->name }}</h3>
+                <h3 class="text-xl font-bold text-church-dark mb-4 text-center">Komisi {{ $commission->name }}</h3>
                 <div class="w-full bg-gray-50 rounded-xl p-4 border border-gray-100 mb-6">
                     <div class="flex items-start gap-3 mb-4">
                         <div>
-                            <p class="text-sm text-gray-500 font-bold uppercase tracking-widest">Jadwal Persekutuan</p>
+                            <p class="text-sm text-gray-500 font-bold">Jadwal Persekutuan</p>
                             <p class="text-sm font-bold text-church-dark mt-0.5">Setiap {{ $commission->day }}</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-3 mb-4">
                         <div>
-                            <p class="text-sm text-gray-500 font-bold uppercase tracking-widest">Waktu</p>
+                            <p class="text-sm text-gray-500 font-bold">Waktu</p>
                             <p class="text-sm font-bold text-church-dark mt-0.5">{{ substr($commission->time_start, 0, 5) }} - {{ substr($commission->time_end, 0, 5) }} WIB</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-3">
                         <div>
-                            <p class="text-sm text-gray-500 font-bold uppercase tracking-widest">Lokasi</p>
+                            <p class="text-sm text-gray-500 font-bold">Lokasi</p>
                             <p class="text-sm font-bold text-church-dark mt-0.5">{{ $commission->room }}</p>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
     <div class="lg:col-span-2 space-y-6">
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden h-full flex flex-col">
             <div class="px-6 py-5 border-b border-gray-50 flex justify-between items-center bg-gray-50/50">
-                <h3 class="font-bold text-church-dark text-xl flex items-center gap-2">
+                <h3 class="font-bold text-church-dark text-base flex items-center gap-2">
                     Anggota Komisi
                 </h3>
             </div>

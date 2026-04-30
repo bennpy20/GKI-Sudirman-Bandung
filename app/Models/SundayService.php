@@ -10,7 +10,8 @@ class SundayService extends Model
     
     protected $fillable = [
         'members_id',
-        'worships_id'
+        'worships_id',
+        'stewards_id',
     ];
 
     public function members()
@@ -21,5 +22,10 @@ class SundayService extends Model
     public function worships()
     {
         return $this->belongsTo(Worship::class,'worships_id');
+    }
+
+    public function stewards()
+    {
+        return $this->belongsTo(Steward::class,'stewards_id');
     }
 }

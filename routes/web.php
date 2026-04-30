@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminDevotionController;
 use App\Http\Controllers\AdminLiturgicalCalendarController;
 use App\Http\Controllers\AdminMemberController;
+use App\Http\Controllers\AdminPreacherController;
 use App\Http\Controllers\AdminRegionController;
 use App\Http\Controllers\AdminStewardController;
 use App\Http\Controllers\AdminWorshipController;
@@ -48,6 +49,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('liturgical_calendar', AdminLiturgicalCalendarController::class);
     Route::resource('announcement', AdminAnnouncementController::class);
     Route::resource('devotion', AdminDevotionController::class);
+    Route::resource('preacher', AdminPreacherController::class);
     Route::resource('about', AdminAboutController::class);
 });
 

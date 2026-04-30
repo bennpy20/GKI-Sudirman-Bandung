@@ -45,7 +45,7 @@
                     <td class="px-6 py-4">
                         <div class="flex items-center gap-3">
                             <div>
-                                <div class="font-bold text-church-dark">{{ $member->name }}</div>
+                                <div class="font-bold text-base text-church-dark">{{ $member->name }}</div>
                                 <div class="text-xs text-gray-500 mt-0.5">{{ $member->memberMembership }}</div>
                             </div>
                         </div>
