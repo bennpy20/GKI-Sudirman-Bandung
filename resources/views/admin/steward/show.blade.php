@@ -13,7 +13,7 @@
             </div>
             Kembali
         </a>
-        <h2 class="text-3xl font-serif font-bold text-church-dark mt-1">Detail Pelayanan</h2>
+        <h2 class="text-3xl font-bold text-church-dark mt-1">Detail Pelayanan</h2>
     </div>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -41,7 +41,6 @@
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
             <div class="px-6 py-5 border-b border-gray-50 bg-gray-50/50 flex justify-between items-center">
                 <h3 class="text-base font-bold text-church-dark">Anggota Pelayanan</h3>
-                <span class="text-xs text-blue-600 font-bold hover:underline cursor-pointer">Lihat Semua</span>
             </div>
             <div class="p-4 space-y-3 relative">
                 @forelse ($members as $member)

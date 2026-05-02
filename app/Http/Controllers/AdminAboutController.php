@@ -45,7 +45,11 @@ class AdminAboutController extends Controller
             'description.string' => 'Deskripsi lengkap harus berupa teks.',
         ]);
 
-        About::create($request->only('name', 'description', 'users_id'));
+        About::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'users_id' => $request->users_id,
+        ]);
 
         return redirect()->route('admin.about.index')->with('success', 'Data profil gereja berhasil ditambahkan!');
     }
@@ -92,7 +96,11 @@ class AdminAboutController extends Controller
 
         $about = About::findOrFail($id);
 
-        $about->update($request->only('name', 'description', 'users_id'));
+        $about->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'users_id' => $request->users_id,
+        ]);
 
         return redirect()->route('admin.about.index')->with('success', 'Data profil gereja berhasil diperbarui!');
     }

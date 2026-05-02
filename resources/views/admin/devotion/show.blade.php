@@ -13,25 +13,35 @@
             </div>
             Kembali
         </a>
+        <h2 class="text-3xl font-bold text-church-dark mt-1">Detail Renungan Harian</h2>
     </div>
 </div>
 <div class="grid grid-cols-1 gap-8 mx-auto">
     <div class="bg-white rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.04)] border border-gray-100 overflow-hidden relative">
         <div class="p-8 md:p-12 relative z-10">
             <div class="flex items-center gap-3 mb-6">
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-church-gold/10 text-yellow-700 border border-church-gold/20">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-church-gold/10 text-yellow-700 border border-church-gold/20">
                     Renungan Harian {{ $devotion->devotionCategory }}
                 </span>
-                <span class="text-xs font-medium text-gray-400">
-                    <i class="far fa-clock mr-1"></i>Dipublikasikan pada tanggal {{ $devotion->created_at_formatted }}
-                </span>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-50 border border-gray-200 text-xs font-medium text-gray-600">
+                        <i class="fas fa-calendar-alt text-church-gold"></i>
+                        {{ $devotion->date_formatted }}
+                    </div>
+                    @if($devotion->updated_at && $devotion->updated_at != $devotion->created_at)
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-medium text-blue-600">
+                            <i class="fas fa-edit"></i>
+                            Terakhir Disunting: {{ $devotion->updated_at_local }}
+                        </div>
+                    @endif
+                </div>
             </div>
             <h1 class="text-xl md:text-2xl font-bold text-church-dark leading-tight mb-2">
                 {{ $devotion->title }}
             </h1>
             <div class="flex items-center gap-3 mb-6">
                 <div class="font-bold text-church-dark text-base">Nats Alkitab:
-                <span class="text-base text-gray-500">{{ $devotion->bible_verse }}</span>
+                    {{ $devotion->bible_verse }}
                 </div>
             </div>
             <div class="flex items-center gap-4 mb-6 pb-6 border-b border-gray-100">

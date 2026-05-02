@@ -16,6 +16,7 @@ class Devotion extends Model
         'bible_verse',
         'author',
         'category',
+        'date',
         'users_id'
     ];
 

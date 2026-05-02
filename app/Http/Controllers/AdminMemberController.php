@@ -14,9 +14,30 @@ class AdminMemberController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $members = Member::latest('id')->paginate(10);
+
+        $query = Member::query();
+
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('membership')) {
+            $query->where('membership', $request->membership);
+        }
+
+        if ($request->filled('status_group')) {
+            if ($request->status_group == 'hambaTuhan') {
+                $query->whereIn('status', [1, 2, 3]);
+            } elseif ($request->status_group == 'majelis') {
+                $query->whereIn('status', [4, 5]);
+            } elseif ($request->status_group == 'jemaat') {
+                $query->where('status', 6);
+            }
+        }
+
+        $members = $query->latest('id')->paginate(10)->withQueryString();
 
         $memberStatus = [
             1 => 'Koordinator Hamba Tuhan',
@@ -39,7 +60,7 @@ class AdminMemberController extends Controller
             $member->memberMembership = $memberMembership[$member->membership];
         }
 
-        return view('admin.member.index', compact('members'));
+        return view('admin.member.index', compact('members', 'memberMembership'));
     }
 
     /**
@@ -117,7 +138,21 @@ class AdminMemberController extends Controller
             'stewards.*.exists' => 'Bidang pelayanan tidak valid.',
         ]);
 
-        $member = Member::create($request->only('name', 'address', 'gender', 'status', 'phone_number', 'birth_date', 'join_date', 'membership', 'is_active', 'is_region_leader', 'users_id', 'regions_id', 'commissions_id'));
+        $member = Member::create([
+            'name' => $request->name,
+            'address' => $request->address,
+            'gender' => $request->gender,
+            'status' => $request->status,
+            'phone_number' => $request->phone_number,
+            'birth_date' => $request->birth_date,
+            'join_date' => $request->join_date,
+            'membership' => $request->membership,
+            'is_active' => $request->is_active,
+            'is_region_leader' => $request->is_region_leader,
+            'users_id' => $request->users_id,
+            'regions_id' => $request->regions_id,
+            'commissions_id' => $request->commissions_id,
+        ]);
 
         $member->stewards()->sync($request->stewards ?? []);
 
@@ -246,7 +281,21 @@ class AdminMemberController extends Controller
 
         $member = Member::findOrFail($id);
 
-        $member->update($request->only('name', 'address', 'gender', 'status', 'phone_number', 'birth_date', 'join_date', 'membership', 'is_active', 'is_region_leader', 'users_id', 'regions_id', 'commissions_id'));
+        $member->update([
+            'name' => $request->name,
+            'address' => $request->address,
+            'gender' => $request->gender,
+            'status' => $request->status,
+            'phone_number' => $request->phone_number,
+            'birth_date' => $request->birth_date,
+            'join_date' => $request->join_date,
+            'membership' => $request->membership,
+            'is_active' => $request->is_active,
+            'is_region_leader' => $request->is_region_leader,
+            'users_id' => $request->users_id,
+            'regions_id' => $request->regions_id,
+            'commissions_id' => $request->commissions_id,
+        ]);
 
         $member->stewards()->sync($request->stewards ?? []);
 

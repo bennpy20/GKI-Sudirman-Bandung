@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('bible_verse', 100);
             $table->string('author', 100);
             $table->integer('category');
+            $table->date('date');
 
             $table->foreignId('users_id')->constrained('users');
 

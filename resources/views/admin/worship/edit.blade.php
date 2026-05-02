@@ -12,7 +12,7 @@
         </div>
         Kembali
     </a>
-    <h2 class="text-3xl font-serif font-bold text-church-dark mt-1">Sunting Data Jadwal Kebaktian</h2>
+    <h2 class="text-3xl font-bold text-church-dark mt-1">Sunting Data Jadwal Kebaktian</h2>
 </div>
 <!-- x-data utk penatalayan -->
 <form action="{{ route('admin.worship.update', $worship->id) }}" method="POST"
@@ -37,11 +37,11 @@
                 .filter(m => (m.stewards || []).some(s => s.id == stewardId))
                 .filter(m => !(this.selections[stewardId] || []).some(sel => sel.id === m.id));
             if (keyword === '') {
-                return results.slice(0, 5);
+                return results.slice(0, 3);
             }
             return results
                 .filter(m => m.name.toLowerCase().includes(keyword))
-                .slice(0, 5);
+                .slice(0, 3);
         },
         addMember(stewardId, member) {
             if (!this.selections[stewardId]) {
@@ -85,11 +85,11 @@
                             })),
                             get filteredOptions() {
                                 if (this.search === '') {
-                                    return this.options.slice(0, 5);
+                                    return this.options.slice(0, 3);
                                 }
                                 return this.options
                                     .filter(opt => opt.name.toLowerCase().includes(this.search.toLowerCase()))
-                                    .slice(0, 5);
+                                    .slice(0, 3);
                             },
                             selectOption(opt) {
                                 this.selectedId = opt.id;
@@ -166,7 +166,7 @@
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Jenis Kebaktian <span class="text-red-500">*</span></label>
                         <select name="category" x-model="selectedCategory" required class="w-full px-5 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark appearance-none font-medium">
-                            <option value="0" {{ old('category', $worship->category) == 0 ? 'selected' : '' }}>Ibadah Umum</option>
+                            <option value="0" {{ old('category', $worship->category) == 0 ? 'selected' : '' }}>Kebaktian Umum</option>
                             @foreach($commissions as $commission)
                                 <option value="{{ $commission->id }}" {{ old('category', $worship->category) == $commission->id ? 'selected' : '' }}>Ibadah {{ $commission->name }}</option>
                             @endforeach
@@ -237,7 +237,7 @@
                         Data Penatalayan
                     </h3>
                 </div>
-                <div class="p-6">
+                <div class="p-6 mb-24">
                     <div x-show="filteredStewards.length === 0"
                         class="text-center text-gray-400 text-sm py-6">
                         Belum ada data pelayanan untuk jenis kebaktian ini. Silakan tambahkan data jenis pelayanan terlebih dahulu.

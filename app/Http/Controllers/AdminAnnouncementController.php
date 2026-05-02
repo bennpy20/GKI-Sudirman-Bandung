@@ -16,15 +16,33 @@ class AdminAnnouncementController extends Controller
     {
         Carbon::setLocale('id');
 
-        $announcementsFilter = Announcement::query();
+        $today = Carbon::today('Asia/Jakarta');
 
-        if ($request->filter == 'active') {
-            $announcementsFilter->where('date_end', '>=', Carbon::now('Asia/Jakarta')->endOfDay());
-        } elseif ($request->filter == 'expired') {
-            $announcementsFilter->where('date_end', '<', Carbon::now('Asia/Jakarta')->endOfDay());
+        $query = Announcement::query();
+
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('title', 'like', '%' . $request->search . '%')
+                ->orWhere('content', 'like', '%' . $request->search . '%');
+            });
         }
 
-        $announcements = $announcementsFilter->paginate(10)->withQueryString();
+        if ($request->filled('status')) {
+            if ($request->status == 'active') {
+                $query->whereDate('date_start', '<=', $today)
+                    ->whereDate('date_end', '>=', $today);
+            } elseif ($request->status == 'expired') {
+                $query->whereDate('date_end', '<', $today);
+            } elseif ($request->status == 'upcoming') {
+                $query->whereDate('date_start', '>', $today);
+            }
+        }
+
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        $announcements = $query->latest()->paginate(10)->withQueryString();
 
         $announcementCategory = [
             1 => 'Diakonia',
@@ -40,7 +58,7 @@ class AdminAnnouncementController extends Controller
             $announcement->announcementCategory = $announcementCategory[$announcement->category];
         }
 
-        return view('admin.announcement.index', compact('announcements'));
+        return view('admin.announcement.index', compact('announcements', 'announcementCategory'));
     }
 
     /**
@@ -85,7 +103,14 @@ class AdminAnnouncementController extends Controller
             'image_url.max' => 'Ukuran gambar tidak boleh lebih dari 8MB.',
         ]);
 
-        $announcement = Announcement::create($request->only('title', 'content', 'category', 'date_start', 'date_end', 'users_id'));
+        $announcement = Announcement::create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'category' => $request->category,
+            'date_start' => $request->date_start,
+            'date_end' => $request->date_end,
+            'users_id' => $request->users_id,
+        ]);
 
         if ($request->hasFile('image_url')) {
             $file = $request->file('image_url');
@@ -172,7 +197,14 @@ class AdminAnnouncementController extends Controller
 
         $announcement = Announcement::findOrFail($id);
 
-        $announcement->update($request->only('title', 'content', 'category', 'date_start', 'date_end', 'users_id'));
+        $announcement->update([
+            'title' => $request->title,
+            'content' => $request->content,
+            'category' => $request->category,
+            'date_start' => $request->date_start,
+            'date_end' => $request->date_end,
+            'users_id' => $request->users_id,
+        ]);
 
         if ($request->hasFile('image_url')) {
             if ($announcement->image_url) {

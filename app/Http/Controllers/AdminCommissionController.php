@@ -11,9 +11,15 @@ class AdminCommissionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $commissions = Commission::oldest('id')->paginate(10);
+        $query = Commission::query();
+
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        $commissions = $query->oldest('id')->paginate(10)->withQueryString();
 
         return view('admin.commission.index', compact('commissions'));
     }
@@ -51,7 +57,13 @@ class AdminCommissionController extends Controller
             'room.max' => 'Lokasi atau ruangan tidak boleh lebih dari 200 karakter.',
         ]);
 
-        Commission::create($request->only('name', 'day', 'time_start', 'time_end', 'room'));
+        Commission::create([
+            'name' => $request->name,
+            'day' => $request->day,
+            'time_start' => $request->time_start,
+            'time_end' => $request->time_end,
+            'room' => $request->room,
+        ]);
 
         return redirect()->route('admin.commission.index')->with('success', 'Data komisi berhasil ditambahkan!');
     }
@@ -122,7 +134,13 @@ class AdminCommissionController extends Controller
         ]);
 
         $commission = Commission::findOrFail($id);
-        $commission->update($request->only('name', 'day', 'time_start', 'time_end', 'room'));
+        $commission->update([
+            'name' => $request->name,
+            'day' => $request->day,
+            'time_start' => $request->time_start,
+            'time_end' => $request->time_end,
+            'room' => $request->room,
+        ]);
 
         return redirect()->route('admin.commission.index')->with('success', 'Data komisi berhasil diperbarui!');
     }

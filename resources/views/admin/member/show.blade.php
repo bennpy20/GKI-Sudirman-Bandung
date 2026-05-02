@@ -13,7 +13,7 @@
             </div>
             Kembali
         </a>
-        <h2 class="text-3xl font-serif font-bold text-church-dark mt-1">Detail Anggota Jemaat</h2>
+        <h2 class="text-3xl font-bold text-church-dark mt-1">Detail Anggota Jemaat</h2>
     </div>
 </div>
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -84,21 +84,21 @@
             <div class="p-6">
                 <dl class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-6">
                     <div>
-                        <dt class="text-sm font-semibold text-gray-500 mb-1">Tanggal Bergabung</dt>
-                        <dd class="text-sm font-medium text-church-dark">{{ $member->join_date_formatted }}</dd>
+                        <div class="text-sm font-semibold text-gray-500 mb-1">Tanggal Bergabung</div>
+                        <div class="text-sm font-medium text-church-dark">{{ $member->join_date_formatted }}</div>
                     </div>
                     <div>
-                        <dt class="text-sm font-semibold text-gray-500 mb-1">Rayon</dt>
-                        <dd class="text-sm font-medium text-church-dark flex items-center gap-2">
+                        <div class="text-sm font-semibold text-gray-500 mb-1">Rayon</div>
+                        <div class="text-sm font-medium text-church-dark flex items-center gap-2">
                             {{ $member->regions?->name ? 'Rayon ' . $member->regions->name : '-' }}
                             @if($member->is_region_leader === 1)
                             <span class="text-[10px] bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full font-bold">KETUA</span>
                             @endif
-                        </dd>
+                        </div>
                     </div>
                     <div>
-                        <dt class="text-sm font-semibold text-gray-500 mb-1">Komisi</dt>
-                        <dd class="text-sm font-medium text-church-dark">{{ $member->commissions->name ?? '-' }}</dd>
+                        <div class="text-sm font-semibold text-gray-500 mb-1">Komisi</div>
+                        <div class="text-sm font-medium text-church-dark">{{ $member->commissions->name ?? '-' }}</div>
                     </div>
                 </dl>
             </div>

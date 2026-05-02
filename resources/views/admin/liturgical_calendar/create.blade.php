@@ -5,7 +5,6 @@
 @section('title', 'Admin - Kalender Liturgi')
 
 @section('content')
-<!-- Header -->
 <div class="mb-8">
     <a href="{{ route('admin.liturgical_calendar.index') }}" class="text-sm font-medium text-gray-500 hover:text-church-gold mb-3 inline-flex items-center transition-colors">
         <div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center mr-2 shadow-sm">
@@ -13,9 +12,8 @@
         </div>
         Kembali
     </a>
-    <h2 class="text-3xl font-serif font-bold text-church-dark mt-1">Tambah Data Pekan Liturgi</h2>
+    <h2 class="text-3xl font-bold text-church-dark mt-1">Tambah Data Pekan Liturgi</h2>
 </div>
-
 <form action="{{ route('admin.liturgical_calendar.store') }}" method="POST">
     @csrf
     <div class="grid grid-cols-1 pb-24">

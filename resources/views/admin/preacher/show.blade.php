@@ -13,7 +13,7 @@
             </div>
             Kembali
         </a>
-        <h2 class="text-3xl font-serif font-bold text-church-dark mt-1">Detail Pengkhotbah</h2>
+        <h2 class="text-3xl font-bold text-church-dark mt-1">Detail Pengkhotbah</h2>
     </div>
 </div>
 <div class="w-full mx-auto">

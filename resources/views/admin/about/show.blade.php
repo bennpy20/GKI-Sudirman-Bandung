@@ -13,7 +13,7 @@
             </div>
             Kembali
         </a>
-        <h2 class="text-3xl font-serif font-bold text-church-dark mt-1">Detail Profil Gereja</h2>
+        <h2 class="text-3xl font-bold text-church-dark mt-1">Detail Profil Gereja</h2>
     </div>
 </div>
 
@@ -29,7 +29,7 @@
                 {{ $about->name }}
             </h1>
             <div class="prose prose-xl prose-gray max-w-none prose-p:leading-loose prose-p:text-gray-700 font-sans mx-auto text-left">
-                <p class="text-base italic text-church-dark whitespace-pre-line">
+                <p class="text-base text-church-dark whitespace-pre-line">
                     {{ $about->description }}
                 </p>
             </div>

@@ -13,7 +13,7 @@
             </div>
             Kembali
         </a>
-        <h2 class="text-3xl font-serif font-bold text-church-dark mt-1">Detail Warta Jemaat</h2>
+        <h2 class="text-3xl font-bold text-church-dark mt-1">Detail Warta Jemaat</h2>
     </div>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -25,7 +25,7 @@
                 </h3>
                 <div class="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-bold 
                     {{ $announcement->is_date_active ? 'bg-green-50 text-green-700 border-green-100' : 'bg-red-50 text-red-700 border-red-100' }} shadow-sm">
-                    <span class="w-2 h-2 rounded-full mr-2 animate-pulse
+                    <span class="w-2 h-2 rounded-full mr-2
                         {{ $announcement->is_date_active ? 'bg-green-500' : 'bg-red-500' }}">
                     </span>
                     {{ $announcement->is_date_active ? 'Sedang Berjalan' : 'Telah Berakhir' }}
@@ -39,7 +39,6 @@
                             <div class="font-bold text-church-dark text-base">{{ $announcement->date_start }}</div>
                         </div>
                     </div>
-                    <div class="ml-2.5 border-l-2 border-dashed border-gray-200 h-5"></div>
                     <div class="flex items-start gap-3">
                         <div>
                             <div class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Tanggal Berakhir</div>
@@ -83,7 +82,7 @@
                 @endif
             </div>
             <div class="p-6 md:p-8">
-                <h1 class="text-2xl font-serif font-bold text-church-dark mb-6">{{ $announcement->title }}</h1>
+                <h1 class="text-xl font-bold text-church-dark mb-2">{{ $announcement->title }}</h1>
                 <div class="prose prose-sm md:prose-base prose-gray max-w-none prose-p:leading-relaxed prose-headings:font-serif">
                     {!! nl2br(e($announcement->content)) !!}
                 </div>
@@ -91,7 +90,6 @@
         </div>
     </div>
 </div>
-
 @if($announcement->image_url)
     <div id="imageModal" 
         class="fixed inset-0 z-[100] hidden bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 transition-all"
@@ -108,26 +106,25 @@
             class="max-w-full max-h-[90vh] rounded-lg shadow-2xl object-contain cursor-default"
             id="modalImageContent">
     </div>
-
-    <script>
-        function openImageModal() {
-            const modal = document.getElementById('imageModal');
-            modal.classList.remove('hidden'); // Mencegah body discroll waktu modalnya terbuka
-            document.body.style.overflow = 'hidden'; 
-        }
-
-        function closeImageModal(event, forceClose = false) {
-            const modal = document.getElementById('imageModal');
-            const imageContent = document.getElementById('modalImageContent');
-            
-            // Tutup modal kalo user menekan tombol silang atao mengklik area di luar gambar
-            if (forceClose || event.target !== imageContent) {
-                modal.classList.add('hidden');
-                // Kembalikan fungsi scroll di body
-                document.body.style.overflow = 'auto'; 
-            }
-        }
-    </script>
 @endif
+<script>
+    function openImageModal() {
+        const modal = document.getElementById('imageModal');
+        modal.classList.remove('hidden'); // Mencegah body discroll waktu modalnya terbuka
+        document.body.style.overflow = 'hidden'; 
+    }
+
+    function closeImageModal(event, forceClose = false) {
+        const modal = document.getElementById('imageModal');
+        const imageContent = document.getElementById('modalImageContent');
+        
+        // Tutup modal kalo user menekan tombol silang atao mengklik area di luar gambar
+        if (forceClose || event.target !== imageContent) {
+            modal.classList.add('hidden');
+            // Kembalikan fungsi scroll di body
+            document.body.style.overflow = 'auto'; 
+        }
+    }
+</script>
 
 @endsection

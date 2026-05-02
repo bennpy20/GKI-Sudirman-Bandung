@@ -10,9 +10,15 @@ class AdminPreacherController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $preachers = Preacher::oldest('id')->paginate(10);
+        $query = Preacher::query();
+        
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        $preachers = $query->oldest('id')->paginate(10)->withQueryString();
 
         return view('admin.preacher.index', compact('preachers'));
     }

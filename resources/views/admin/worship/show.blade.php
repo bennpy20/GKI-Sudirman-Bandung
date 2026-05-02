@@ -13,7 +13,7 @@
             </div>
             Kembali
         </a>
-        <h2 class="text-3xl font-serif font-bold text-church-dark mt-1">Detail Jadwal Kebaktian</h2>
+        <h2 class="text-3xl font-bold text-church-dark mt-1">Detail Jadwal Kebaktian</h2>
         <div class="flex flex-wrap items-center gap-3 mt-3">
             <div class="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-bold bg-white border border-gray-200 shadow-sm text-gray-700">
                 <i class="far fa-calendar-alt text-gray-400 mr-2"></i>{{ $worship->date_formatted }}

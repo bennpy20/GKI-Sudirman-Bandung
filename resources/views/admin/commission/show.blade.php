@@ -13,7 +13,7 @@
             </div>
             Kembali
         </a>
-        <h2 class="text-3xl font-serif font-bold text-church-dark mt-1">Detail Komisi</h2>
+        <h2 class="text-3xl font-bold text-church-dark mt-1">Detail Komisi</h2>
     </div>
 </div>
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-20">

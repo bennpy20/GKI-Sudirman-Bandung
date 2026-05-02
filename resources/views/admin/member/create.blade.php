@@ -12,7 +12,7 @@
         </div>
         Kembali
     </a>
-    <h2 class="text-3xl font-serif font-bold text-church-dark mt-1">Tambah Data Anggota Jemaat</h2>
+    <h2 class="text-3xl font-bold text-church-dark mt-1">Tambah Data Anggota Jemaat</h2>
 </div>
 <form action="{{ route('admin.member.store') }}" method="POST">
     @csrf

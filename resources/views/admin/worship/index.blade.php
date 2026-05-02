@@ -5,30 +5,71 @@
 @section('title', 'Admin - Jadwal Kebaktian')
 
 @section('content')
-<!-- Page Header -->
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
     <div>
-        <h2 class="text-3xl font-serif font-bold text-church-dark">Jadwal Kebaktian</h2>
+        <h2 class="text-3xl font-bold text-church-dark">Jadwal Kebaktian</h2>
         <p class="text-sm text-gray-500 mt-2 font-sans flex items-center gap-2">
             <i class="fas fa-info-circle text-church-gold"></i>Kelola jadwal kebaktian dan detailnya beserta daftar penatalayan.
         </p>
     </div>
     
     <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
-        <div class="relative w-full sm:w-auto">
-            <input type="text" placeholder="Cari jadwal kebaktian..." class="w-full sm:w-64 pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all shadow-sm text-sm">
-            <i class="fas fa-search absolute left-3.5 top-3 text-gray-400"></i>
-        </div>
+        <form method="GET" action="{{ route('admin.worship.index') }}">
+            <div class="relative w-full sm:w-auto">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari judul khotbah..." class="w-full sm:w-64 pl-10 pr-10 py-2.5 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all shadow-sm text-sm">
+                <input type="hidden" name="period" value="{{ request('period') }}">
+                <input type="hidden" name="category" value="{{ request('category') }}">
+                <i class="fas fa-search absolute left-3.5 top-3 text-gray-400"></i>
+                @if(request('search'))
+                    <a href="{{ route('admin.worship.index', request()->except('search')) }}" class="absolute right-3 top-2.5 text-gray-400 hover:text-church-gold">
+                        <i class="fas fa-times-circle"></i>
+                    </a>
+                @endif
+            </div>
+        </form>
         <a href="{{ route('admin.worship.create') }}" class="w-full sm:w-auto justify-center bg-gradient-to-r from-church-gold to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-church-dark px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 whitespace-nowrap">
             <i class="fas fa-plus"></i>Tambah Jadwal Kebaktian
         </a>
     </div>
 </div>
-
-<!-- Data Table Container -->
 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
     <div class="p-5 border-b border-gray-50 flex justify-between items-center bg-gray-50/30">
         <h3 class="font-bold text-church-dark text-lg">Jadwal Terdaftar</h3>
+        <div x-data="{ open: false }" class="relative">
+            <button @click="open = !open" type="button" class="text-gray-400 hover:text-church-gold transition-colors text-sm font-medium flex items-center gap-2 cursor-pointer">
+                <i class="fas fa-filter"></i> Sortir
+            </button>
+            <div x-show="open" @click.outside="open = false" x-transition class="absolute right-0 mt-2 w-64 bg-white border border-gray-100 rounded-xl shadow-lg p-4 z-50">
+                <form method="GET" action="{{ route('admin.worship.index') }}">
+                    <input type="hidden" name="search" value="{{ request('search') }}">
+                    <label class="text-xs font-semibold text-gray-500 mb-1 block">
+                        Periode
+                    </label>
+                    <select name="period" onchange="this.form.submit()" class="w-full mb-3 px-3 py-2 border border-gray-200 rounded-lg text-sm">
+                        <option value="">Semua</option>
+                        <option value="1m" {{ request('period')=='1m' ? 'selected' : '' }}>1 Bulan Terakhir</option>
+                        <option value="3m" {{ request('period')=='3m' ? 'selected' : '' }}>3 Bulan Terakhir</option>
+                        <option value="6m" {{ request('period')=='6m' ? 'selected' : '' }}>6 Bulan Terakhir</option>
+                        <option value="1y" {{ request('period')=='1y' ? 'selected' : '' }}>1 Tahun Terakhir</option>
+                    </select>
+                    <label class="text-xs font-semibold text-gray-500 mb-1 block">
+                        Jenis Ibadah
+                    </label>
+                    <select name="category" onchange="this.form.submit()" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm">
+                        <option value="">Semua</option>
+                        <option value="0" {{ request('category')==='0' ? 'selected' : '' }}>
+                            Kebaktian Umum
+                        </option>
+                        @foreach($commission_names as $id => $name)
+                            <option value="{{ $id }}"
+                                {{ request('category') == $id ? 'selected' : '' }}>
+                                Ibadah {{ $name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </form>
+            </div>
+        </div>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse whitespace-nowrap">

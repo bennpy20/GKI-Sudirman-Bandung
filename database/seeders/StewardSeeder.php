@@ -16,16 +16,24 @@ class StewardSeeder extends Seeder
         DB::table('stewards')->insert([
             [
                 'field' => 'Liturgos (WL)',
-                'commissions_id' => 1,
+                'commissions_id' => null,
             ],
             [
                 'field' => 'Pemusik',
-                'commissions_id' => 1,
+                'commissions_id' => null,
             ],
             [
                 'field' => 'Usher',
+                'commissions_id' => null,
+            ],
+            [
+                'field' => 'Pemimpin Pujian',
                 'commissions_id' => 1,
             ],
+            [
+                'field' => 'Guru Kelas Balita',
+                'commissions_id' => 2,
+            ]
         ]);
     }
 }

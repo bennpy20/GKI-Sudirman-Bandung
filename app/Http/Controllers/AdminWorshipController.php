@@ -17,11 +17,34 @@ class AdminWorshipController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         Carbon::setLocale('id');
 
-        $worships = Worship::with('liturgical_calendars')->latest('id')->paginate(10);
+        $query = Worship::with('liturgical_calendars');
+
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('period')) {
+            $now = Carbon::now('Asia/Jakarta');
+            if ($request->period == '1m') {
+                $query->where('date', '>=', $now->copy()->subMonth());
+            } elseif ($request->period == '3m') {
+                $query->where('date', '>=', $now->copy()->subMonths(3));
+            } elseif ($request->period == '6m') {
+                $query->where('date', '>=', $now->copy()->subMonths(6));
+            } elseif ($request->period == '1y') {
+                $query->where('date', '>=', $now->copy()->subYear());
+            }
+        }
+
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        $worships = $query->latest('id')->paginate(10)->withQueryString();
 
         // Ambil data komisi supaya ga hardcode jenis kebaktiannya
         $commission_names = Commission::pluck('name', 'id');
@@ -36,7 +59,7 @@ class AdminWorshipController extends Controller
             }
         }
 
-        return view('admin.worship.index', compact('worships'));
+        return view('admin.worship.index', compact('worships', 'commission_names'));
     }
 
     /**

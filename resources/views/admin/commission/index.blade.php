@@ -7,16 +7,23 @@
 @section('content')
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
     <div>
-        <h2 class="text-3xl font-serif font-bold text-church-dark">Komisi</h2>
+        <h2 class="text-3xl font-bold text-church-dark">Komisi</h2>
         <p class="text-sm text-gray-500 mt-2 font-sans flex items-center gap-2">
             <i class="fas fa-info-circle text-church-gold"></i> Kelola data komisi serta jadwal persekutuannya.
         </p>
     </div>
     <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
-        <div class="relative w-full sm:w-auto">
-            <input type="text" placeholder="Cari komisi..." class="w-full sm:w-64 pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all shadow-sm text-sm">
-            <i class="fas fa-search absolute left-3.5 top-3 text-gray-400"></i>
-        </div>
+        <form method="GET" action="{{ route('admin.commission.index') }}">
+            <div class="relative w-full sm:w-auto">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama komisi..." class="w-full sm:w-64 pl-10 pr-10 py-2.5 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all shadow-sm text-sm">
+                <i class="fas fa-search absolute left-3.5 top-3 text-gray-400"></i>
+                @if(request('search'))
+                    <a href="{{ route('admin.commission.index') }}" class="absolute right-3 top-2.5 text-gray-400 hover:text-church-gold transition">
+                        <i class="fas fa-times-circle"></i>
+                    </a>
+                @endif
+            </div>
+        </form>
         <a href="{{ route('admin.commission.create') }}" class="w-full sm:w-auto justify-center bg-gradient-to-r from-church-gold to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-church-dark px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 whitespace-nowrap">
             <i class="fas fa-plus"></i> Tambah Komisi
         </a>

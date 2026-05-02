@@ -7,7 +7,7 @@
 @section('content')
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
     <div>
-        <h2 class="text-3xl font-serif font-bold text-church-dark">Profil Gereja</h2>
+        <h2 class="text-3xl font-bold text-church-dark">Profil Gereja</h2>
         <p class="text-sm text-gray-500 mt-2 font-sans flex items-center gap-2">
             <i class="fas fa-info-circle text-church-gold"></i>Kelola visi, misi, tema, dan profil gereja lainnya.
         </p>
@@ -45,7 +45,7 @@
                     </form>
                 </div>
             </div>
-            <h3 class="text-xl font-serif font-bold pt-2 text-church-dark group-hover:text-church-gold transition-colors">{{ $about->name }}</h3>
+            <h3 class="text-xl font-bold pt-2 text-church-dark group-hover:text-church-gold transition-colors">{{ $about->name }}</h3>
             <p class="text-sm text-gray-600 leading-relaxed line-clamp-3 whitespace-pre-line">
                 {{ $about->description }}
             </p>

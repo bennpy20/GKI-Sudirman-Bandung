@@ -12,7 +12,7 @@
         </div>
         Kembali
     </a>
-    <h2 class="text-3xl font-serif font-bold text-church-dark mt-1">Tambah Data Pelayanan</h2>
+    <h2 class="text-3xl font-bold text-church-dark mt-1">Tambah Data Pelayanan</h2>
 </div>
 <form action="{{ route('admin.steward.store') }}" method="POST">
     @csrf

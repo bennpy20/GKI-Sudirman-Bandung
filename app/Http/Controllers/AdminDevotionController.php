@@ -11,11 +11,36 @@ class AdminDevotionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         Carbon::setLocale('id');
 
-        $devotions = Devotion::latest()->paginate(10);
+        $today = Carbon::today('Asia/Jakarta');
+
+        $query = Devotion::query();
+
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('title', 'like', '%' . $request->search . '%')
+                ->orWhere('content', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        if ($request->filled('status')) {
+            if ($request->status == 'active') {
+                $query->whereDate('date', $today);
+            } elseif ($request->status == 'past') {
+                $query->whereDate('date', '<', $today);
+            } elseif ($request->status == 'upcoming') {
+                $query->whereDate('date', '>', $today);
+            }
+        }
+
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        $devotions = $query->latest()->paginate(10)->withQueryString();
 
         $devotionCategory = [
             1 => 'Umum',
@@ -25,11 +50,11 @@ class AdminDevotionController extends Controller
         ];
 
         foreach ($devotions as $devotion) {
-            $devotion->created_at_formatted = Carbon::parse($devotion->created_at, 'Asia/Jakarta')->translatedFormat('j F Y');
+            $devotion->date_formatted = Carbon::parse($devotion->date, 'Asia/Jakarta')->translatedFormat('j F Y');
             $devotion->devotionCategory = $devotionCategory[$devotion->category];
         }
 
-        return view('admin.devotion.index', compact('devotions'));
+        return view('admin.devotion.index', compact('devotions', 'devotionCategory'));
     }
 
     /**
@@ -55,6 +80,7 @@ class AdminDevotionController extends Controller
             'author' => 'required|string|max:100',
             'category' => 'required|in:1,2,3,4',
             'content' => 'required|string',
+            'date' => 'required|date',
         ], [
             'title.required' => 'Judul renungan wajib diisi.',
             'title.string' => 'Judul renungan harus berupa teks.',
@@ -69,9 +95,19 @@ class AdminDevotionController extends Controller
             'category.in' => 'Kategori pembaca tidak valid.',
             'content.required' => 'Isi renungan wajib diisi.',
             'content.string' => 'Isi renungan harus berupa teks.',
+            'date.required' => 'Tanggal renungan wajib diisi.',
+            'date.date' => 'Tanggal renungan tidak valid.',
         ]);
 
-        Devotion::create($request->only('title', 'bible_verse', 'author', 'category', 'content', 'users_id'));
+        Devotion::create([
+            'title' => $request->title,
+            'bible_verse' => $request->bible_verse,
+            'author' => $request->author,
+            'category' => $request->category,
+            'content' => $request->content,
+            'date' => $request->date,
+            'users_id' => $request->users_id,
+        ]);
 
         return redirect()->route('admin.devotion.index')->with('success', 'Data renungan harian berhasil ditambahkan!');
     }
@@ -85,7 +121,8 @@ class AdminDevotionController extends Controller
 
         Carbon::setLocale('id');
 
-        $devotion->created_at_formatted = Carbon::parse($devotion->created_at, 'Asia/Jakarta')->translatedFormat('j F Y');
+        $devotion->date_formatted = Carbon::parse($devotion->date, 'Asia/Jakarta')->translatedFormat('j F Y');
+        $devotion->updated_at_local = Carbon::parse($devotion->updated_at, 'Asia/Jakarta')->timezone('Asia/Jakarta')->translatedFormat('j F Y H:i');
 
         $devotionCategory = [
             1 => 'Umum',
@@ -138,11 +175,21 @@ class AdminDevotionController extends Controller
             'category.in' => 'Kategori pembaca tidak valid.',
             'content.required' => 'Isi renungan wajib diisi.',
             'content.string' => 'Isi renungan harus berupa teks.',
+            'date.required' => 'Tanggal renungan wajib diisi.',
+            'date.date' => 'Tanggal renungan tidak valid.',
         ]);
 
         $devotion = Devotion::findOrFail($id);
 
-        $devotion->update($request->only('title', 'bible_verse', 'author', 'category', 'content', 'users_id'));
+        $devotion->update([
+            'title' => $request->title,
+            'bible_verse' => $request->bible_verse,
+            'author' => $request->author,
+            'category' => $request->category,
+            'content' => $request->content,
+            'date' => $request->date,
+            'users_id' => $request->users_id,
+        ]);
 
         return redirect()->route('admin.devotion.index')->with('success', 'Data renungan harian berhasil diperbarui!');
     }

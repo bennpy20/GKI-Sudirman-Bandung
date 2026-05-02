@@ -10,11 +10,23 @@ class AdminLiturgicalCalendarController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $liturgical_calendars = LiturgicalCalendar::oldest('id')->paginate(10);
+        $query = LiturgicalCalendar::query();
 
-        return view('admin.liturgical_calendar.index', compact('liturgical_calendars'));
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('color')) {
+            $query->where('color', $request->color);
+        }
+
+        $liturgical_calendars = $query->oldest('id')->paginate(10)->withQueryString();
+
+        $colors = LiturgicalCalendar::select('color')->distinct()->pluck('color');
+
+        return view('admin.liturgical_calendar.index', compact('liturgical_calendars', 'colors'));
     }
 
     /**
@@ -41,8 +53,11 @@ class AdminLiturgicalCalendarController extends Controller
             'color.string' => 'Warna harus berupa teks.',
             'color.max' => 'Warna tidak boleh lebih dari 50 karakter.',
         ]);
-
-        LiturgicalCalendar::create($request->only('name', 'color'));
+    
+        LiturgicalCalendar::create([
+            'name' => $request->name,
+            'color' => $request->color,
+        ]);
 
         return redirect()->route('admin.liturgical_calendar.index')->with('success', 'Data pekan liturgi berhasil ditambahkan!');
     }
@@ -85,7 +100,10 @@ class AdminLiturgicalCalendarController extends Controller
         ]);
 
         $liturgical_calendar = LiturgicalCalendar::findOrFail($id);
-        $liturgical_calendar->update($request->only('name', 'color'));
+        $liturgical_calendar->update([
+            'name' => $request->name,
+            'color' => $request->color,
+        ]);
 
         return redirect()->route('admin.liturgical_calendar.index')->with('success', 'Data pekan liturgi berhasil diperbarui!');
     }

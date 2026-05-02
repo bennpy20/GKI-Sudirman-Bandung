@@ -12,7 +12,7 @@
         </div>
         Kembali
     </a>
-    <h2 class="text-3xl font-serif font-bold text-church-dark mt-1">Sunting Data Renungan Harian</h2>
+    <h2 class="text-3xl font-bold text-church-dark mt-1">Sunting Data Renungan Harian</h2>
 </div>
 <form action="{{ route('admin.devotion.update', $devotion->id) }}" method="POST">
     @csrf
@@ -33,13 +33,21 @@
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>
-                    
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Nats Alkitab <span class="text-red-500">*</span></label>
-                        <input type="text" name="bible_verse" value="{{ old('bible_verse', $devotion->bible_verse) }}" required placeholder="Tuliskan nats Alkitab.." class="w-full px-5 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark font-medium">
-                        @error('bible_verse')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Nats Alkitab <span class="text-red-500">*</span></label>
+                            <input type="text" name="bible_verse" value="{{ old('bible_verse', $devotion->bible_verse) }}" required placeholder="Tuliskan nats Alkitab.." class="w-full px-5 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark font-medium">
+                            @error('bible_verse')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Tanggal Renungan <span class="text-red-500">*</span></label>
+                            <input type="date" name="date" value="{{ old('date', $devotion->date) }}" required class="w-full px-5 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark font-medium">
+                            @error('date')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>

@@ -40,7 +40,7 @@ Route::resource('hubungi_kami', ContactUsController::class);
 Route::resource('visi_misi', VisiMisiController::class);
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
-    Route::resource('dashboard', AdminDashboardController::class);
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('member', AdminMemberController::class);
     Route::resource('commission', AdminCommissionController::class);
     Route::resource('region', AdminRegionController::class);

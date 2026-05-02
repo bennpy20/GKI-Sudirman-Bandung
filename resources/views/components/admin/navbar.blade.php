@@ -1,11 +1,10 @@
 <aside x-cloak :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed inset-y-0 left-0 z-50 w-64 bg-gradient-to-b from-church-dark to-slate-900 text-white transition-transform duration-300 ease-in-out md:static md:translate-x-0 flex flex-col shadow-2xl border-r border-church-gold/20">
-    <div class="h-16 flex items-center justify-between md:justify-center border-b border-white/10 px-4">
+    <div class="h-16 flex items-center justify-between border-b border-white/10 px-4">
         <div class="flex items-center gap-3">
             <!-- Logo -->
-            <img src="{{ asset('logo.png') }}" alt="Logo GKI" class="h-8 w-8 object-contain rounded-full">
-
+            <img src="{{ asset('logo.png') }}" alt="Logo GKI" class="h-8 w-8 object-contain rounded-full ml-4">
             <!-- Nama -->
-            <h1 class="text-lg font-serif font-bold text-church-gold tracking-widest">
+            <h1 class="text-xl font-bold text-church-gold">
                 GKI Sudirman
             </h1>
         </div>
@@ -17,7 +16,7 @@
     
     <div class="px-4 py-6 flex-1 overflow-y-auto w-full no-scrollbar">
         <nav class="space-y-2">
-            <a href="{{ route('admin.dashboard.index') }}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.dashboard.*') || request()->is('admin') ? 'bg-gradient-to-r from-church-gold to-yellow-600 text-church-dark shadow-[0_4px_20px_rgba(197,160,89,0.3)] transform hover:-translate-y-0.5' : 'text-white/70 hover:bg-white/5 hover:text-church-gold group' }}">
+            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.dashboard.*') || request()->is('admin') ? 'bg-gradient-to-r from-church-gold to-yellow-600 text-church-dark shadow-[0_4px_20px_rgba(197,160,89,0.3)] transform hover:-translate-y-0.5' : 'text-white/70 hover:bg-white/5 hover:text-church-gold group' }}">
                 <div class="w-8 h-8 rounded-lg flex items-center justify-center transition-colors {{ request()->routeIs('admin.dashboard.*') || request()->is('admin') ? 'bg-church-dark/10 text-church-dark' : 'bg-white/5 group-hover:bg-church-gold/20 group-hover:text-church-gold' }}">
                     <i class="fas fa-tachometer-alt"></i>
                 </div>

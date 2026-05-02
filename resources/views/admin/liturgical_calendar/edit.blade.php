@@ -12,7 +12,7 @@
         </div>
         Kembali
     </a>
-    <h2 class="text-3xl font-serif font-bold text-church-dark mt-1">Sunting Data Pekan Liturgi</h2>
+    <h2 class="text-3xl font-bold text-church-dark mt-1">Sunting Data Pekan Liturgi</h2>
 </div>
 
 <form action="{{ route('admin.liturgical_calendar.update', $liturgical_calendar->id) }}" method="POST">
@@ -37,35 +37,35 @@
                     <label class="block text-sm font-bold text-gray-700 mb-2">Warna Liturgi Peristiwa <span class="text-red-500">*</span></label>
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                         <label class="cursor-pointer">
-                            <input type="radio" name="color" value="Ungu" class="peer sr-only" checked>
+                            <input type="radio" name="color" value="Ungu" class="peer sr-only" {{ $liturgical_calendar->color === 'Ungu' ? 'checked' : '' }}>
                             <div class="p-4 rounded-xl border-2 border-transparent bg-white shadow-sm ring-1 ring-gray-200 peer-checked:border-purple-500 peer-checked:ring-purple-500 peer-checked:bg-purple-50 transition-all text-center">
                                 <div class="w-8 h-8 rounded-full bg-purple-600 mx-auto mb-2 shadow-sm"></div>
                                 <span class="text-sm font-bold text-gray-700">Ungu</span>
                             </div>
                         </label>
                         <label class="cursor-pointer">
-                            <input type="radio" name="color" value="Hijau" class="peer sr-only">
+                            <input type="radio" name="color" value="Hijau" class="peer sr-only " {{ $liturgical_calendar->color === 'Hijau' ? 'checked' : '' }}>
                             <div class="p-4 rounded-xl border-2 border-transparent bg-white shadow-sm ring-1 ring-gray-200 peer-checked:border-green-500 peer-checked:ring-green-500 peer-checked:bg-green-50 transition-all text-center">
                                 <div class="w-8 h-8 rounded-full bg-green-500 mx-auto mb-2 shadow-sm"></div>
                                 <span class="text-sm font-bold text-gray-700">Hijau</span>
                             </div>
                         </label>
                         <label class="cursor-pointer">
-                            <input type="radio" name="color" value="Merah" class="peer sr-only">
+                            <input type="radio" name="color" value="Merah" class="peer sr-only" {{ $liturgical_calendar->color === 'Merah' ? 'checked' : '' }}>
                             <div class="p-4 rounded-xl border-2 border-transparent bg-white shadow-sm ring-1 ring-gray-200 peer-checked:border-red-500 peer-checked:ring-red-500 peer-checked:bg-red-50 transition-all text-center">
                                 <div class="w-8 h-8 rounded-full bg-red-600 mx-auto mb-2 shadow-sm"></div>
                                 <span class="text-sm font-bold text-gray-700">Merah</span>
                             </div>
                         </label>
                         <label class="cursor-pointer">
-                            <input type="radio" name="color" value="Putih" class="peer sr-only">
+                            <input type="radio" name="color" value="Putih" class="peer sr-only" {{ $liturgical_calendar->color === 'Putih' ? 'checked' : '' }}>
                             <div class="p-4 rounded-xl border-2 border-transparent bg-white shadow-sm ring-1 ring-gray-200 peer-checked:border-gray-400 peer-checked:ring-gray-400 peer-checked:bg-gray-100 transition-all text-center">
                                 <div class="w-8 h-8 rounded-full bg-white border border-gray-300 mx-auto mb-2 shadow-sm"></div>
                                 <span class="text-sm font-bold text-gray-700">Putih</span>
                             </div>
                         </label>
                         <label class="cursor-pointer">
-                            <input type="radio" name="color" value="Hitam" class="peer sr-only">
+                            <input type="radio" name="color" value="Hitam" class="peer sr-only" {{ $liturgical_calendar->color === 'Hitam' ? 'checked' : '' }}>
                             <div class="p-4 rounded-xl border-2 border-transparent bg-white shadow-sm ring-1 ring-gray-200 peer-checked:border-gray-800 peer-checked:ring-gray-800 peer-checked:bg-gray-200 transition-all text-center">
                                 <div class="w-8 h-8 rounded-full bg-gray-900 mx-auto mb-2 shadow-sm"></div>
                                 <span class="text-sm font-bold text-gray-700">Hitam</span>

@@ -26,8 +26,8 @@ class AnnouncementSeeder extends Seeder
                     kasih Kristus melalui tindakan nyata dan memberikan harapan
                     kepada mereka yang sedang berjuang.',
                 'image_url' => null,
-                'date_start' => '2026-03-01',
-                'date_end' => '2026-03-10',
+                'date_start' => '2026-05-01',
+                'date_end' => '2026-05-10',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'users_id' => 1,

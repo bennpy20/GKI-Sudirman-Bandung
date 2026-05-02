@@ -5,19 +5,27 @@
 @section('title', 'Admin - Kalender Liturgi')
 
 @section('content')
-<!-- Page Header -->
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
     <div>
-        <h2 class="text-3xl font-serif font-bold text-church-dark">Kalender Liturgi</h2>
+        <h2 class="text-3xl font-bold text-church-dark">Kalender Liturgi</h2>
         <p class="text-sm text-gray-500 mt-2 font-sans flex items-center gap-2">
             <i class="fas fa-info-circle text-church-gold"></i>Kelola data masa raya, pekan liturgi, dan warna peristiwanya.
         </p>
     </div>
     <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
-        <div class="relative w-full sm:w-auto">
-            <input type="text" placeholder="Cari pekan..." class="w-full sm:w-64 pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all shadow-sm text-sm">
-            <i class="fas fa-search absolute left-3.5 top-3 text-gray-400"></i>
-        </div>
+        <form method="GET" action="{{ route('admin.liturgical_calendar.index') }}" class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+            <div class="relative w-full sm:w-auto">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama pekan liturgi..." class="w-full sm:w-64 pl-10 pr-10 py-2.5 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all shadow-sm text-sm">
+                <input type="hidden" name="color" value="{{ request('color') }}">
+                <i class="fas fa-search absolute left-3.5 top-3 text-gray-400"></i>
+                @if(request('search'))
+                    <a href="{{ route('admin.liturgical_calendar.index', request()->except('search')) }}"
+                    class="absolute right-3 top-2.5 text-gray-400 hover:text-church-gold">
+                        <i class="fas fa-times-circle"></i>
+                    </a>
+                @endif
+            </div>
+        </form>
         <a href="{{ route('admin.liturgical_calendar.create') }}" class="w-full sm:w-auto justify-center bg-gradient-to-r from-church-gold to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-church-dark px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 whitespace-nowrap">
             <i class="fas fa-plus"></i>Tambah Pekan Liturgi
         </a>
@@ -26,6 +34,29 @@
 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
     <div class="p-5 border-b border-gray-50 flex justify-between items-center bg-gray-50/30">
         <h3 class="font-bold text-church-dark text-lg">Daftar Pekan Liturgi</h3>
+        <div x-data="{ open: false }" class="relative">
+            <button @click="open = !open" type="button"
+                class="text-gray-400 hover:text-church-gold text-sm font-medium flex items-center gap-2 cursor-pointer">
+                <i class="fas fa-filter"></i> Sortir
+            </button>
+            <div x-show="open" @click.outside="open = false" x-transition class="absolute right-0 mt-2 w-56 bg-white border border-gray-100 rounded-xl shadow-lg p-4 z-50">
+                <form method="GET" action="{{ route('admin.liturgical_calendar.index') }}">
+                    <input type="hidden" name="search" value="{{ request('search') }}">
+                    <label class="text-xs text-gray-500 font-semibold block mb-1">
+                        Warna Liturgi
+                    </label>
+                    <select name="color" onchange="this.form.submit()" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-church-gold">
+                        <option value="">Semua</option>
+                        @foreach($colors as $color)
+                            <option value="{{ $color }}"
+                                {{ request('color') == $color ? 'selected' : '' }}>
+                                {{ $color }}
+                            </option>
+                        @endforeach
+                    </select>
+                </form>
+            </div>
+        </div>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse whitespace-nowrap">

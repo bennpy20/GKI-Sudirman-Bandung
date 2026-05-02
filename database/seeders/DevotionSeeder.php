@@ -16,9 +16,10 @@ class DevotionSeeder extends Seeder
         DB::table('devotions')->insert([
             [
                 'title' => 'Renungan Pagi',
-                'content' => 'Isi renungan...',
+                'content' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
                 'bible_verse' => 'Mazmur 1:1',
                 'author' => 'Admin',
+                'date' => '2026-04-01',
                 'category' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),

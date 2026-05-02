@@ -10,9 +10,15 @@ class AdminRegionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $regions = Region::oldest('id')->paginate(10);
+        $query = Region::query();
+
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        $regions = $query->oldest('id')->paginate(10)->withQueryString();
         
         return view('admin.region.index', compact('regions'));
     }
@@ -42,7 +48,10 @@ class AdminRegionController extends Controller
             'description.max' => 'Deskripsi tidak boleh lebih dari 200 karakter.',
         ]);
 
-        Region::create($request->only('name', 'description'));
+        Region::create([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
 
         return redirect()->route('admin.region.index')->with('success', 'Data rayon berhasil ditambahkan!');
     }
@@ -99,7 +108,10 @@ class AdminRegionController extends Controller
         ]);
 
         $region = Region::findOrFail($id);
-        $region->update($request->only('name', 'description'));
+        $region->update([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
 
         return redirect()->route('admin.region.index')->with('success', 'Data rayon berhasil diperbarui!');
     }

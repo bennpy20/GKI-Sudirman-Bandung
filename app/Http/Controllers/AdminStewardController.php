@@ -12,11 +12,23 @@ class AdminStewardController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $stewards = Steward::with('commission')->oldest('id')->paginate(10);
+        $query = Steward::with('commission');
 
-        return view('admin.steward.index', compact('stewards'));
+        if ($request->filled('search')) {
+            $query->where('field', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('commission')) {
+            $query->where('commissions_id', $request->commission);
+        }
+
+        $stewards = $query->oldest('id')->paginate(10)->withQueryString();
+
+        $commissions = Commission::all();
+
+        return view('admin.steward.index', compact('stewards', 'commissions'));
     }
 
     /**

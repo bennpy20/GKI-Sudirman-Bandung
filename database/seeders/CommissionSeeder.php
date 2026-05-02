@@ -19,14 +19,14 @@ class CommissionSeeder extends Seeder
                 'day' => 'Senin',
                 'time_start' => '18:00:00',
                 'time_end' => '20:00:00',
-                'room' => 'Room A'
+                'room' => 'Ruang Bethesda'
             ],
             [
                 'name' => 'Sekolah Minggu',
                 'day' => 'Minggu',
                 'time_start' => '09:00:00',
                 'time_end' => '10:30:00',
-                'room' => 'Room B'
+                'room' => 'Gedung Anak'
             ],
         ]);
     }

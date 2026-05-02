@@ -5,7 +5,6 @@
 @section('title', 'Admin - Kalender Liturgi')
 
 @section('content')
-<!-- Header -->
 <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
     <div>
         <a href="{{ route('admin.liturgical_calendar.index') }}" class="text-sm font-medium text-gray-500 hover:text-church-gold mb-3 inline-flex items-center transition-colors">
@@ -14,7 +13,7 @@
             </div>
             Kembali
         </a>
-        <h2 class="text-3xl font-serif font-bold text-church-dark mt-1">Detail Pekan Liturgi</h2>
+        <h2 class="text-3xl font-bold text-church-dark mt-1">Detail Pekan Liturgi</h2>
     </div>
 </div>
 <!-- Ganti warna -->
@@ -66,7 +65,7 @@ $color = $colors[$key] ?? $colors['putih'];
                 </div>
             </div>
             
-            <h3 class="text-2xl font-serif font-bold text-church-dark">{{ $liturgical_calendar->name }}</h3>
+            <h3 class="text-2xl font-bold text-church-dark">{{ $liturgical_calendar->name }}</h3>
             <span class="inline-flex items-center gap-2 mt-2 px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-600 border border-gray-200 shadow-sm">
                 <span class="w-2 h-2 rounded-full {{ $color['dot'] }}"></span> Warna: {{ ucfirst($liturgical_calendar->color) }}
             </span>

@@ -26,6 +26,10 @@ class LiturgicalCalendarSeeder extends Seeder
                 'name' => 'Minggu Advent I',
                 'color' => 'Ungu',
             ],
+            [
+                'name' => 'Minggu Biasa',
+                'color' => 'Hijau',
+            ]
         ]);
     }
 }
