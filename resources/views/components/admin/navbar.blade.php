@@ -112,6 +112,20 @@
                 </div>
                 <span class="text-sm {{ request()->routeIs('admin.about.*') ? 'font-bold' : 'font-medium' }}">Profil Gereja</span>
             </a>
+
+            <!-- CRUD Admin untuk Super Admin -->
+            @if(auth()->user()->role === 1)
+                <div class="pt-4 pb-2">
+                    <p class="text-[10px] font-bold text-church-gold/60 uppercase tracking-widest px-2">Manajemen Admin</p>
+                </div>
+                <a href="{{ route('admin.super_admin.index') }}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.super_admin.*') ? 'bg-gradient-to-r from-church-gold to-yellow-600 text-church-dark shadow-[0_4px_20px_rgba(197,160,89,0.3)] transform hover:-translate-y-0.5' : 'text-white/70 hover:bg-white/5 hover:text-church-gold group' }}">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center transition-colors {{ request()->routeIs('admin.super_admin.*') ? 'bg-church-dark/10 text-church-dark' : 'bg-white/5 group-hover:bg-church-gold/20 group-hover:text-church-gold' }}">
+                        <i class="fas fa-user-cog"></i>
+                    </div>
+                    <span class="text-sm {{ request()->routeIs('admin.super_admin.*') ? 'font-bold' : 'font-medium' }}">Super Admin</span>
+                </a>
+            @endif
+            
         </nav>
     </div>
     

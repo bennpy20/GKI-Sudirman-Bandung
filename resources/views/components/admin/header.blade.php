@@ -1,3 +1,8 @@
+@php
+    $user = auth()->user();
+    $user->role_formatted = ($user->role == 1) ? 'Super Admin' : 'Admin';
+@endphp
+
 <header class="h-16 bg-white/80 backdrop-blur-md shadow-sm flex items-center justify-between px-4 lg:px-8 z-10 border-b border-gray-200/60 sticky top-0">
     <div class="flex items-center gap-4">
         <button @click="sidebarOpen = true" class="md:hidden text-gray-500 hover:text-church-gold focus:outline-none p-1.5 rounded-lg hover:bg-church-warm/50 transition-colors">
@@ -22,8 +27,8 @@
         <div class="relative" x-data="{ profileOpen: false }">
             <div @click="profileOpen = !profileOpen" @click.away="profileOpen = false" class="flex items-center gap-2.5 cursor-pointer hover:opacity-80 transition-opacity">
                 <div class="hidden md:block text-right">
-                    <p class="text-[13px] font-bold text-church-dark leading-tight">Admin Sekretaris</p>
-                    <p class="text-[11px] text-church-gold font-medium">Administrator</p>
+                    <p class="text-[13px] font-bold text-church-dark leading-tight">{{ $user->name }}</p>
+                    <p class="text-[11px] text-church-gold font-medium">Status: {{ $user->role_formatted }}</p>
                 </div>
                 <div class="w-8 h-8 rounded-full bg-church-gold flex items-center justify-center text-church-dark">
                     <i class="fas fa-user"></i>

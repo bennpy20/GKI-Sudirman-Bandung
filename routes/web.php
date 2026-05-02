@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminMemberController;
 use App\Http\Controllers\AdminPreacherController;
 use App\Http\Controllers\AdminRegionController;
 use App\Http\Controllers\AdminStewardController;
+use App\Http\Controllers\AdminSuperAdminController;
 use App\Http\Controllers\AdminWorshipController;
 use App\Http\Controllers\ArticleTeologisController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -51,6 +52,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('devotion', AdminDevotionController::class);
     Route::resource('preacher', AdminPreacherController::class);
     Route::resource('about', AdminAboutController::class);
+    Route::resource('super_admin', AdminSuperAdminController::class)->middleware('superadmin');
 });
 
 require __DIR__.'/auth.php';

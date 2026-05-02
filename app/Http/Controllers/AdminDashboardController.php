@@ -19,6 +19,8 @@ class AdminDashboardController extends Controller
     {
         Carbon::setLocale('id');
 
+        $user = auth()->user();
+
         $date_now = Carbon::now('Asia/Jakarta')->isoFormat('dddd, D MMMM Y');
 
         $members = Member::all();
@@ -90,6 +92,6 @@ class AdminDashboardController extends Controller
             $devotion->devotionCategory = $devotionCategory[$devotion->category] ?? '-';
         }
 
-        return view('admin.index', compact('date_now', 'members', 'regions', 'commissions', 'worships', 'announcements', 'devotions'));
+        return view('admin.index', compact('user', 'date_now', 'members', 'regions', 'commissions', 'worships', 'announcements', 'devotions'));
     }
 }

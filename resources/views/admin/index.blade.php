@@ -1,10 +1,13 @@
 @extends('components.admin.layout')
-@section('page_title', 'Dashboard')
+
+@section('page_title', 'Dashboard Admin')
+
+@section('title', 'Admin - Dashboard')
 
 @section('content')
 <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
     <div>
-        <h2 class="text-3xl font-bold text-church-dark">Selamat Datang, Admin!</h2>
+        <h2 class="text-3xl font-bold text-church-dark">Selamat Datang, {{ $user->name }}</h2>
         <p class="text-sm text-gray-500 mt-2 font-sans flex items-center gap-2">
             Ringkasan informasi dan aktivitas pelayanan GKI Sudirman ada di sini.
         </p>
