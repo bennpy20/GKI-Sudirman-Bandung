@@ -19,11 +19,6 @@
         <p class="text-gray-500 text-sm mb-6">
             Halaman ini telah kadaluarsa. Silakan login kembali.
         </p>
-        <div class="flex justify-center gap-3">
-            <a href="{{ route('login') }}" class="inline-flex items-center gap-2 bg-church-gold hover:bg-yellow-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition">
-                <i class="fas fa-sign-in-alt"></i> Login
-            </a>
-        </div>
     </div>
 </body>
 </html>

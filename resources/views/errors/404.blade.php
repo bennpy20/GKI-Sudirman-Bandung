@@ -19,9 +19,6 @@
         <p class="text-gray-500 text-sm mb-6">
             Halaman yang Anda cari tidak tersedia atau sudah dipindahkan.
         </p>
-        <a href="{{ route('admin.dashboard') }}" class="inline-flex items-center gap-2 bg-church-gold hover:bg-yellow-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition">
-            <i class="fas fa-arrow-left"></i> Kembali ke Dashboard
-        </a>
     </div>
 </body>
 </html>

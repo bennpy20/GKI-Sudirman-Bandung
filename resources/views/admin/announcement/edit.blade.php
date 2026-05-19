@@ -61,7 +61,7 @@
                             <i class="fas fa-cloud-upload-alt text-2xl text-church-gold"></i>
                         </div>
                         <p class="font-bold text-gray-700 group-hover:text-church-dark transition-colors">Klik untuk mengunggah file</p>
-                        <p class="text-xs text-gray-400 mt-2 text-center">Format: JPG, JPEG, PNG, WEBP <br>(Max: 2MB)</p>
+                        <p class="text-xs text-gray-400 mt-2 text-center">Format: JPG, JPEG, PNG, WEBP <br>(Max: 8MB)</p>
                         <input type="file" name="image_url" x-ref="fileInput" class="hidden" accept=".jpg,.jpeg,.png,.webp"
                             @change="
                                 const file = $event.target.files[0];

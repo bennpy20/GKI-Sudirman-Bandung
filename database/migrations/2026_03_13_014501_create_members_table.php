@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('membership');
             $table->boolean('is_active');
             $table->boolean('is_region_leader');
+            $table->string('image_url', 200)->nullable();
 
             $table->foreignId('users_id')->constrained('users');
             $table->foreignId('regions_id')->nullable()->constrained('regions')->nullOnDelete();

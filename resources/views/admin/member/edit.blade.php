@@ -14,7 +14,7 @@
     </a>
     <h2 class="text-3xl font-bold text-church-dark mt-1">Sunting Data Anggota Jemaat</h2>
 </div>
-<form action="{{ route('admin.member.update', $member->id) }}" method="POST">
+<form action="{{ route('admin.member.update', $member->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     <div class="space-y-8 pb-24">
@@ -72,6 +72,23 @@
                         <label class="block text-sm font-bold text-gray-700 mb-2">Alamat <span class="text-red-500">*</span></label>
                         <textarea name="address" rows="3" class="w-full px-5 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all focus:bg-white text-church-dark resize-none font-medium">{{ old('address', $member->address) }}</textarea>
                         @error('address')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Foto Profil (Opsional)</label>
+                        @if($member->image_url)
+                            <div class="mb-4">
+                                <img src="{{ asset('storage/' . $member->image_url) }}" alt="{{ $member->name }}" class="w-32 h-32 object-cover rounded-xl border border-gray-200">
+                                <label class="flex items-center gap-2 mt-3 cursor-pointer">
+                                    <input type="checkbox" name="remove_image" value="1" class="text-red-500 rounded border-gray-300 focus:ring-red-500">
+                                    <span class="text-sm text-red-500 font-medium hover:text-red-600 transition-colors">Hapus foto saat ini</span>
+                                </label>
+                            </div>
+                        @endif
+                        <input type="file" name="image_url" accept="image/jpeg,image/png,image/jpg,image/webp" class="w-full px-5 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all focus:bg-white text-church-dark font-medium file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-church-gold/10 file:text-church-gold hover:file:bg-church-gold/20">
+                        <p class="text-xs text-gray-500 mt-2">Format yang didukung: JPG, JPEG, PNG, WEBP (maksimal 8MB)</p>
+                        @error('image_url')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>

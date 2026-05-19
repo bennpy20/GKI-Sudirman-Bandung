@@ -19,6 +19,7 @@ class Member extends Model
         'membership',
         'is_active',
         'is_region_leader',
+        'image_url',
         'users_id',
         'regions_id',
         'commissions_id',

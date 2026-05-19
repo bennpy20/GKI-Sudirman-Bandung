@@ -28,8 +28,6 @@ class DatabaseSeeder extends Seeder
             MemberSeeder::class,   
             WorshipSeeder::class,
 
-            MemberServiceSeeder::class,
-            SundayServiceSeeder::class,
             AnnouncementSeeder::class,
             DevotionSeeder::class,
             AboutSeeder::class

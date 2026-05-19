@@ -40,8 +40,7 @@
                 {{ $devotion->title }}
             </h1>
             <div class="flex items-center gap-3 mb-6">
-                <div class="font-bold text-church-dark text-base">Nats Alkitab:
-                    {{ $devotion->bible_verse }}
+                <div class="font-bold text-church-dark text-base">Bacaan: {{ $devotion->bible_verse }}
                 </div>
             </div>
             <div class="flex items-center gap-4 mb-6 pb-6 border-b border-gray-100">

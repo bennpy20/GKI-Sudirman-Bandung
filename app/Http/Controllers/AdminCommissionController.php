@@ -19,7 +19,7 @@ class AdminCommissionController extends Controller
             $query->where('name', 'like', '%' . $request->search . '%');
         }
 
-        $commissions = $query->oldest('id')->paginate(10)->withQueryString();
+        $commissions = $query->latest('id')->paginate(10)->withQueryString();
 
         return view('admin.commission.index', compact('commissions'));
     }
@@ -86,7 +86,7 @@ class AdminCommissionController extends Controller
             6 => 'Jemaat Biasa',
         ];
 
-        $members = $commission->members()->oldest('id')->get()->map(function ($member) use ($memberStatus) {
+        $members = $commission->members()->latest('id')->get()->map(function ($member) use ($memberStatus) {
             $member->memberStatus = $memberStatus[$member->status];
             return $member;
         });

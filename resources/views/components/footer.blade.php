@@ -11,9 +11,9 @@
         <div>
             <h4 class="font-serif text-xl mb-6 text-church-gold">Tautan Cepat</h4>
             <ul class="space-y-3 text-sm text-white/50">
-                <li><button @click="activeTab = 'home'" class="hover:text-church-gold">Beranda</button></li>
-                <li><button @click="activeTab = 'renungan'" class="hover:text-church-gold">Renungan Harian</button></li>
-                <li><button @click="activeTab = 'kontak'" class="hover:text-church-gold">Hubungi Kami</button></li>
+                <li><a href="{{ route('home.index') }}" class="hover:text-church-gold transition-colors">Beranda</a></li>
+                <li><a href="{{ route('renungan_harian.index') }}" class="hover:text-church-gold transition-colors">Renungan Harian</a></li>
+                <li><a href="{{ route('hubungi_kami.index') }}" class="hover:text-church-gold transition-colors">Hubungi Kami</a></li>
             </ul>
         </div>
         <div>

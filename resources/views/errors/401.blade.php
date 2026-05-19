@@ -19,9 +19,6 @@
         <p class="text-gray-500 text-sm mb-6">
             Anda harus login terlebih dahulu untuk mengakses halaman ini.
         </p>
-        <a href="{{ route('login') }}" class="inline-flex items-center gap-2 bg-church-gold hover:bg-yellow-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition">
-            <i class="fas fa-sign-in-alt"></i> Login Sekarang
-        </a>
     </div>
 </body>
 </html>

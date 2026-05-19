@@ -24,7 +24,7 @@ class AdminStewardController extends Controller
             $query->where('commissions_id', $request->commission);
         }
 
-        $stewards = $query->oldest('id')->paginate(10)->withQueryString();
+        $stewards = $query->latest('id')->paginate(10)->withQueryString();
 
         $commissions = Commission::all();
 
@@ -87,7 +87,7 @@ class AdminStewardController extends Controller
             6 => 'Jemaat Biasa',
         ];
 
-        $members = $steward->members()->oldest('id')->get()->map(function ($member) use ($memberStatus) {
+        $members = $steward->members()->latest('id')->get()->map(function ($member) use ($memberStatus) {
             $member->memberStatus = $memberStatus[$member->status];
             return $member;
         });

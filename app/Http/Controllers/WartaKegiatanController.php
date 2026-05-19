@@ -35,7 +35,7 @@ class WartaKegiatanController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('warta.show');
     }
 
     /**

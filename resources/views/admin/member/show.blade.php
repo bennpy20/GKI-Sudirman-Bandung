@@ -22,9 +22,13 @@
             <div class="h-24 bg-gradient-to-r from-church-gold to-yellow-600"></div>
             <div class="relative px-6 pb-6 -mt-12">
                 <div class="w-24 h-24 rounded-full bg-white p-1 mx-auto shadow-md mb-4 flex items-center justify-center border border-gray-100 relative">
-                    <div class="w-full h-full rounded-full bg-gray-100 flex items-center justify-center text-3xl font-bold text-gray-400">
-                        <i class="fas fa-user"></i>
-                    </div>
+                    @if($member->image_url)
+                        <img src="{{ asset('storage/' . $member->image_url) }}" alt="{{ $member->name }}" class="w-full h-full rounded-full object-cover">
+                    @else
+                        <div class="w-full h-full rounded-full bg-gray-100 flex items-center justify-center text-3xl font-bold text-gray-400">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    @endif
                     <div class="absolute bottom-1 right-1 w-5 h-5 border-2 border-white rounded-full {{ $member->is_active === 1 ? 'bg-green-500' : 'bg-red-500' }}" title="{{ $member->is_active === 1 ? 'Aktif' : 'Non-Aktif' }}"></div>
                 </div>
                 <h3 class="text-xl font-bold text-church-dark">{{ $member->name }}</h3>

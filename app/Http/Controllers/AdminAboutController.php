@@ -12,7 +12,7 @@ class AdminAboutController extends Controller
      */
     public function index()
     {
-        $abouts = About::with('users')->oldest('id')->get();
+        $abouts = About::with('users')->latest('id')->paginate(10);
 
         return view('admin.about.index', compact('abouts'));
     }
@@ -110,9 +110,6 @@ class AdminAboutController extends Controller
      */
     public function destroy(string $id)
     {
-        $about = About::findOrFail($id);
-        $about->delete();
-
-        return redirect()->route('admin.about.index')->with('success', 'Data profil gereja berhasil dihapus!');
+        //
     }
 }

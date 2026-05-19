@@ -18,7 +18,7 @@ class AdminRegionController extends Controller
             $query->where('name', 'like', '%' . $request->search . '%');
         }
 
-        $regions = $query->oldest('id')->paginate(10)->withQueryString();
+        $regions = $query->latest('id')->paginate(10)->withQueryString();
         
         return view('admin.region.index', compact('regions'));
     }
@@ -72,7 +72,7 @@ class AdminRegionController extends Controller
             6 => 'Jemaat Biasa',
         ];
 
-        $members = $region->members()->oldest('id')->get()->map(function ($member) use ($memberStatus) {
+        $members = $region->members()->latest('id')->get()->map(function ($member) use ($memberStatus) {
             $member->memberStatus = $memberStatus[$member->status];
             return $member;
         });

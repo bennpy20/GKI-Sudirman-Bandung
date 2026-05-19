@@ -14,7 +14,7 @@
     </a>
     <h2 class="text-3xl font-bold text-church-dark mt-1">Tambah Data Anggota Jemaat</h2>
 </div>
-<form action="{{ route('admin.member.store') }}" method="POST">
+<form action="{{ route('admin.member.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="space-y-8 pb-24">
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -71,6 +71,14 @@
                         <label class="block text-sm font-bold text-gray-700 mb-2">Alamat <span class="text-red-500">*</span></label>
                         <textarea name="address" rows="3" placeholder="Tuliskan alamat.." class="w-full px-5 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all focus:bg-white text-church-dark resize-none font-medium"></textarea>
                         @error('address')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Foto Profil (Opsional)</label>
+                        <input type="file" name="image_url" accept="image/jpeg,image/png,image/jpg,image/webp" class="w-full px-5 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all focus:bg-white text-church-dark font-medium file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-church-gold/10 file:text-church-gold hover:file:bg-church-gold/20">
+                        <p class="text-xs text-gray-500 mt-2">Format yang didukung: JPG, JPEG, PNG, WEBP (maksimal 8MB)</p>
+                        @error('image_url')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>

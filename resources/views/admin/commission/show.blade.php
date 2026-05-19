@@ -65,8 +65,12 @@
                 @forelse ($members as $member)
                 <div class="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-xl transition-colors border border-transparent hover:border-gray-100
                     {{ $member->is_active == 0 ? 'opacity-50' : '' }}">
-                    <div class="h-10 w-10 rounded-full bg-church-gold flex items-center justify-center">
-                        <i class="fas fa-user text-church-dark" ></i>
+                    <div class="h-10 w-10 rounded-full overflow-hidden flex items-center justify-center bg-church-gold">
+                        @if($member->image_url)
+                            <img src="{{ asset('storage/' . $member->image_url) }}" alt="{{ $member->name }}" class="w-full h-full object-cover">
+                        @else
+                            <i class="fas fa-user text-church-dark"></i>
+                        @endif
                     </div>
                     <div class="flex-1">
                         <div class="font-bold text-church-dark text-sm">{{ $member->name }}</div>

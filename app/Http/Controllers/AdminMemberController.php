@@ -8,6 +8,7 @@ use App\Models\Region;
 use App\Models\Steward;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdminMemberController extends Controller
 {
@@ -106,6 +107,7 @@ class AdminMemberController extends Controller
             'commissions_id' => 'nullable|exists:commissions,id',
             'stewards' => 'nullable|array',
             'stewards.*' => 'exists:stewards,id',
+            'image_url' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
         ], [
             'name.required' => 'Nama anggota jemaat wajib diisi.',
             'name.string' => 'Nama anggota jemaat harus berupa teks.',
@@ -136,6 +138,9 @@ class AdminMemberController extends Controller
             'commissions_id.exists' => 'ID komisi tidak valid.',
             'stewards.array' => 'Daftar bidang pelayanan tidak valid.',
             'stewards.*.exists' => 'Bidang pelayanan tidak valid.',
+            'image_url.image' => 'File yang diunggah harus berupa gambar.',
+            'image_url.mimes' => 'Format gambar harus JPG, JPEG, PNG, atau WEBP.',
+            'image_url.max' => 'Ukuran gambar tidak boleh lebih dari 8MB.',
         ]);
 
         $member = Member::create([
@@ -153,6 +158,16 @@ class AdminMemberController extends Controller
             'regions_id' => $request->regions_id,
             'commissions_id' => $request->commissions_id,
         ]);
+
+        if ($request->hasFile('image_url')) {
+            $file = $request->file('image_url');
+            $extension = $file->getClientOriginalExtension();
+            $filename = date('YmdHis') . '_' . uniqid() . '.' . $extension;
+            $path = $file->storeAs('members', $filename, 'public');
+            $member->update(
+                ['image_url' => $path]
+            );
+        }
 
         $member->stewards()->sync($request->stewards ?? []);
 
@@ -249,6 +264,7 @@ class AdminMemberController extends Controller
             'users_id' => 'required|exists:users,id',
             'regions_id' => 'nullable|exists:regions,id|required_if:is_region_leader,1',
             'commissions_id' => 'nullable|exists:commissions,id',
+            'image_url' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
         ], [
             'name.required' => 'Nama anggota jemaat wajib diisi.',
             'name.string' => 'Nama anggota jemaat harus berupa teks.',
@@ -277,6 +293,9 @@ class AdminMemberController extends Controller
             'regions_id.exists' => 'ID rayon tidak valid.',
             'regions_id.required_if' => 'Ketua rayon harus memiliki rayon.',
             'commissions_id.exists' => 'ID komisi tidak valid.',
+            'image_url.image' => 'File yang diunggah harus berupa gambar.',
+            'image_url.mimes' => 'Format gambar harus JPG, JPEG, PNG, atau WEBP.',
+            'image_url.max' => 'Ukuran gambar tidak boleh lebih dari 8MB.',
         ]);
 
         $member = Member::findOrFail($id);
@@ -297,6 +316,25 @@ class AdminMemberController extends Controller
             'commissions_id' => $request->commissions_id,
         ]);
 
+        if ($request->hasFile('image_url')) {
+            if ($member->image_url) {
+                Storage::disk('public')->delete($member->image_url);
+            }
+
+            $file = $request->file('image_url');
+            $extension = $file->getClientOriginalExtension();
+            $filename = date('YmdHis') . '_' . uniqid() . '.' . $extension;
+            $path = $file->storeAs('members', $filename, 'public');
+            $member->update(
+                ['image_url' => $path]
+            );
+        } elseif ($request->input('remove_image')) {
+            if ($member->image_url) {
+                Storage::disk('public')->delete($member->image_url);
+                $member->update(['image_url' => null]);
+            }
+        }
+
         $member->stewards()->sync($request->stewards ?? []);
 
         return redirect()->route('admin.member.index')->with('success', 'Data anggota jemaat berhasil diperbarui!');
@@ -308,6 +346,10 @@ class AdminMemberController extends Controller
     public function destroy(string $id)
     {
         $member = Member::findOrFail($id);
+
+        if ($member->image_url) {
+            Storage::disk('public')->delete($member->image_url);
+        }
 
         $member->delete();
 

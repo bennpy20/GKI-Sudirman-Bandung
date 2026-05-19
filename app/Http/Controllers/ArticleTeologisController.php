@@ -35,7 +35,7 @@ class ArticleTeologisController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('artikel_teologis.show');
     }
 
     /**

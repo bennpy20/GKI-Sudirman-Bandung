@@ -22,7 +22,7 @@ class AdminLiturgicalCalendarController extends Controller
             $query->where('color', $request->color);
         }
 
-        $liturgical_calendars = $query->oldest('id')->paginate(10)->withQueryString();
+        $liturgical_calendars = $query->latest('id')->paginate(10)->withQueryString();
 
         $colors = LiturgicalCalendar::select('color')->distinct()->pluck('color');
 

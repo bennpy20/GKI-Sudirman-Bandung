@@ -18,7 +18,7 @@ class AdminPreacherController extends Controller
             $query->where('name', 'like', '%' . $request->search . '%');
         }
 
-        $preachers = $query->oldest('id')->paginate(10)->withQueryString();
+        $preachers = $query->latest('id')->paginate(10)->withQueryString();
 
         return view('admin.preacher.index', compact('preachers'));
     }
