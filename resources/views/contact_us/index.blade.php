@@ -50,7 +50,7 @@
                 @endforeach
             </div>
             <div class="pt-8 mt-8 border-t border-black/10">
-                <h3 class="text-lg sm:text-xl font-bold mb-5">Sosial Media</h3>
+                <h3 class="text-lg sm:text-xl font-bold mb-5">Media Sosial</h3>
                 <div class="grid grid-cols-3 gap-2">
                     @foreach($abouts as $about)
                         @if($about->name === 'YouTube')

@@ -18,7 +18,7 @@
 
                 <!-- Jadwal Ibadah -->
                 <a href="{{ route('sunday_services.index') }}" class="flex items-center gap-1 text-base font-medium transition-colors py-2 cursor-pointer {{ Route::is('sunday_services.index') ? 'text-church-gold' : 'text-church-dark/60 hover:text-church-dark' }}">
-                    Jadwal Kebaktian Minggu
+                    Jadwal Kebaktian
                 </a>
 
                 <!-- Warta -->
@@ -69,9 +69,9 @@
                 Home
             </a>
 
-            <!-- Kebaktian Minggu -->
+            <!-- Jadwal Kebaktian -->
             <a href="{{ route('sunday_services.index') }}" class="w-full flex items-center justify-between p-3 rounded-xl text-base font-medium {{ Route::is('sunday_services.index') ? 'bg-church-gold/10 text-church-gold' : 'text-church-dark/60' }}">
-                Jadwal Kebaktian Minggu
+                Jadwal Kebaktian
             </a>
 
             <!-- Warta -->

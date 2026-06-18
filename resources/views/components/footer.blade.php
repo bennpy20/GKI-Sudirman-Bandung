@@ -16,7 +16,7 @@
             <h4 class="font-bold text-lg sm:text-xl mb-4 text-church-gold">Tautan Cepat</h4>
             <ul class="space-y-3 text-sm sm:text-base *:text-white/50">
                 <li><a href="{{ route('home.index') }}" class="hover:text-church-gold transition-colors">Beranda</a></li>
-                <li><a href="{{ route('sunday_services.index') }}" class="hover:text-church-gold transition-colors">Jadwal Kebaktian Minggu</a></li>
+                <li><a href="{{ route('sunday_services.index') }}" class="hover:text-church-gold transition-colors">Jadwal Kebaktian</a></li>
                 <li><a href="{{ route('announcement.index') }}" class="hover:text-church-gold transition-colors">Warta</a></li>
                 <li><a href="{{ route('devotion.index') }}" class="hover:text-church-gold transition-colors">Renungan Harian</a></li>
                 <li><a href="{{ route('contact_us.index') }}" class="hover:text-church-gold transition-colors">Hubungi Kami</a></li>

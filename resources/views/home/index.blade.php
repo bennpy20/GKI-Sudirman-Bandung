@@ -136,7 +136,7 @@
         <section>
             <div class="mb-10 flex items-end justify-between">
                 <div>
-                    <h2 class="text-2xl font-bold mb-2">Kebaktian Minggu</h2>
+                    <h2 class="text-2xl font-bold mb-2">Jadwal Kebaktian</h2>
                     <div class="w-16 h-1 bg-church-gold mt-3 rounded-full"></div>
                 </div>
                 <a href="{{ route('sunday_services.index') }}" class="hidden sm:block text-sm sm:text-base font-bold text-church-gold">Lihat Jadwal Kebaktian &rarr;</a>
