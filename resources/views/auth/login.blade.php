@@ -32,14 +32,11 @@
                     <div>
                         <label for="email" class="block text-sm font-semibold text-gray-700 mb-1.5">Email</label>
                         <div class="relative">
-                            <input type="email" id="email" name="email" required autofocus value="{{ old('email') }}"
+                            <input type="email" id="email" name="email" required autofocus
                                 class="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-church-gold focus:border-church-gold transition-colors text-sm text-gray-700"
                                 placeholder="Masukkan email..">
                             <i class="fas fa-envelope absolute left-3.5 top-4 text-gray-400"></i>
                         </div>
-                        @error('email')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror
                     </div>
 
                     <div>
@@ -52,7 +49,7 @@
                                 placeholder="Masukkan password..">
                             <i class="fas fa-lock absolute left-3.5 top-4 text-gray-400"></i>
                         </div>
-                        @error('password')
+                        @error('email')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>
