@@ -16,11 +16,11 @@
     
     <div class="px-4 py-6 flex-1 overflow-y-auto w-full no-scrollbar">
         <nav class="space-y-2">
-            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.dashboard.*') || request()->is('admin') ? 'bg-gradient-to-r from-church-gold to-yellow-600 text-church-dark shadow-[0_4px_20px_rgba(197,160,89,0.3)] transform hover:-translate-y-0.5' : 'text-white/70 hover:bg-white/5 hover:text-church-gold group' }}">
-                <div class="w-8 h-8 rounded-lg flex items-center justify-center transition-colors {{ request()->routeIs('admin.dashboard.*') || request()->is('admin') ? 'bg-church-dark/10 text-church-dark' : 'bg-white/5 group-hover:bg-church-gold/20 group-hover:text-church-gold' }}">
+            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.dashboard') || request()->is('admin') ? 'bg-gradient-to-r from-church-gold to-yellow-600 text-church-dark shadow-[0_4px_20px_rgba(197,160,89,0.3)] transform hover:-translate-y-0.5' : 'text-white/70 hover:bg-white/5 hover:text-church-gold group' }}">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center transition-colors {{ request()->routeIs('admin.dashboard') || request()->is('admin') ? 'bg-church-dark/10 text-church-dark' : 'bg-white/5 group-hover:bg-church-gold/20 group-hover:text-church-gold' }}">
                     <i class="fas fa-tachometer-alt"></i>
                 </div>
-                <span class="text-sm {{ request()->routeIs('admin.dashboard.*') || request()->is('admin') ? 'font-bold' : 'font-medium' }}">Dashboard</span>
+                <span class="text-sm {{ request()->routeIs('admin.dashboard') || request()->is('admin') ? 'font-bold' : 'font-medium' }}">Dashboard</span>
             </a>
 
             <!-- Manajemen Ibadah -->
