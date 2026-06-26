@@ -63,7 +63,7 @@
                             </tr>
                             @if($week1?->liturgical_calendars || $week2?->liturgical_calendars)
                                 <tr class="hover:bg-church-warm/10 transition-colors">
-                                    <td class="px-5 py-3 font-bold text-church-dark text-sm sm:text-base">Nats Alkitab</td>
+                                    <td class="px-5 py-3 font-bold text-church-dark text-sm sm:text-base">Kalender Liturgi</td>
                                     <td class="px-5 py-3 text-center font-semibold text-church-dark border-l border-black/5 text-sm sm:text-base">
                                         {{ $week1?->liturgical_calendars?->name ?? '-' }}
                                     </td>
