@@ -6,6 +6,7 @@ use App\Models\Commission;
 use App\Models\Member;
 use App\Models\Region;
 use App\Models\Steward;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -17,6 +18,7 @@ class AdminMemberController extends Controller
      */
     public function index(Request $request)
     {
+        Carbon::setLocale('id');
 
         $query = Member::query();
 
@@ -38,7 +40,11 @@ class AdminMemberController extends Controller
             }
         }
 
-        $members = $query->latest('id')->paginate(10)->withQueryString();
+        if ($request->has('print')) {
+            $members = $query->latest('id')->get();
+        } else {
+            $members = $query->latest('id')->paginate(10)->withQueryString();
+        }
 
         $memberStatus = [
             1 => 'Koordinator Hamba Tuhan',
@@ -60,6 +66,18 @@ class AdminMemberController extends Controller
         foreach ($members as $member) {
             $member->memberStatus = $memberStatus[$member->status];
             $member->memberMembership = $memberMembership[$member->membership];
+            $member->birth_date_formatted = Carbon::parse($member->birth_date, 'Asia/Jakarta')->translatedFormat('j F Y');
+        }
+
+        if ($request->has('print')) {
+            $pdf = Pdf::loadView(
+                'admin.member.print',
+                [
+                    'members' => $members,
+                    'date' => Carbon::now()->translatedFormat('d F Y'),
+                ]
+            );
+            return $pdf->setPaper('a4', 'landscape')->stream('Data Jemaat GKI Sudirman.pdf');
         }
 
         return view('admin.member.index', compact('members', 'memberMembership'));
