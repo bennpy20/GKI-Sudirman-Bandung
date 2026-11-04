@@ -20,14 +20,11 @@ class AboutUsController extends Controller
     {
         $abouts = About::all();
         
-        $members = Member::whereIn('status', [1, 2, 3, 4, 5])->get();
+        $members = Member::whereIn('status', [1, 2])->get();
 
         $memberStatus = [
-            1 => 'Koordinator Hamba Tuhan',
-            2 => 'Pendeta',
-            3 => 'Penginjil',
-            4 => 'Penatua',
-            5 => 'Diaken'
+            1 => 'Pendeta',
+            2 => 'Penatua'
         ];
 
         foreach($members as $member) {

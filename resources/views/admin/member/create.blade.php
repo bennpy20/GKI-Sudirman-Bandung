@@ -105,12 +105,9 @@
                         <label class="block text-sm font-bold text-gray-700 mb-2">Status Jemaat <span class="text-red-500">*</span></label>
                         <select name="status" required class="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-church-gold focus:border-church-gold outline-none transition-all text-church-dark appearance-none font-medium">
                             <option value="" disabled selected>Pilih Status</option>
-                            <option value="1">Koordinator Hamba Tuhan</option>
-                            <option value="2">Pendeta</option>
-                            <option value="3">Penginjil</option>
-                            <option value="4">Penatua</option>
-                            <option value="5">Diaken</option>
-                            <option value="6">Jemaat Biasa</option>
+                            <option value="1">Pendeta</option>
+                            <option value="2">Penatua</option>
+                            <option value="3">Jemaat Biasa</option>
                         </select>
                         @error('status')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>

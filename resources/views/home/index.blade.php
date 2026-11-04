@@ -11,7 +11,7 @@
     <div class="absolute inset-0 flex flex-col justify-center p-6 sm:p-10 md:p-16 text-white">
         <div class="relative z-10 max-w-3xl">
             <h1 class="text-4xl sm:text-6xl font-bold mb-4 leading-tight drop-shadow-lg">
-                Selamat Datang di <br class="hidden sm:block"> 
+                EkSoe Life <br class="hidden sm:block"> 
                 <span class="text-church-gold drop-shadow-md">GKI Sudirman</span>
             </h1>
             @foreach ($abouts as $about)

@@ -1,7 +1,7 @@
 @extends('components.layout')
 
 @section('title')
-    Visi & Misi - GKI Sudirman
+    GKI Sudirman - Visi & Misi
 @endsection
 
 @section('content')

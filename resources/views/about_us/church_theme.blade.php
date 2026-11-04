@@ -1,7 +1,7 @@
 @extends('components.layout')
 
 @section('title')
-    Tema Gereja - GKI Sudirman
+    GKI Sudirman - Tema Gereja
 @endsection
 
 @section('content')

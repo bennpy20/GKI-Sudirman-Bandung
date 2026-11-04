@@ -164,12 +164,9 @@ class AdminWorshipController extends Controller
         });
 
         $memberStatus = [
-            1 => 'Koordinator Hamba Tuhan',
-            2 => 'Pendeta',
-            3 => 'Penginjil',
-            4 => 'Penatua',
-            5 => 'Diaken',
-            6 => 'Jemaat Biasa',
+            1 => 'Pendeta',
+            2 => 'Penatua',
+            3 => 'Jemaat Biasa',
         ];
 
         foreach ($worship->sunday_services as $service) {

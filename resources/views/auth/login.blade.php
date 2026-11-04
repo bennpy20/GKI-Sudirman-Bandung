@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Admin - GKI Sudirman</title>
+    <link rel="icon" type="image/png" href="{{ asset('EkSoe-Life-Icon.png') }}">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,11 +19,11 @@
     <div class="max-w-md w-full">
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
             <div class="px-8 pt-8 pb-6 text-center">
-                <div class="mx-auto w-16 h-16 bg-church-warm/30 text-church-dark rounded-full flex items-center justify-center mb-4 border border-church-gold/20">
-                    <img src="{{ asset('logo.png') }}" alt="Logo GKI Sudirman" class="w-16 h-16 rounded-full object-cover">
+                <div class="mx-auto mb-5 flex items-center justify-center px-4 py-2">
+                    <img src="{{ asset('EkSoe-Life-Transparent.png') }}" alt="Logo EkSoe Life" class="w-auto h-16">
                 </div>
                 <h1 class="text-2xl font-bold text-gray-900 mb-2">Login</h1>
-                <p class="text-gray-500 text-sm">Silakan masuk ke akun admin GKI Sudirman</p>
+                <p class="text-gray-500 text-sm">Silakan masuk ke akun admin EkSoe Life</p>
             </div>
 
             <div class="px-8 pb-8">

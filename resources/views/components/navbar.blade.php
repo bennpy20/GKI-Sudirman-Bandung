@@ -2,9 +2,9 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-20 items-center">
             <a href="{{ route('home.index') }}" class="flex items-center gap-3 cursor-pointer">
-                <img src="{{ asset('logo.png') }}" alt="GKI Sudirman" class="w-10 h-10 rounded-full">
+                <img src="{{ asset('EkSoe-Life-Transparent.png') }}" alt="EkSoe Life" class="w-auto h-12">
                 <div class="flex flex-col">
-                    <span class="text-2xl font-bold leading-tight text-church-dark">GKI Sudirman</span>
+                    {{-- <span class="text-2xl font-bold leading-tight text-church-dark">GKI Sudirman</span> --}}
                     {{-- <span class="text-[10px] uppercase tracking-widest opacity-60 text-church-dark">Tuhan Mencipta, Manusia Ikut Serta</span> --}}
                 </div>
             </a>

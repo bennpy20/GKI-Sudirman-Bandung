@@ -1,12 +1,7 @@
 <aside x-cloak :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed inset-y-0 left-0 z-50 w-64 bg-gradient-to-b from-church-dark to-slate-900 text-white transition-transform duration-300 ease-in-out md:static md:translate-x-0 flex flex-col shadow-2xl border-r border-church-gold/20">
-    <div class="h-16 flex items-center justify-between border-b border-white/10 px-4">
+    <div class="h-24 flex items-center justify-between border-b border-white/10 px-4">
         <div class="flex items-center gap-3">
-            <!-- Logo -->
-            <img src="{{ asset('logo.png') }}" alt="Logo GKI" class="h-8 w-8 object-contain rounded-full ml-4">
-            <!-- Nama -->
-            <h1 class="text-xl font-bold text-church-gold">
-                GKI Sudirman
-            </h1>
+            <img src="{{ asset('EkSoe-Life-White-Transparent.png') }}" alt="EkSoe Life" class="w-auto h-12 ml-4">
         </div>
         {{-- Close button (mobile) --}}
         <button @click="sidebarOpen = false" class="md:hidden text-white/70 hover:text-church-gold">

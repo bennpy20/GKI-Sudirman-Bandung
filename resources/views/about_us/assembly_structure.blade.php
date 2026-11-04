@@ -37,7 +37,7 @@
     <h3 class="text-xl font-bold mb-4">Pendeta Jemaat</h3>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mx-auto">
         @foreach($members as $member)
-            @if ($member->status == '1' || $member->status == '2' || $member->status == '3')
+            @if ($member->status == '1')
                 <div class="bg-white p-6 rounded-2xl border border-black/5 card-shadow flex flex-col items-center text-center gap-4">
                     @if($member->image_url)
                         <img src="{{ asset('storage/' . $member->image_url) }}" alt="{{ $member->name }}" class="w-24 h-24 rounded-full object-cover">
@@ -47,8 +47,8 @@
                         </div>
                     @endif
                     <div>
-                        <h4 class="font-bold sm:text-xl text-base mb-1">{{ $member->name }}</h4>
-                        <p class="text-sm opacity-70">{{ $member->memberStatus }}</p>
+                        <h4 class="font-bold sm:text-xl text-base mb-1">Pdt. {{ $member->name }}</h4>
+                        {{-- <p class="text-sm opacity-70">{{ $member->memberStatus }}</p> --}}
                     </div>
                 </div>
             @endif
@@ -60,7 +60,7 @@
     <h3 class="text-xl font-bold mb-4">Majelis Jemaat</h3>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full mx-auto">
         @foreach($members as $member)
-            @if ($member->status == '4' || $member->status == '5')
+            @if ($member->status == '2')
                 <div class="bg-white p-6 rounded-2xl border border-black/5 card-shadow flex flex-col items-center text-center gap-4">
                     @if($member->image_url)
                         <img src="{{ asset('storage/' . $member->image_url) }}" alt="{{ $member->name }}" class="w-24 h-24 rounded-full object-cover">
@@ -70,8 +70,8 @@
                         </div>
                     @endif
                     <div>
-                        <h4 class="font-bold sm:text-xl text-base mb-1">{{ $member->name }}</h4>
-                        <p class="text-sm opacity-70">{{ $member->memberStatus }}</p>
+                        <h4 class="font-bold sm:text-xl text-base mb-1">Pnt. {{ $member->name }}</h4>
+                        {{-- <p class="text-sm opacity-70">{{ $member->memberStatus }}</p> --}}
                     </div>
                 </div>
             @endif

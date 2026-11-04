@@ -7,8 +7,7 @@
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
         <div>
             <div class="flex items-center gap-3 mb-4">
-                <img src="{{ asset('logo.png') }}" alt="GKI Sudirman" class="w-10 h-10 rounded-full">
-                <span class="text-lg sm:text-xl font-bold">GKI Sudirman</span>
+                <img src="{{ asset('EkSoe-Life-White-Transparent.png') }}" alt="EkSoe Life" class="w-auto h-12 sm:h-16">
             </div>
             <p class="text-white/40 text-sm sm:text-base leading-relaxed">{{ $abouts->where('name', 'Visi')->first()?->description ?? '-' }}</p>
         </div>

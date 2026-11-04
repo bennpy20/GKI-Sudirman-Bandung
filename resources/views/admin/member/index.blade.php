@@ -35,40 +35,42 @@
 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
     <div class="p-5 border-b border-gray-50 flex justify-between items-center bg-gray-50/30">
         <h3 class="font-bold text-church-dark text-lg">Daftar Anggota Jemaat</h3>
-        <div x-data="{ open: false }" class="relative flex items-center gap-6">
+        <div class="flex items-center gap-6">
             <a href="{{ route('admin.member.index', array_merge(request()->query(), ['print' => 1])) }}" target="_blank"
                 class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-gray-200 text-gray-700 text-sm font-semibold hover:border-church-gold hover:text-church-gold hover:bg-church-gold/5 transition-all shadow-sm">
                 <i class="fas fa-print"></i> Cetak PDF
             </a>
-            <button @click="open = !open" type="button"
-                class="text-gray-400 hover:text-church-gold text-sm font-medium flex items-center gap-2 cursor-pointer">
-                <i class="fas fa-filter"></i> Sortir
-            </button>
-            <div x-show="open" @click.outside="open = false" x-transition class="absolute right-0 mt-2 w-64 bg-white border border-gray-100 rounded-xl shadow-lg p-4 z-50">
-                <form method="GET" action="{{ route('admin.member.index') }}">
-                    <input type="hidden" name="search" value="{{ request('search') }}">
-                    <label class="text-xs font-semibold text-gray-500 mb-1 block">
-                        Kategori Pelayanan
-                    </label>
-                    <select name="status_group" onchange="this.form.submit()" class="w-full mb-3 px-3 py-2 border border-gray-200 rounded-lg text-sm">
-                        <option value="">Semua</option>
-                        <option value="hambaTuhan" {{ request('status_group')=='hambaTuhan' ? 'selected' : '' }}>Hamba Tuhan</option>
-                        <option value="majelis" {{ request('status_group')=='majelis' ? 'selected' : '' }}>Majelis</option>
-                        <option value="jemaat" {{ request('status_group')=='jemaat' ? 'selected' : '' }}>Jemaat</option>
-                    </select>
-                    <label class="text-xs font-semibold text-gray-500 mb-1 block">
-                        Status Keanggotaan
-                    </label>
-                    <select name="membership" onchange="this.form.submit()" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm">
-                        <option value="">Semua</option>
-                        @foreach($memberMembership as $key => $label)
-                            <option value="{{ $key }}"
-                                {{ request('membership') == $key ? 'selected' : '' }}>
-                                {{ $label }}
-                            </option>
-                        @endforeach
-                    </select>
-                </form>
+            <div x-data="{ open: false }" class="relative">
+                <button @click="open = !open" type="button"
+                    class="text-gray-400 hover:text-church-gold text-sm font-medium flex items-center gap-2 cursor-pointer">
+                    <i class="fas fa-filter"></i> Sortir
+                </button>
+                <div x-show="open" @click.outside="open = false" x-transition class="absolute right-0 mt-2 w-64 bg-white border border-gray-100 rounded-xl shadow-lg p-4 z-50">
+                    <form method="GET" action="{{ route('admin.member.index') }}">
+                        <input type="hidden" name="search" value="{{ request('search') }}">
+                        <label class="text-xs font-semibold text-gray-500 mb-1 block">
+                            Kategori Pelayanan
+                        </label>
+                        <select name="status_group" onchange="this.form.submit()" class="w-full mb-3 px-3 py-2 border border-gray-200 rounded-lg text-sm">
+                            <option value="">Semua</option>
+                            <option value="hambaTuhan" {{ request('status_group')=='hambaTuhan' ? 'selected' : '' }}>Hamba Tuhan</option>
+                            <option value="majelis" {{ request('status_group')=='majelis' ? 'selected' : '' }}>Majelis</option>
+                            <option value="jemaat" {{ request('status_group')=='jemaat' ? 'selected' : '' }}>Jemaat</option>
+                        </select>
+                        <label class="text-xs font-semibold text-gray-500 mb-1 block">
+                            Status Keanggotaan
+                        </label>
+                        <select name="membership" onchange="this.form.submit()" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm">
+                            <option value="">Semua</option>
+                            @foreach($memberMembership as $key => $label)
+                                <option value="{{ $key }}"
+                                    {{ request('membership') == $key ? 'selected' : '' }}>
+                                    {{ $label }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

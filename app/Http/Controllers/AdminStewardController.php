@@ -83,12 +83,9 @@ class AdminStewardController extends Controller
         $steward = Steward::with('commission')->findOrFail($id);
 
         $memberStatus = [
-            1 => 'Koordinator Hamba Tuhan',
-            2 => 'Pendeta',
-            3 => 'Penginjil',
-            4 => 'Penatua',
-            5 => 'Diaken',
-            6 => 'Jemaat Biasa',
+            1 => 'Pendeta',
+            2 => 'Penatua',
+            3 => 'Jemaat Biasa',
         ];
 
         $members = $steward->members()->latest('id')->get()->map(function ($member) use ($memberStatus) {
